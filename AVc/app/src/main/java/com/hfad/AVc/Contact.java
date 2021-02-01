@@ -1,6 +1,11 @@
 package com.hfad.AVc;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 public class Contact {
     private String id;

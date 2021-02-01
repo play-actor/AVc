@@ -3,4 +3,17 @@
     <string name="starbuzz_logo">Starbuzz logo</string>
     <string name="favorite">Поздравлять</string>
     <string name="favorites">Поздравляются</string>
+    <string-array name="options">
+        <item>Drinks</item>
+        <item>Food</item>
+        <item>Stores</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Поздравления</string>
+    <string name="base_work">Работа с БД</string>
+    <string name="congratulations">Поздравления</string>
+    <string name="create_order_title">Create Order</string>
+    <string name="action_share">Share</string>
+    <string name="home_tab">Home</string>
+    <string name="pizza_tab">Pizzas</string>
 </resources>

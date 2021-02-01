@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.view.View;
 import android.content.Intent;
@@ -13,9 +14,9 @@ import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.hfad.starbuzz.R;
+import com.hfad.AVc.R;
 
-public class DrinkCategoryActivity extends Activity {
+public class NameListActivity extends Activity {
     /**
      * Эти приватные переменные добавляются для того, чтобы базу данных и курсор можно было закрыть
      * в методе onDestroy()
@@ -25,7 +26,7 @@ public class DrinkCategoryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drink_category);
+        setContentView(R.layout.activity_name_activity);
 
        /* Адаптер массива с бд не используется
        *//**
@@ -41,11 +42,11 @@ public class DrinkCategoryActivity extends Activity {
                 Drink.drinks);*/
         ListView listDrinks = (ListView) findViewById(R.id.list_drinks);
         //Получить ссылку на базу данных и создать курсор
-        SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(this);
+        SQLiteOpenHelper AVcDatabaseHelper = Applications.INSTANCE.getAVcDatabaseHelper();
         try {
-            db = starbuzzDatabaseHelper.getReadableDatabase();
-            cursor = db.query("DRINK",
-                    new String[]{"_id", "NAME"},
+            db = AVcDatabaseHelper.getReadableDatabase();
+            cursor = db.query("PhoneDB",
+                    new String[]{"_id", "NAME", "Phone"},
                     null, null, null, null, null);
             //Создание адаптера курсора
             SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this,
@@ -56,7 +57,7 @@ public class DrinkCategoryActivity extends Activity {
                     0);
             listDrinks.setAdapter(listAdapter);
         } catch(SQLiteException e) {
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "База данных не найдена", Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -73,15 +74,17 @@ public class DrinkCategoryActivity extends Activity {
 
 
                         //Передача напитка, выбранного пользователем, DrinkActivity
-                        Intent intent = new Intent(DrinkCategoryActivity.this,
-                                DrinkActivity.class);
+                        Intent intent = new Intent(NameListActivity.this,
+                                ContactActivity.class);
                         /**
                          * Имя дополнительной информации в интенте обозначается константой, чтобы
-                         * DrinkCategoryActivity и DrinkActivity заведомо использовали одну строку.
+                         * NameListActivity и DrinkActivity заведомо использовали одну строку.
                          * Константа будет добавлена в DrinkActivity при создании активности.
                          */
-                        intent.putExtra(DrinkActivity.EXTRA_DRINKID, (int) id);
+                        intent.putExtra(ContactActivity.EXTRA_DRINKID, (int) id);
+                        Log.d("ID контакта ", String.valueOf(id));
                         startActivity(intent);
+                        Log.d("Intent ", "ok");
                     }
                 };
         //Назначение слушателя для спискового представления

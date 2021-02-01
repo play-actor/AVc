@@ -4,11 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hfad.starbuzz.com.hfad.AVc.DrinkActivity" >
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="190dp"
-        android:layout_height="190dp" />
+    tools:context="com.hfad.AVc.ContactActivity" >
 
     <TextView
         android:id="@+id/name"
