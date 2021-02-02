@@ -1,11 +1,6 @@
-package com.hfad.AVc;
+package com.hfad.AVc.ui;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.util.Log;
-
-import java.util.ArrayList;
 
 public class Contact {
     private String id;
@@ -26,7 +21,7 @@ public class Contact {
         return phone;
     }
 
-    void setPhone(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

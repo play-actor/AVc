@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Db_Fragment">
+    tools:context=".ui.main_fragment.Db_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -20,7 +20,6 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
-        android:onClick="onShowBD"
         android:text="БД"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

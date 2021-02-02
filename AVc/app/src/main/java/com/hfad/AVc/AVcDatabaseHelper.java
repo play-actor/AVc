@@ -3,14 +3,12 @@ package com.hfad.AVc;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.Observable;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.TableLayout;
 
-import com.hfad.AVc.R;
+import com.hfad.AVc.ui.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hfad.AVc;
+package com.hfad.AVc.ui.main_fragment;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,7 +20,10 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
+
+import com.hfad.AVc.Applications;
+import com.hfad.AVc.R;
+import com.hfad.AVc.ui.contact.ContactFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -123,10 +126,16 @@ public class CongratulationsFragment extends Fragment {
         listFavorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> listView, View v, int position, long id) {
-                Intent intent = new Intent(requireActivity(), ContactActivity.class);
+                /*Intent intent = new Intent(requireActivity(), ContactFragment.class);
                 //Запустить DrinkActivity и передать идентификатор выбранного напитка.
-                intent.putExtra(ContactActivity.EXTRA_DRINKID, (int)id);
-                startActivity(intent);
+                intent.put(ContactFragment., (int)id);
+                startActivity(intent);*/
+
+                ContactFragment contactFragment = ContactFragment.newInstance((int) id);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .add(R.id.root, contactFragment, "contactFragment")
+                        .show(contactFragment)
+                        .commitAllowingStateLoss();
             }
         });
 
