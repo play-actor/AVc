@@ -16,12 +16,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.AVc.AVcDatabaseHelper;
+import com.hfad.AVc.ui.database.AVcDatabaseHelper;
 import com.hfad.AVc.Applications;
 import com.hfad.AVc.R;
 

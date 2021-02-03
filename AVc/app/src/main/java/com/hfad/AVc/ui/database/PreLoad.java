@@ -1,6 +1,8 @@
-package com.hfad.AVc;
+package com.hfad.AVc.ui.database;
 
 import android.os.AsyncTask;
+
+import com.hfad.AVc.Applications;
 
 public class PreLoad extends AsyncTask<Integer, Void, Boolean> {
     @Override

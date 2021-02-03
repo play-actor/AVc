@@ -1,4 +1,4 @@
-package com.hfad.AVc;
+package com.hfad.AVc.ui.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.hfad.AVc.ui.Contact;
+import com.hfad.AVc.Applications;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,22 +77,10 @@ public class AVcDatabaseHelper extends SQLiteOpenHelper {
                     + "NAME TEXT, "
                     + "Phone TEXT, "
                     + "Activate NUMERIC);");
-            //Для теста
-/*            insertDB(db, "Сёма", "1",false);
-            Log.i("Контакт заполнен", "Сёма");
-            insertDB(db, "Петя", "2",false);
-            Log.i("Контакт заполнен", "Петя");
-            insertDB(db, "Вася", "4",false);
-            Log.i("Контакт заполнен", "Коля");*/
-
-        }
-
-
-        /*if (oldVersion < 3) {
-            loadDB())
-            Log.i(TAG, "loadDB: ok");
-        }*/
+         }
     }
+
+
 
     public void loadDB() {
         List<Contact> contacts = new ArrayList<>();

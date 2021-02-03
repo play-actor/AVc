@@ -15,9 +15,9 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.hfad.AVc.Applications;
-import com.hfad.AVc.PreLoad;
+import com.hfad.AVc.ui.database.PreLoad;
 import com.hfad.AVc.R;
-import com.hfad.AVc.ui.NameListFragment;
+import com.hfad.AVc.ui.namelist.NameListFragment;
 
 public class Db_Fragment extends Fragment {
 

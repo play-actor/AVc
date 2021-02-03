@@ -3,10 +3,12 @@ package com.hfad.AVc;
 import android.app.Application;
 import android.util.Log;
 
+import com.hfad.AVc.ui.database.AVcDatabaseHelper;
+
 public class Applications extends Application {
 
     public static Applications INSTANCE = null;
-    private AVcDatabaseHelper AVcDatabaseHelper = null;
+    private com.hfad.AVc.ui.database.AVcDatabaseHelper AVcDatabaseHelper = null;
     public String TAG ="AVc";
 
     @Override

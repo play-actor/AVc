@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/fragContact"
     android:background="@android:color/white"
-    tools:context="com.hfad.AVc.ui.Contact" >
+    tools:context="com.hfad.AVc.ui.database.Contact" >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"

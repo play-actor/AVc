@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui;
+package com.hfad.AVc.ui.database;
 
 import android.util.Log;
 

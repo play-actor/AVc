@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui;
+package com.hfad.AVc.ui.namelist;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +23,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.hfad.AVc.Applications;
 import com.hfad.AVc.R;
 import com.hfad.AVc.ui.contact.ContactFragment;
+import com.hfad.AVc.ui.database.Contact;
+
+import java.util.ArrayList;
 
 public class NameListFragment extends Fragment {
 
@@ -31,6 +34,8 @@ public class NameListFragment extends Fragment {
     private ListView listDrinks;
     private RecyclerView recyclerView;
     private AdapterView.OnItemClickListener itemClickListener;
+    private ListAdapter adapter;
+    private ArrayList<Contact> contactsList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,17 @@ public class NameListFragment extends Fragment {
                     new String[]{"_id", "NAME", "Phone"},
                     null, null, null, null, null);
 
+
+            this.cursor.moveToFirst();
+            int id = this.cursor.getColumnIndex("_id");
+            while (this.cursor.moveToNext()) {
+                Contact contact = new Contact();
+                contact.setId(this.cursor.getString(id));
+                contact.setName(this.cursor.getString(this.cursor.getColumnIndex("NAME")));
+                contact.setPhone(this.cursor.getString(this.cursor.getColumnIndex("Phone")));
+                this.contactsList.add(contact);
+            }
+
         } catch (SQLiteException e) {
             e.printStackTrace();
             Snackbar.make(requireView(), "База данных не найдена", BaseTransientBottomBar.LENGTH_LONG).show();
@@ -50,29 +66,14 @@ public class NameListFragment extends Fragment {
 
 
         //Создание слушателя
-        this.itemClickListener =
-                (listDrinks1, itemView, position, id) -> {
-                    //Передача напитка, выбранного пользователем, DrinkActivity
-                    /**
-                     * Имя дополнительной информации в интенте обозначается константой, чтобы
-                     * NameListActivity и DrinkActivity заведомо использовали одну строку.
-                     * Константа будет добавлена в DrinkActivity при создании активности.
-                     */
-
-                    ContactFragment contactFragment = ContactFragment.newInstance((int) id);
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .add(R.id.root, contactFragment, "contactFragment")
-                            .show(contactFragment)
-                            .commitAllowingStateLoss();
-                    Log.d("Intent ", "ok");
-                };
+        //this.itemClickListener = (listDrinks1, itemView, position, id)
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_name_list, container, false);
-        this.listDrinks = inflate.findViewById(R.id.list_drinks);
+        this.recyclerView = inflate.findViewById(R.id.list);
         return inflate;
     }
 
@@ -81,17 +82,30 @@ public class NameListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Создание адаптера курсора
-        SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(Applications.INSTANCE,
+        /*SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(Applications.INSTANCE,
                 android.R.layout.simple_list_item_1,
                 this.cursor,
                 new String[]{"NAME"},
                 new int[]{android.R.id.text1},
-                0);
-        this.listDrinks.setAdapter(listAdapter);
+                0);*/
+        //this.listDrinks.setAdapter(listAdapter);
+
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        // создаем адаптер
+        ListAdapter adapter = new ListAdapter(contactsList);
+        // устанавливаем для списка адаптер
+        recyclerView.setAdapter(adapter);
 
         //Назначение слушателя для спискового представления
-        listDrinks.setOnItemClickListener(this.itemClickListener);
+        adapter.setClick(id -> {
+            ContactFragment contactFragment = ContactFragment.newInstance(id);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.root, contactFragment, "ContactFragment")
+                    .commit();
+        });
+        //listDrinks.setOnItemClickListener(this.itemClickListener);
     }
+
 
     @Override
     public void onDestroy() {
