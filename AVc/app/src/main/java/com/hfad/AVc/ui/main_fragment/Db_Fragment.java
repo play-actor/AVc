@@ -15,9 +15,11 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.hfad.AVc.Applications;
-import com.hfad.AVc.ui.database.PreLoad;
 import com.hfad.AVc.R;
 import com.hfad.AVc.ui.namelist.NameListFragment;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Db_Fragment extends Fragment {
 
@@ -42,13 +44,25 @@ public class Db_Fragment extends Fragment {
     public void onShowBD() {
         NameListFragment nameListFragment = new NameListFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.root, nameListFragment)
+                .replace(R.id.root, nameListFragment, "nameListFragment")
+                .addToBackStack("nameListFragment")
                 .commit();
+
     }
 
     public void onLoadBD() {
-        new PreLoad();
+        //new PreLoad();
         Snackbar.make(requireView(), "Загрузка БД", BaseTransientBottomBar.LENGTH_LONG).show();
+        Applications.INSTANCE.getAVcDatabaseHelper().loadDB()
+                //обрабатываем в потоке ввода.вывода
+                //subscribeOn — это оператор, который задаёт поток выполнения работы
+                .subscribeOn(Schedulers.io())
+                //выводим в главном
+                .observeOn(AndroidSchedulers.mainThread())
+                //подписываемся
+                .subscribe(list -> Snackbar.make(requireView(), "Загрузка БД завершена "
+                                 + list.size(), BaseTransientBottomBar.LENGTH_LONG).show(),
+                        Throwable::printStackTrace);
     }
 
     /**

@@ -13,6 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.hfad.AVc.Applications;
 import com.hfad.AVc.R;
 
 public class MainFragment extends Fragment {
@@ -21,23 +23,18 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-//        getActivity().setSupportActionBar(toolbar);
-
-        SectionsPagerAdapter pagerAdapter =
-                new SectionsPagerAdapter(
-                        getActivity(),
-                        getActivity().getSupportFragmentManager()
+/*       Toolbar toolbar = view.findViewById(R.id.);
+        toolbar.setTitle(R.string.app_name);*/
+        SectionsPagerAdapter2 pagerAdapter =
+                new SectionsPagerAdapter2(
+                        Applications.INSTANCE,this
                 );
-        ViewPager pager = view.findViewById(R.id.pager);
+        ViewPager2 pager = view.findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
-
-        //Связывание ViewPager с TabLayout
         TabLayout tabLayout = view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(pager);
-
+        new TabLayoutMediator(tabLayout, pager,
+                (tab, position) -> tab.setText(pagerAdapter.getPageTitle(position))
+        ).attach();
         return view;
     }
 

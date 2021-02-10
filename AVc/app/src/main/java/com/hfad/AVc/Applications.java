@@ -8,18 +8,20 @@ import com.hfad.AVc.ui.database.AVcDatabaseHelper;
 public class Applications extends Application {
 
     public static Applications INSTANCE = null;
-    private com.hfad.AVc.ui.database.AVcDatabaseHelper AVcDatabaseHelper = null;
+    private com.hfad.AVc.ui.database.AVcDatabaseHelper aVcDatabaseHelper = null;
     public String TAG ="AVc";
 
     @Override
     public void onCreate() {
         Applications.INSTANCE = this;
-        this.AVcDatabaseHelper = new AVcDatabaseHelper(this);
+        this.aVcDatabaseHelper = new AVcDatabaseHelper(this);
+        Log.i(TAG, "AVcDatabaseHelper: ok");
         super.onCreate();
-        Log.w(TAG, "Создание Applications: ok");
+        Log.i(TAG, "Applications: ok");
+
     }
 
     public AVcDatabaseHelper getAVcDatabaseHelper() {
-        return AVcDatabaseHelper;
+        return aVcDatabaseHelper;
     }
 }

@@ -1,17 +1,16 @@
 package com.hfad.AVc.ui.contact;
 
-import android.content.ContentValues;
+import android.app.AlertDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,9 +19,16 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.AVc.ui.database.AVcDatabaseHelper;
 import com.hfad.AVc.Applications;
 import com.hfad.AVc.R;
+import com.hfad.AVc.ui.database.AVcDatabaseHelper;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 
 public class ContactFragment extends Fragment {
 
@@ -30,6 +36,11 @@ public class ContactFragment extends Fragment {
     private CheckBox favorite;
     private TextView name;
     private TextView description;
+    private TextView ID_in_base;
+    private EditText date_congratulations;
+    private String TAG = "AVc";
+
+    private final CompositeDisposable disposable = new CompositeDisposable();
 
     public static ContactFragment newInstance(Integer congratulations) {
         ContactFragment contactFragment = new ContactFragment();
@@ -46,21 +57,34 @@ public class ContactFragment extends Fragment {
         this.favorite = view.findViewById(R.id.favorite);
         this.name = view.findViewById(R.id.name);
         this.description = view.findViewById(R.id.description);
+        this.date_congratulations = view.findViewById(R.id.date_congratulations);
+        this.ID_in_base = view.findViewById(R.id.ID_in_base);
+        view.findViewById(R.id.buttonAdd).setOnClickListener(v -> onClickSave());
         //возврат на уровень назад
         /*Toolbar toolbar = view.findViewById(R.id.toolbar2);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());*/
         return view;
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.favorite.setOnClickListener(v -> onFavoriteClicked());
+        this.disposable.addAll(
+                Observable.just(1)
+                        .subscribe(),
+                Observable.just(2)
+                        .subscribe()
+        );
 
-        //Получение напитка из интента
+
+/*        this.favorite.setOnClickListener(v -> onFavoriteClicked());
+        this.date_congratulations.setOnClickListener(v -> onDateClicked());*/
+
+        //Получение контакта из интента
         if (getArguments() != null) {
-            int drinkId = getArguments().getInt("congratulations", -1);
+            int contactId = getArguments().getInt("congratulations", -1);
 
             //Создание курсора
             SQLiteOpenHelper AVcDatabaseHelper = new AVcDatabaseHelper(Applications.INSTANCE);
@@ -69,14 +93,15 @@ public class ContactFragment extends Fragment {
                 SQLiteDatabase db = AVcDatabaseHelper.getReadableDatabase();
                 //Создаем курсор для получения названия, описания и идентификатора ресурса выбранного
                 //пользователем напитка.
-                Cursor cursor = db.query("PhoneDB",
-                        new String[]{"NAME", "Phone", "Activate"},
+                Cursor cursor = db.query("CONTACT_TABLE",
+                        new String[]{"NAME", "PHONE", "ACTIVATE", "DATE_CONGRATULATIONS", "_id"},
                         "_id = ?",
-                        new String[]{Integer.toString(drinkId)},
+                        new String[]{Integer.toString(contactId)},
                         null, null, null);
                 //Переход к первой записи в курсоре
                 //moveToFirst - возвращает true, если запись успешно найдена
-                Log.d("Cursor ", "ok");
+                //Log.d(TAG, String.valueOf(db.getVersion()));
+
                 if (cursor.moveToFirst()) {
                     /**
                      * Получение данных напитка из курсора и расфасовка их по переменным
@@ -88,20 +113,27 @@ public class ContactFragment extends Fragment {
                      */
                     String nameText = cursor.getString(0);
                     String descriptionText = cursor.getString(1);
-
+                    String dateCongratulations = cursor.getString(3);
+                    String new_text = cursor.getString(4);
 
                     //Если столбец FAVORITE содержит 1, это соответствуетзначению true
                     boolean isFavorite = (cursor.getInt(2) == 1);
 
                     //Заполнение названия напитка
 
-                    this.name.setText(nameText);
+                    this.name.setText("Имя: " + nameText);
 
                     //Заполнение описания напитка
-                    this.description.setText(descriptionText);
+                    this.description.setText("Номер: " + descriptionText);
 
-                    //Заполнение флажка любимого напитка
+                    //Заполнение флажка поздравления
                     this.favorite.setChecked(isFavorite);
+
+                    //Заполнение даты поздравления
+                    this.date_congratulations.setText(dateCongratulations);
+
+                    //Заполнение даты поздравления
+                    this.ID_in_base.setText("id: " + new_text);
 
                 }
                 //Эти строки закрывают курсор и базу данных.
@@ -118,64 +150,72 @@ public class ContactFragment extends Fragment {
 
     //Обновление базы данных по щелчку на флажке
 
-    public void onFavoriteClicked() {
-        if (getArguments() != null) {
-            int drinkId = getArguments().getInt("congratulations", 0);
-            /**
-             * Код далее использовался при выполнении в главном потоке, при использовании нескольких
-             * потоков заменен на UpdateDrinkTask
-             */
-            //Получение значения флажка
-        /*CheckBox favorite = (CheckBox) findViewById(R.id.favorite);
-        ContentValues drinkValues = new ContentValues();
-        drinkValues.put("FAVORITE", favorite.isChecked());
-        //Получение ссылки на базу данных и обновление столбца FAVORITE
-        SQLiteOpenHelper starbuzzDatabaseHelper = new StarbuzzDatabaseHelper(this);
-        try {
-            SQLiteDatabase db = starbuzzDatabaseHelper.getWritableDatabase();
-            //Обновить столбец FAVORITE текущим значением флажка.
-            db.update("DRINK",
-                    drinkValues,
-                    "_id = ?",
-                    new String[] {Integer.toString(drinkId)});
-            db.close();
-        } catch(SQLiteException e) {
-            //Вывести сообщение при возникновении проблемы с базой данных
-            Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
-            toast.show();
-        }*/
-            new UpdateDrinkTask().execute(drinkId);
-        }
+
+    private void onClickSave() {
+        Observable.just(requireArguments().getInt("congratulations", -1))
+                .subscribeOn(Schedulers.io())
+                .flatMapCompletable(id -> {
+                    Applications.INSTANCE.getAVcDatabaseHelper().updateContact(
+                            this.favorite.isChecked(),
+                            this.date_congratulations.getText().toString(),
+                            id
+                    );
+                    return Completable.complete();
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    new AlertDialog.Builder(requireActivity())
+                            .setTitle("Запись")
+                            .setMessage("Успешно")
+                            .setPositiveButton("Ок", null)
+                            .show();
+                }, throwable -> {
+                    new AlertDialog.Builder(requireActivity())
+                            .setTitle("Запись")
+                            .setMessage("Ошибка " + throwable.getCause())
+                            .setPositiveButton("Ок", null)
+                            .show();
+                });
+
     }
 
-    //Реализация AsyncTask добавляется в активность в виде внутреннего класса.
-    private class UpdateDrinkTask extends AsyncTask<Integer, Void, Boolean> {
 
-        private ContentValues drinkValues;
 
-        /**
-         * Мы определили drinkValues как приватную  переменную, так как она используется только
-         * в методах onExecute() и doInBackground().
-         */
+
+/*    //Реализация AsyncTask добавляется в активность в виде внутреннего класса.
+    private class UpdateTask extends AsyncTask<Integer, Void, Boolean> {
+
+        private ContentValues activateValues;
+        private ContentValues dateValues;
+
+        */
+
+    /**
+     * Мы определили drinkValues как приватную  переменную, так как она используется только
+     * в методах onExecute() и doInBackground().
+     *//*
         protected void onPreExecute() {
             //Перед выполнением кода базы данных значение флажка помещается в объект
             //drinkValues типа ContentValues.
 
-            drinkValues = new ContentValues();
+            activateValues = new ContentValues();
             //Прежде чем выполнять код базы данных, значение флажка favorite помещается в объект
             // drinkValues типа ContentValues.
-            drinkValues.put("Activate", favorite.isChecked());
+            activateValues.put("ACTIVATE", favorite.isChecked());
+            dateValues = new ContentValues();
+            dateValues.put("DATE_CONGRATULATIONS", date_congratulations.getText().toString());
         }
         //Код базы данных содержится в методе doInBackground() и выполняется в фоновом потоке.
 
-        protected Boolean doInBackground(Integer... drinks) {
-            int drinkId = drinks[0];
+        protected Boolean doInBackground(Integer... contacts) {
+            int contactId = contacts[0];
             SQLiteOpenHelper AVcDatabaseHelper =
                     Applications.INSTANCE.getAVcDatabaseHelper();
             try {
                 SQLiteDatabase db = AVcDatabaseHelper.getWritableDatabase();
-                db.update("PhoneDB", drinkValues,//Обновление значениястолбца FAVORITE.
-                        "_id= ?", new String[]{Integer.toString(drinkId)});
+                db.update("CONTACT_TABLE", activateValues,//Обновление значениястолбца ACTIVATE.
+                        "_id= ?", new String[]{Integer.toString(contactId)});
+                db.update("CONTACT_TABLE", dateValues,//Обновление значениястолбца FAVORITE.
+                        "_id= ?", new String[]{Integer.toString(contactId)});
                 db.close();
                 return true;
             } catch (SQLiteException e) {
@@ -187,17 +227,18 @@ public class ContactFragment extends Fragment {
         //был выполнен. Если при выполнении произошла ошибка, выводится сообщение об ошибке.
         protected void onPostExecute(Boolean success) {
             if (!success) {
-                /*Toast toast = Toast.makeText(ContactActivity.this,
+                *//*Toast toast = Toast.makeText(ContactActivity.this,
                         "Database unavailable", Toast.LENGTH_SHORT);
                 //Код вывода сообщения включается в метод onPostExecute(), так как он должен
                 //выполняться в основном потоке событий для обновления экрана.
-                toast.show();*/
+                toast.show();*//*
                 Snackbar.make(getActivity().findViewById(R.id.fragContact), "C базой данных возникли проблемы", BaseTransientBottomBar.LENGTH_LONG).show();
             }
         }
-
+    }*/
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.disposable.clear();
     }
-
-
-
 }

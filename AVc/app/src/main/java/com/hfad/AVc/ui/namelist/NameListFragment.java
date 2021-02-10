@@ -9,9 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,35 +25,37 @@ import com.hfad.AVc.ui.database.Contact;
 import java.util.ArrayList;
 
 public class NameListFragment extends Fragment {
-
+    private String TAG = "AVc";
     private SQLiteDatabase db;
     private Cursor cursor;
-    private ListView listDrinks;
+    //private ListView listDrinks;
     private RecyclerView recyclerView;
-    private AdapterView.OnItemClickListener itemClickListener;
-    private ListAdapter adapter;
+    //private AdapterView.OnItemClickListener itemClickListener;
+    //private ListAdapter adapter;
     private ArrayList<Contact> contactsList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int id = 0;
         //Получить ссылку на базу данных и создать курсор
         SQLiteOpenHelper AVcDatabaseHelper = Applications.INSTANCE.getAVcDatabaseHelper();
         try {
             this.db = AVcDatabaseHelper.getReadableDatabase();
-            this.cursor = this.db.query("PhoneDB",
-                    new String[]{"_id", "NAME", "Phone"},
+            this.cursor = this.db.query("CONTACT_TABLE",
+                    new String[]{"_id", "NAME", "PHONE"},
                     null, null, null, null, null);
 
 
             this.cursor.moveToFirst();
-            int id = this.cursor.getColumnIndex("_id");
+            id = this.cursor.getColumnIndex("_id");
             while (this.cursor.moveToNext()) {
                 Contact contact = new Contact();
                 contact.setId(this.cursor.getString(id));
                 contact.setName(this.cursor.getString(this.cursor.getColumnIndex("NAME")));
-                contact.setPhone(this.cursor.getString(this.cursor.getColumnIndex("Phone")));
+                contact.setPhone(this.cursor.getString(this.cursor.getColumnIndex("PHONE")));
                 this.contactsList.add(contact);
+                Log.i(TAG, contact.getName());
             }
 
         } catch (SQLiteException e) {
@@ -80,30 +79,20 @@ public class NameListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        //Создание адаптера курсора
-        /*SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(Applications.INSTANCE,
-                android.R.layout.simple_list_item_1,
-                this.cursor,
-                new String[]{"NAME"},
-                new int[]{android.R.id.text1},
-                0);*/
-        //this.listDrinks.setAdapter(listAdapter);
-
         RecyclerView recyclerView = view.findViewById(R.id.list);
         // создаем адаптер
         ListAdapter adapter = new ListAdapter(contactsList);
         // устанавливаем для списка адаптер
         recyclerView.setAdapter(adapter);
-
         //Назначение слушателя для спискового представления
         adapter.setClick(id -> {
             ContactFragment contactFragment = ContactFragment.newInstance(id);
             getFragmentManager().beginTransaction()
                     .replace(R.id.root, contactFragment, "ContactFragment")
+                    .addToBackStack("ContactFragment")
                     .commit();
+            /* Log.i("Важно", String.valueOf(id));*/
         });
-        //listDrinks.setOnItemClickListener(this.itemClickListener);
     }
 
 

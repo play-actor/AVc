@@ -11,15 +11,18 @@ import android.util.Log;
 import com.hfad.AVc.Applications;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
 
 
 //Помощники SQLite должны расширять класс SQLiteOpenHelper.
 public class AVcDatabaseHelper extends SQLiteOpenHelper {
 
     public String TAG = "AVc";
-    private static final String DB_NAME = "AVcDatabase"; // Имя базы данных
-    private static final int DB_VERSION = 4; // Версия базы данных
+    private static final String DB_NAME = "AVcDBase10"; // Имя базы данных
+    private static final int DB_VERSION = 1; // Версия базы данных
     private final SQLiteDatabase db;
 
     public AVcDatabaseHelper(Context context) {
@@ -40,8 +43,7 @@ public class AVcDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         updateMyDatabase(db, 0, DB_VERSION);
-        // loadDB(db);
-        //Log.i(TAG, "loadDB: ok");
+        Log.i(TAG, "onCreate DB: ok");
     }
 
     /**
@@ -51,21 +53,21 @@ public class AVcDatabaseHelper extends SQLiteOpenHelper {
      * @param oldVersion - номер старой версии
      * @param newVersion - номер новой версии
      */
-
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         updateMyDatabase(db, oldVersion, newVersion);
+        Log.i(TAG, "onUpgrade DB: ok");
     }
 
     //Метод для заполнения БД
-    public void insertDB(SQLiteDatabase db, String NAME, String Phone, boolean Activate) {
+    public void insertDB(SQLiteDatabase db, String NAME, String Phone, boolean Activate, String Date_con) {
         ContentValues ContactValues = new ContentValues();
         ContactValues.put("NAME", NAME);
-        ContactValues.put("Phone", Phone);
-        ContactValues.put("Activate", Activate);
-        db.insert("PhoneDB", null, ContactValues);
-        Log.i("Контакт добавлен в БД", String.valueOf(ContactValues));
+        ContactValues.put("PHONE", Phone);
+        ContactValues.put("ACTIVATE", Activate);
+        ContactValues.put("DATE_CONGRATULATIONS", Date_con);
+        db.insert("CONTACT_TABLE", null, ContactValues);
+        Log.i(TAG, String.valueOf(ContactValues));
     }
 
     //Метод обновления БД
@@ -73,16 +75,46 @@ public class AVcDatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion < 1) {
             //Создание БД
             //execSQL(String sql) - Выполнить команду SQL, заданную в строковом виде.
-            db.execSQL("CREATE TABLE PhoneDB (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            db.execSQL("CREATE TABLE CONTACT_TABLE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
-                    + "Phone TEXT, "
-                    + "Activate NUMERIC);");
-         }
+                    + "PHONE TEXT, "
+                    + "ACTIVATE NUMERIC, "
+                    + "DATE_CONGRATULATIONS TEXT);");
+            insertDB(db, "", "", false, "");
+            insertDB(db, "Lucifer", "666", true, "0000-00-00");
+            insertDB(db, "Satan", "666", true, "0");
+        }
+
+        if (oldVersion < 5) {
+            db.execSQL("CREATE TABLE CONGRATULATIONS_TEXT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "CONGRATULATIONS_TEXT TEXT);");
+        }
+
+
+    }
+
+    public void updateContact(boolean check, String date, int id) {
+        ContentValues activateValues = new ContentValues();
+        activateValues.put("ACTIVATE", check);
+        this.db.update(
+                "CONTACT_TABLE",
+                activateValues,//Обновление значениястолбца ACTIVATE.
+                "_id= ?",
+                new String[]{Integer.toString(id)}
+        );
+
+        ContentValues dateValues = new ContentValues();
+        dateValues.put("DATE_CONGRATULATIONS", date);
+        db.update(
+                "CONTACT_TABLE",
+                dateValues,//Обновление значениястолбца FAVORITE.
+                "_id= ?",
+                new String[]{Integer.toString(id)}
+        );
     }
 
 
-
-    public void loadDB() {
+    public Observable<List<Contact>> loadDB() {
         List<Contact> contacts = new ArrayList<>();
         Context context = Applications.INSTANCE;
         ContentValues ContactValues = new ContentValues();
@@ -95,60 +127,65 @@ public class AVcDatabaseHelper extends SQLiteOpenHelper {
         );
 
         if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
+            //defer - не создаётся Observable, пока наблюдатель не подпишется, и создаётся новый
+            // Observable для каждого наблюдателя
+            return Observable.defer(() -> {
+                while (cursor.moveToNext()) {
 
-                Contact contact = new Contact();
-                String id = cursor.getString(
-                        cursor.getColumnIndex(
-                                ContactsContract.Contacts._ID));
-                /*contact.setId(id);*/
+                    Contact contact = new Contact();
+                    String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    contact.setId(id);
 
-                String name = cursor.getString(
-                        cursor.getColumnIndex(
-                                ContactsContract.Contacts
-                                        .DISPLAY_NAME));
-                ContactValues.put("NAME", name);
-                contact.setName(name);
+                    String name = cursor.getString(
+                            cursor.getColumnIndex(
+                                    ContactsContract.Contacts
+                                            .DISPLAY_NAME));
+                    ContactValues.put("NAME", name);
+                    contact.setName(name);
 
-                String has_phone = cursor.getString(
-                        cursor.getColumnIndex(
-                                ContactsContract.Contacts
-                                        .HAS_PHONE_NUMBER));
-                if (Integer.parseInt(has_phone) > 0) {
-                    // получаем контакты
-                    Cursor pCur;
-                    pCur = context.getContentResolver().query(
-                            ContactsContract.CommonDataKinds
-                                    .Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds
-                                    .Phone.CONTACT_ID + " = ?",
-                            new String[]{id},
-                            null);
-                    while (pCur.moveToNext()) {
-                        String phone = pCur.getString(
-                                pCur.getColumnIndex(
-                                        ContactsContract.
-                                                CommonDataKinds.
-                                                Phone.NUMBER));
-                        ContactValues.put("Phone", phone);
-                        contact.setPhone(phone);
+                    String has_phone = cursor.getString(
+                            cursor.getColumnIndex(
+                                    ContactsContract.Contacts
+                                            .HAS_PHONE_NUMBER));
+                    if (Integer.parseInt(has_phone) > 0) {
+                        // получаем контакты
+                        Cursor pCur;
+                        pCur = context.getContentResolver().query(
+                                ContactsContract.CommonDataKinds
+                                        .Phone.CONTENT_URI,
+                                null,
+                                ContactsContract.CommonDataKinds
+                                        .Phone.CONTACT_ID + " = ?",
+                                new String[]{id},
+                                null);
+                        while (pCur.moveToNext()) {
+                            String phone = pCur.getString(
+                                    pCur.getColumnIndex(
+                                            ContactsContract.
+                                                    CommonDataKinds.
+                                                    Phone.NUMBER));
+                            ContactValues.put("PHONE", phone);
+                            contact.setPhone(phone);
+                        }
+                        pCur.close();
+
+                        contacts.add(contact);
                     }
-                    pCur.close();
 
-                    contacts.add(contact);
                 }
 
-            }
+                for (Contact contact : contacts) {
+                    insertDB(db, contact.getName(), contact.getPhone(), false, "0");
+                    Log.i(TAG, contact.getName());
+                }
 
-            for (Contact contact : contacts) {
-                insertDB(db, contact.getName(), contact.getPhone(), false);
-                Log.i(TAG, contact.getName());
-            }
-
+                return Observable.just(contacts);
+                //тут возврат мне не нужен, но он должен быть в синтаксисе, поэтому возвращаем
+            });
         }
 
-
+        return Observable.just(Collections.emptyList());
+        //нужен лишь на тот случай если у нас лист пустой (его и возвращаем)
     }
 
 }

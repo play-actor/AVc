@@ -1,6 +1,5 @@
 package com.hfad.AVc.ui.main_fragment;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -27,10 +26,10 @@ import com.hfad.AVc.ui.contact.ContactFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CongratulationsFragment#newInstance} factory method to
+ * Use the {@link AllCongratulationsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CongratulationsFragment extends Fragment {
+public class AllCongratulationsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,7 +47,7 @@ public class CongratulationsFragment extends Fragment {
     private ListView listFavorites;
     private CursorAdapter favoriteAdapter;
 
-    public CongratulationsFragment() {
+    public AllCongratulationsFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +57,11 @@ public class CongratulationsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CongratulationsFragment.
+     * @return A new instance of fragment AllCongratulationsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CongratulationsFragment newInstance(String param1, String param2) {
-        CongratulationsFragment fragment = new CongratulationsFragment();
+    public static AllCongratulationsFragment newInstance(String param1, String param2) {
+        AllCongratulationsFragment fragment = new AllCongratulationsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,7 +83,7 @@ public class CongratulationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_congratulations, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_congratulations, container, false);
 
         this.listFavorites = view.findViewById(R.id.list_favorites);
 
@@ -103,9 +102,9 @@ public class CongratulationsFragment extends Fragment {
         try{
             SQLiteOpenHelper AVcDatabaseHelper = Applications.INSTANCE.getAVcDatabaseHelper();
             db = AVcDatabaseHelper.getReadableDatabase();
-            favoritesCursor = db.query("PhoneDB",
+            favoritesCursor = db.query("CONTACT_TABLE",
                     new String[] { "_id", "NAME"},
-                    "Activate = 1",
+                    "ACTIVATE = 1",
                     null, null, null, null);
             this.favoriteAdapter =
                     new SimpleCursorAdapter(requireActivity(),
@@ -135,7 +134,12 @@ public class CongratulationsFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .add(R.id.root, contactFragment, "contactFragment")
                         .show(contactFragment)
+                        .addToBackStack("contactFragment")
                         .commitAllowingStateLoss();
+                /*getFragmentManager().beginTransaction()
+                        .replace(R.id.root, contactFragment, "ContactFragment")
+                        .addToBackStack("ContactFragment")
+                        .commit();*/
             }
         });
 
@@ -144,9 +148,9 @@ public class CongratulationsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Cursor newCursor = db.query("PhoneDB",
+        Cursor newCursor = db.query("CONTACT_TABLE",
                 new String[] { "_id", "NAME"},
-                "Activate = 1",
+                "ACTIVATE = 1",
                 null, null, null, null);
         //Для получения адаптера ListView используется метод getAdapter().
         //Курсор, используемый list_favorites,заменяется новым курсором.

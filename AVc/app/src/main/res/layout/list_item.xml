@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/nameListContact"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/filter" />
+        app:srcCompat="@drawable/ic_baseline_people_alt_24" />
 
     <TextView
         android:id="@+id/nameListContact"

@@ -1,6 +1,7 @@
 package com.hfad.AVc.ui.namelist;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 click.click(Integer.parseInt(сontact.getId()));
             }
         });
+        /*Log.i("Важно", сontact.getId());*/
     }
 
     public void setOnItemClickListener(View.OnClickListener onItemClickListener) {
