@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui;
+package com.hfad.avc.ui;
 
 import android.content.Context;
 

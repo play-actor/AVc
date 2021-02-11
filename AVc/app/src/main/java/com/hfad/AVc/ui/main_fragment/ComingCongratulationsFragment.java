@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.main_fragment;
+package com.hfad.avc.ui.main_fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,9 +21,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.hfad.AVc.Applications;
-import com.hfad.AVc.R;
-import com.hfad.AVc.ui.contact.ContactFragment;
+import com.hfad.avc.Applications;
+import com.hfad.avc.R;
+import com.hfad.avc.ui.contact.ContactFragment;
 
 
 public class ComingCongratulationsFragment extends Fragment {

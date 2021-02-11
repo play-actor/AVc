@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.database;
+package com.hfad.avc.ui.database;
 
 import android.util.Log;
 
@@ -6,6 +6,8 @@ public class Contact {
     private String id;
     private String name = "";
     private String phone = "";
+    private String date_congratulations = "";
+    private Boolean favorite = false;
     /**
      Все взаимодействия с контактами
      */
@@ -33,12 +35,32 @@ public class Contact {
         this.id = id;
     }
 
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) { this.favorite = favorite;}
+
+    public String getDateCongratulations() {
+        return date_congratulations;
+    }
+
+    public void setDateCongratulations(String date_congratulations) {
+        this.date_congratulations = date_congratulations;
+    }
+
+
     @Override
     public String toString() {
         return "id = " + this.id +
                 ", Имя = " + this.name +
                 ", Телефон = " + this.phone;
     }
+
+
+
+
+
 
     public static class Builder {
         private String id;

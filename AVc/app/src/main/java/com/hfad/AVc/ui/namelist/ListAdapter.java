@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.namelist;
+package com.hfad.avc.ui.namelist;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hfad.AVc.Applications;
-import com.hfad.AVc.R;
-import com.hfad.AVc.ui.database.Contact;
+import com.hfad.avc.Applications;
+import com.hfad.avc.R;
+import com.hfad.avc.ui.database.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

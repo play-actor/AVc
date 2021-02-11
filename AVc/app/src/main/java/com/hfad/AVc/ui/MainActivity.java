@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui;
+package com.hfad.avc.ui;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,10 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.AVc.R;
-import com.hfad.AVc.ui.main_fragment.Db_Fragment;
-import com.hfad.AVc.ui.main_fragment.MainFragment;
-import com.hfad.AVc.ui.namelist.NameListFragment;
+import com.hfad.avc.R;
+import com.hfad.avc.ui.main_fragment.Db_Fragment;
+import com.hfad.avc.ui.main_fragment.MainFragment;
+import com.hfad.avc.ui.namelist.NameListFragment;
 
 
 public class MainActivity extends AppCompatActivity {

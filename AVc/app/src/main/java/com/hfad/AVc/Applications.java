@@ -1,14 +1,14 @@
-package com.hfad.AVc;
+package com.hfad.avc;
 
 import android.app.Application;
 import android.util.Log;
 
-import com.hfad.AVc.ui.database.AVcDatabaseHelper;
+import com.hfad.avc.ui.database.AVcDatabaseHelper;
 
 public class Applications extends Application {
 
     public static Applications INSTANCE = null;
-    private com.hfad.AVc.ui.database.AVcDatabaseHelper aVcDatabaseHelper = null;
+    private com.hfad.avc.ui.database.AVcDatabaseHelper aVcDatabaseHelper = null;
     public String TAG ="AVc";
 
     @Override

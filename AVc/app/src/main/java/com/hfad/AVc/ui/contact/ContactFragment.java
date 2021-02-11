@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.contact;
+package com.hfad.avc.ui.contact;
 
 import android.app.AlertDialog;
 import android.database.Cursor;
@@ -15,13 +15,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.AVc.Applications;
-import com.hfad.AVc.R;
-import com.hfad.AVc.ui.database.AVcDatabaseHelper;
+import com.hfad.avc.Applications;
+import com.hfad.avc.R;
+import com.hfad.avc.databinding.FragmentContactBinding;
+import com.hfad.avc.ui.MainActivity;
+import com.hfad.avc.ui.database.AVcDatabaseHelper;
+import com.hfad.avc.ui.database.Contact;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -39,6 +44,7 @@ public class ContactFragment extends Fragment {
     private TextView ID_in_base;
     private EditText date_congratulations;
     private String TAG = "AVc";
+    private FragmentContactBinding binding;
 
     private final CompositeDisposable disposable = new CompositeDisposable();
 
@@ -53,30 +59,32 @@ public class ContactFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact, container, false);
-        this.favorite = view.findViewById(R.id.favorite);
+        //View view = inflater.inflate(R.layout.fragment_contact, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact,container,false);
+        /*this.favorite = view.findViewById(R.id.favorite);
         this.name = view.findViewById(R.id.name);
         this.description = view.findViewById(R.id.description);
         this.date_congratulations = view.findViewById(R.id.date_congratulations);
         this.ID_in_base = view.findViewById(R.id.ID_in_base);
-        view.findViewById(R.id.buttonAdd).setOnClickListener(v -> onClickSave());
+        view.findViewById(R.id.buttonAdd).setOnClickListener(v -> onClickSave());*/
         //возврат на уровень назад
         /*Toolbar toolbar = view.findViewById(R.id.toolbar2);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());*/
-        return view;
+
+        return binding.getRoot();
     }
+
+
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.disposable.addAll(
-                Observable.just(1)
-                        .subscribe(),
-                Observable.just(2)
-                        .subscribe()
-        );
+        Contact contact =new Contact();
+
+        //FragmentContactBinding binding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_contact);
+
 
 
 /*        this.favorite.setOnClickListener(v -> onFavoriteClicked());
@@ -120,8 +128,7 @@ public class ContactFragment extends Fragment {
                     boolean isFavorite = (cursor.getInt(2) == 1);
 
                     //Заполнение названия напитка
-
-                    this.name.setText("Имя: " + nameText);
+/*                    this.name.setText("Имя: " + nameText);
 
                     //Заполнение описания напитка
                     this.description.setText("Номер: " + descriptionText);
@@ -133,12 +140,20 @@ public class ContactFragment extends Fragment {
                     this.date_congratulations.setText(dateCongratulations);
 
                     //Заполнение даты поздравления
-                    this.ID_in_base.setText("id: " + new_text);
+                    this.ID_in_base.setText("id: " + new_text);*/
 
+                    contact.setId(new_text);
+                    contact.setName(nameText);
+                    contact.setPhone(descriptionText);
+                    contact.setDateCongratulations(dateCongratulations);
+                    contact.setFavorite(isFavorite);
                 }
+                binding.setContactDetail(contact);
                 //Эти строки закрывают курсор и базу данных.
                 cursor.close();
                 db.close();
+
+
             } catch (SQLiteException e) {//При выдаче исключенияSQLiteException выводится уведомление.
                 Snackbar.make(requireView(), "C базой данных возникли проблемы", BaseTransientBottomBar.LENGTH_LONG).show();
                 //Если выдается исключение SQLiteException,значит, с базой данных возникли проблемы.

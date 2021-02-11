@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.main_fragment;
+package com.hfad.avc.ui.main_fragment;
 
 import android.content.Context;
 
@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.hfad.AVc.R;
+import com.hfad.avc.R;
 
 public class SectionsPagerAdapter2 extends FragmentStateAdapter {
 

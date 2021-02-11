@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="contactDetail"
+            type="com.hfad.avc.ui.database.Contact" />
+
+    </data>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragContact"
     android:background="@color/background"
-    tools:context="com.hfad.AVc.ui.MainActivity" >
+    tools:context="com.hfad.avc.ui.MainActivity" >
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Имя"
+            android:text="@{contactDetail.name}"
             tools:textColor="@android:color/darker_gray" />
 
         <TextView
@@ -40,7 +50,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/name"
-            tools:text="Номер" />
+            tools:text="Номер"
+            android:text="@{contactDetail.phone}"/>
 
         <EditText
             android:id="@+id/date_congratulations"
@@ -51,7 +62,9 @@
             android:inputType="text"
             android:textSize="30sp"
             app:layout_constraintTop_toTopOf="@+id/description"
-            tools:layout_editor_absoluteX="85dp" />
+            tools:layout_editor_absoluteX="85dp"
+            tools:text="Дата"
+            android:text="@{contactDetail.dateCongratulations}"/>
 
 
         <TextView
@@ -62,7 +75,9 @@
             android:layout_marginTop="100dp"
             android:textColor="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/date_congratulations" />
+            app:layout_constraintTop_toTopOf="@+id/date_congratulations"
+            tools:text="ID"
+            android:text='@{contactDetail.id}'/>
 
         <CheckBox
             android:id="@+id/favorite"
@@ -72,6 +87,7 @@
             android:layout_marginTop="104dp"
             android:layout_marginEnd="146dp"
             android:text="@string/favorite"
+            android:checked="@{contactDetail.favorite}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,24 +107,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:visibility="visible"
-        app:backgroundTint="@color/colorPrimary"
-        app:menu="@menu/menu_main"
-        app:navigationIcon="@drawable/ic_menu_24dp"/>
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:backgroundTint="@color/colorButton"
-        app:layout_anchor="@id/bottomAppBar"
-        app:srcCompat="@drawable/ic_add_24dp"/>-->
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

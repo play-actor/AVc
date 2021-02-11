@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.main_fragment;
+package com.hfad.avc.ui.main_fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.AVc.Applications;
-import com.hfad.AVc.R;
-import com.hfad.AVc.ui.namelist.NameListFragment;
+import com.hfad.avc.Applications;
+import com.hfad.avc.R;
+import com.hfad.avc.ui.namelist.NameListFragment;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

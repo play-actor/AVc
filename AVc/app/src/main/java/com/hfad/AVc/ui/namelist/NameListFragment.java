@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.namelist;
+package com.hfad.avc.ui.namelist;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.AVc.Applications;
-import com.hfad.AVc.R;
-import com.hfad.AVc.ui.contact.ContactFragment;
-import com.hfad.AVc.ui.database.Contact;
+import com.hfad.avc.Applications;
+import com.hfad.avc.R;
+import com.hfad.avc.ui.contact.ContactFragment;
+import com.hfad.avc.ui.database.Contact;
 
 import java.util.ArrayList;
 

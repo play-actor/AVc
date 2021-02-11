@@ -1,4 +1,4 @@
-package com.hfad.AVc.ui.database;
+package com.hfad.avc.ui.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.hfad.AVc.Applications;
+import com.hfad.avc.Applications;
 
 import java.util.ArrayList;
 import java.util.Collections;
