@@ -23,8 +23,6 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-/*       Toolbar toolbar = view.findViewById(R.id.);
-        toolbar.setTitle(R.string.app_name);*/
         SectionsPagerAdapter2 pagerAdapter =
                 new SectionsPagerAdapter2(
                         Applications.INSTANCE,this

@@ -41,16 +41,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ListAdapter.ViewHolder holder, int position) {
         Contact сontact = contactList.get(position);
-
         holder.nameView.setText(сontact.getName());
         holder.PhoneView.setText(сontact.getPhone());
-
         holder.itemView.setOnClickListener(v -> {
             if (click != null) {
                 click.click(Integer.parseInt(сontact.getId()));
             }
         });
-        /*Log.i("Важно", сontact.getId());*/
     }
 
     public void setOnItemClickListener(View.OnClickListener onItemClickListener) {

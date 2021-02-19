@@ -53,4 +53,20 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.0.7"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
+    implementation 'ru.terrakok.cicerone:cicerone:5.1.1'
+
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    implementation files('joda-time')
+    implementation files('joda-time')
+    implementation 'joda-time:joda-time:2.10.10'
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
+    //Moxy
+    def versionMoxy = "2.2.1"
+    implementation "com.github.moxy-community:moxy:$versionMoxy"
+    implementation "com.github.moxy-community:moxy-androidx:$versionMoxy"
+    implementation "com.github.moxy-community:moxy-material:$versionMoxy"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    annotationProcessor "com.github.moxy-community:moxy-compiler:$versionMoxy"
+
 }

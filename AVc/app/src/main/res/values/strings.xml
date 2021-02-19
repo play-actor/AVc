@@ -9,7 +9,7 @@
         <item>Food</item>
         <item>Stores</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Поздравления</string>
     <string name="base_work">Работа с БД</string>
     <string name="congratulations">Поздравления</string>
