@@ -3,7 +3,7 @@
     package="com.hfad.avc">
 
     <application
-        android:name=".Applications"
+        android:name="com.hfad.avc.Applications"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

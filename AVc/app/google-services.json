@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1079237841140",
+    "project_id": "avcon-19aaa",
+    "storage_bucket": "avcon-19aaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079237841140:android:a06508ad5365752543cea1",
+        "android_client_info": {
+          "package_name": "com.hfad.AVcon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079237841140-n791phkv52fdh8r4t2o4phft1um8uv08.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQfj-3sDM0YQPaHNjcVBQuAipw0ZYCBqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1079237841140-n791phkv52fdh8r4t2o4phft1um8uv08.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
