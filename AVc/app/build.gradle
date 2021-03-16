@@ -63,7 +63,7 @@ dependencies {
     //joda-time
     implementation 'joda-time:joda-time:2.10.10'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-//
+
     //Moxy
     def versionMoxy = "2.2.1"
     implementation "com.github.moxy-community:moxy:$versionMoxy"

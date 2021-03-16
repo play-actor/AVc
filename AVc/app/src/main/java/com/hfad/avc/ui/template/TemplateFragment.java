@@ -48,13 +48,16 @@ public class TemplateFragment extends BaseFragment implements ITemplateViewModel
             this.templatesList = templateList;
             TemplateAdapter adapter = new TemplateAdapter(templatesList);
             recyclerView.setAdapter(adapter);
-
+            adapter.setClick(id -> {
+                this.presenter.openTemplate(id);
+            });
         }
     }
 
 
     @Override
     public boolean onBackPressed() {
+       // this.presenter.back();
         return false;
     }
 }

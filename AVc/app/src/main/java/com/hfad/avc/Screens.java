@@ -8,6 +8,7 @@ import com.hfad.avc.ui.contact.ContactFragment;
 import com.hfad.avc.ui.database.Db_Fragment;
 import com.hfad.avc.ui.main_fragment.MainFragment;
 import com.hfad.avc.ui.template.TemplateFragment;
+import com.hfad.avc.ui.templateWrite.TemplateWriteFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -67,6 +68,24 @@ public class Screens {
             ContactFragment fragment = new ContactFragment();
             Bundle args = new Bundle();
             args.putInt("congratulations", this.congratulations);
+            fragment.setArguments(args);
+            return fragment;
+        }
+    }
+    public static final class TemplateWriteScreen extends SupportAppScreen {
+
+        private final int templateId;
+
+        public TemplateWriteScreen(int templateId) {
+            this.templateId = templateId;
+            this.screenKey = getClass().getSimpleName();
+        }
+
+        @Override
+        public Fragment getFragment() {
+            TemplateWriteFragment fragment = new TemplateWriteFragment();
+            Bundle args = new Bundle();
+            args.putInt("template_Id", this.templateId);
             fragment.setArguments(args);
             return fragment;
         }

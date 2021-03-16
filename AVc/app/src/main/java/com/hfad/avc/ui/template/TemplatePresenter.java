@@ -1,6 +1,7 @@
 package com.hfad.avc.ui.template;
 
 import com.hfad.avc.Applications;
+import com.hfad.avc.Screens;
 import com.hfad.avc.interactor.LoadDBInteractor;
 
 import javax.inject.Inject;
@@ -27,6 +28,13 @@ public class TemplatePresenter extends MvpPresenter<ITemplateViewModel> {
         super.attachView(view);
         getViewState().setData(this.interactor.getTemplateList(0));
     }
+    public void openTemplate(int id) {
+        this.router.navigateTo(new Screens.TemplateWriteScreen(id));
+    }
 
-
+    public void back() {
+        this.router.exit();
+    }
 }
+
+

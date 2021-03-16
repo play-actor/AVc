@@ -5,25 +5,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
+import androidx.databinding.DataBindingUtil;
 
 import com.hfad.avc.R;
+import com.hfad.avc.databinding.FragmentTemplateWriteBinding;
+import com.hfad.avc.ui.database.Template;
+
+import moxy.MvpAppCompatFragment;
+import moxy.presenter.InjectPresenter;
+import moxy.presenter.ProvidePresenter;
 
 
-public class TemplateWriteFragment extends Fragment {
+public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemplateWriteViewModel {
 
+    @InjectPresenter
+    TemplatePresenter presenter;
 
+    private String TAG = "AVc";
+    private FragmentTemplateWriteBinding binding;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static TemplateWriteFragment newInstance(Integer templateFavorite) {
+        TemplateWriteFragment templateWriteFragment = new TemplateWriteFragment();
+        Bundle args = new Bundle();
+        args.putInt("template_Id", templateFavorite);
+        templateWriteFragment.setArguments(args);
+        return templateWriteFragment;
+    }
 
+    @ProvidePresenter
+    TemplatePresenter ProvidePresenterContactPresenter() {
+        return new TemplatePresenter(getArguments());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_template_write, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_template_write, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void setData(Template template) {
+        this.binding.setTemplateDetail(template);
+        this.binding.setPresenterTemplate(this.presenter);
     }
 }
