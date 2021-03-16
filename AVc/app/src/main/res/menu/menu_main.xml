@@ -15,9 +15,10 @@
         android:title="@string/work_bace"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/safe_text"
+        android:id="@+id/template_text"
         android:icon="@drawable/ic_baseline_star_24"
         android:title="@string/safe_text"
+        android:onClick="onClickTemplateBase"
         android:contentDescription="@string/content_description_search"
         app:showAsAction="ifRoom"/>
     <item

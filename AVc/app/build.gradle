@@ -82,5 +82,5 @@ dependencies {
   //  implementation 'com.google.firebase:firebase-analytics'
 
     implementation "com.squareup.retrofit2:converter-gson:2.7.2"
-    implementation 'com.github.balrampandey19:AppLocker:1.0.1'
+
 }
