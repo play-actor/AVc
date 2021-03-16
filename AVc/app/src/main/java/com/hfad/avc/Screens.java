@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import com.hfad.avc.ui.contact.ContactFragment;
 import com.hfad.avc.ui.database.Db_Fragment;
 import com.hfad.avc.ui.main_fragment.MainFragment;
-import com.hfad.avc.ui.Template.TemplateFragment;
+import com.hfad.avc.ui.template.TemplateFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -38,11 +38,11 @@ public class Screens {
             return fragment;
         }
     }
+
+
     public static final class TemplateScreen extends SupportAppScreen {
 
-        public TemplateScreen() {
-            this.screenKey = getClass().getSimpleName();
-        }
+        public TemplateScreen() {this.screenKey = getClass().getSimpleName();}
 
         @Override
         public Fragment getFragment() {
@@ -50,6 +50,8 @@ public class Screens {
             return fragment;
         }
     }
+
+
 
     public static final class ConatctScreen extends SupportAppScreen {
 

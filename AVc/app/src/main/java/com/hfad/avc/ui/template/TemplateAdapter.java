@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.Template;
+package com.hfad.avc.ui.template;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +60,7 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
 
         ViewHolder(View view) {
             super(view);
-            templateView = (TextView) view.findViewById(R.id.nameListContact);
+            templateView = (TextView) view.findViewById(R.id.nameListTemplate);
         }
     }
     public interface Click {
