@@ -10,12 +10,12 @@ import moxy.InjectViewState;
 import moxy.MvpPresenter;
 
 @InjectViewState
-public class TemplatePresenter extends MvpPresenter<ITemplateWriteViewModel> {
+public class TemplateWritePresenter extends MvpPresenter<ITemplateWriteViewModel> {
     private AppDatabase db;
     private Template template;
     private String templateId;
 
-    public TemplatePresenter(Bundle bundle) {
+    public TemplateWritePresenter(Bundle bundle) {
         templateId = String.valueOf(bundle.getInt("template_Id", -1));
         db = Applications.getInstance().getDatabase();
         template = db.templateDao().getById(templateId);

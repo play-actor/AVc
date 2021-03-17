@@ -11,10 +11,12 @@
 
         <variable
             name="presenterTemplate"
-            type="com.hfad.avc.ui.templateWrite.TemplatePresenter" />
+            type="com.hfad.avc.ui.templateWrite.TemplateWritePresenter" />
 
     </data>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/fragTemplate"
         android:layout_width="match_parent"
@@ -26,20 +28,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <EditText
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{templateDetail.textTemplate}"
+                android:text="@={templateDetail.textTemplate}"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Имя"
-                tools:textColor="@android:color/darker_gray" />
+                tools:text="Текст"
+                tools:textColor="@android:color/darker_gray"
+                android:autofillHints="Text" />
 
             <TextView
                 android:id="@+id/ID_in_base"
@@ -59,7 +62,7 @@
                 android:id="@+id/favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="146dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="104dp"
                 android:layout_marginEnd="146dp"
                 android:checked="@={templateDetail.favorite}"
@@ -73,13 +76,14 @@
                 android:id="@+id/buttonAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="140dp"
-                android:layout_marginTop="108dp"
-                android:text="Сохранить"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="88dp"
                 android:onClick="@{() -> presenterTemplate.updateTemplate()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/favorite" />
+                android:text="Сохранить"
+                app:layout_constraintStart_toEndOf="@+id/favorite"
+                app:layout_constraintTop_toBottomOf="@+id/ID_in_base" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </ScrollView>
 </layout>

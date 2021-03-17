@@ -8,6 +8,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import javax.inject.Inject;
+
 @Entity()
 public class Template extends BaseObservable {
     @PrimaryKey
@@ -17,7 +18,10 @@ public class Template extends BaseObservable {
     private Boolean favorite = false;
 
     @Inject
-    public Template() {};
+    public Template() {
+    }
+
+    ;
 
     @Bindable
     public String getId() {
@@ -26,7 +30,7 @@ public class Template extends BaseObservable {
 
     public void setId(String id) {
         this.id = id;
-        //  notifyPropertyChanged(BR.id);
+        notifyPropertyChanged(BR.id);
     }
 
     @Bindable
@@ -36,8 +40,9 @@ public class Template extends BaseObservable {
 
     public void setTextTemplate(String textTemplate) {
         this.textTemplate = textTemplate;
-        //  notifyPropertyChanged(BR.textTemplate);
+        notifyPropertyChanged(BR.textTemplate);
     }
+
     @Bindable
     public Boolean getFavorite() {
         return favorite;
@@ -51,7 +56,7 @@ public class Template extends BaseObservable {
     @Override
     public String toString() {
         return "id = " + this.id +
-                ", Текст: " + this.textTemplate+
+                ", Текст: " + this.textTemplate +
                 ", В избранном: " + this.favorite;
     }
 

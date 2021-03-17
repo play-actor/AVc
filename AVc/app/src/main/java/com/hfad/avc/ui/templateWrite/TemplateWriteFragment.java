@@ -19,7 +19,7 @@ import moxy.presenter.ProvidePresenter;
 public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemplateWriteViewModel {
 
     @InjectPresenter
-    TemplatePresenter presenter;
+    TemplateWritePresenter presenter;
 
     private String TAG = "AVc";
     private FragmentTemplateWriteBinding binding;
@@ -33,8 +33,8 @@ public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemp
     }
 
     @ProvidePresenter
-    TemplatePresenter ProvidePresenterContactPresenter() {
-        return new TemplatePresenter(getArguments());
+    TemplateWritePresenter ProvidePresenterContactPresenter() {
+        return new TemplateWritePresenter(getArguments());
     }
 
     @Override
