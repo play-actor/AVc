@@ -17,5 +17,5 @@ public interface IContactViewModel extends MvpView {
     void setData(Contact contact);
 
     @StateStrategyType(OneExecutionStateStrategy.class)
-    void setWorker();
+    void setWorker(String phoneNumber, String date, String TextTemplate);
 }
