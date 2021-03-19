@@ -25,4 +25,12 @@
     <string name="work_bace">Работа с базой данных</string>
     <string name="safe_text">Мои шаблоны</string>
     <string name="null_text"> </string>
+
+
+    <string name="exit">Выход</string>
+    <string name="save_data">Сохранить данные?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="cancel">Отмена</string>
+    <string name="saved">Сохранено</string>
 </resources>
