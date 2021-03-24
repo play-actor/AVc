@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 public class SendIteractor {
     @SuppressLint("IntentReset")
@@ -16,6 +17,7 @@ public class SendIteractor {
             context.startActivity(Intent.createChooser(sms, "Отправить"));
         } catch (Exception ex) {
             ex.printStackTrace();
+            Log.i("AVc", String.valueOf(ex));
         }
     }
 
