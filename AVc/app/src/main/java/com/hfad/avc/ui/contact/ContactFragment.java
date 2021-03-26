@@ -1,11 +1,15 @@
 package com.hfad.avc.ui.contact;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
@@ -14,7 +18,6 @@ import androidx.work.WorkManager;
 import com.hfad.avc.Applications;
 import com.hfad.avc.R;
 import com.hfad.avc.databinding.FragmentContactBinding;
-import com.hfad.avc.interactor.SendIteractor;
 import com.hfad.avc.ui.SendWorker;
 import com.hfad.avc.ui.calendar.Calendar;
 import com.hfad.avc.ui.calendar.CalendarType;
@@ -37,12 +40,15 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
     PeriodicWorkRequest myWorkRequest;
     @InjectPresenter
     ContactPresenter presenter;
-    SendIteractor interactor;
     private String TAG = "AVc";
     Data data = null;
     Date thisDateCon;
     Date myTime = java.util.Calendar.getInstance().getTime();
     private FragmentContactBinding binding;
+    public static final String PERMISSION_STRING = Manifest.permission.SEND_SMS;
+    private final int PERMISSION_REQUEST_CODE = 1118;
+    private final int NOTIFICATION_ID = 1118;
+    private final String IFICATION_ID = "1118";
     public static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("dd.MM.yyyy, HH:mm");
 
 
@@ -96,40 +102,41 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
 
     @Override
     public void setWorker(String name, String phoneNumber, String dateCon, String getTextTemplate) {
-
-        data = new Data.Builder()
-                .putString("Name", name)
-                .putString("Phone", phoneNumber)
-                .putString("TextTemplate", getTextTemplate)
-                .build();
-        Log.i(TAG, String.valueOf(data));
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy");
-        try {
-            thisDateCon = format.parse(dateCon);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long seconds = (thisDateCon.getTime() - myTime.getTime()) / (100);
-        Log.i(TAG, "----------------------------------------------------------");
-        Log.i(TAG, "Дата поздравления: " + String.valueOf(thisDateCon));
-        Log.i(TAG, "Текущая дата: " + String.valueOf(myTime));
-        Log.i(TAG, "----------------------------------------------------------");
-        Log.i(TAG, "Разница между датами в секундах: " + String.valueOf(seconds));
-        Log.i(TAG, "----------------------------------------------------------");
-
-      //  this.interactor = Applications.INSTANCE.getHelperInteractors().getSendIteractor();
-        /*this.interactor.smsSend(Applications.INSTANCE,inputData.getString("Phone"),inputData.getString("TextTemplate"));*/
-       // this.interactor.smsSend(getActivity(), phoneNumber, getTextTemplate);
-       // this.interactor.smsSend(Applications.INSTANCE, "89041100764", "getTextTemplate");
-
-        if (this.binding.favorite.isChecked()) {
-            myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 525600, TimeUnit.MINUTES)
-                    .setInputData(data)
-                    .setInitialDelay(10, TimeUnit.SECONDS)
+        if (ContextCompat.checkSelfPermission(getActivity(), PERMISSION_STRING)
+                == PackageManager.PERMISSION_GRANTED) {
+            data = new Data.Builder()
+                    .putString("Name", name)
+                    .putString("Phone", phoneNumber)
+                    .putString("TextTemplate", getTextTemplate)
                     .build();
-            WorkManager.getInstance(Applications.INSTANCE).enqueue(myWorkRequest);
-            Log.i(TAG, "Задача создана");
+            Log.i(TAG, String.valueOf(data));
+            SimpleDateFormat format = new SimpleDateFormat();
+            format.applyPattern("dd.MM.yyyy");
+            try {
+                thisDateCon = format.parse(dateCon);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long seconds = (thisDateCon.getTime() - myTime.getTime()) / (100);
+            Log.i(TAG, "----------------------------------------------------------");
+            Log.i(TAG, "Дата поздравления: " + String.valueOf(thisDateCon));
+            Log.i(TAG, "Текущая дата: " + String.valueOf(myTime));
+            Log.i(TAG, "----------------------------------------------------------");
+            Log.i(TAG, "Разница между датами в секундах: " + String.valueOf(seconds));
+            Log.i(TAG, "----------------------------------------------------------");
+
+            if (this.binding.favorite.isChecked()) {
+                myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 525600, TimeUnit.MINUTES)
+                        .setInputData(data)
+                        .setInitialDelay(10, TimeUnit.SECONDS)
+                        .build();
+                WorkManager.getInstance(Applications.INSTANCE).enqueue(myWorkRequest);
+                Log.i(TAG, "Задача создана");
+            }
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_CODE);
+            Log.i(TAG, "разрешение на СМС: -");
         }
     }
 }

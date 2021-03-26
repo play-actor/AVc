@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
-                    android:hint="Подсказка"
+                    android:hint="Дата"
                     android:inputType="none"
                     android:onClick="@{() -> presenter.setDate2()}"
                     android:text="@{contactDetail.date_congratulationsString}" />

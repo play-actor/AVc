@@ -27,6 +27,7 @@ import com.hfad.avc.ui.database.AppDatabase;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     @Inject
     NavigatorHolder navigatorHolder;
     SendIteractor interactor;
+    private boolean send = false;
 
     private Navigator navigator = new SupportAppNavigator(this, R.id.root) {
         @Override
@@ -65,27 +67,20 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Applications.INSTANCE.getContactCompanent().inject(this);
         setContentView(R.layout.activity_main);
         navigator.applyCommands(new Command[]{new Replace(new Screens.MainScreen())});
-
-        myClickListener = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    // положительная кнопка
-                    case Dialog.BUTTON_POSITIVE:
-
-                        break;
-                    // негативная кнопка
-                    case Dialog.BUTTON_NEGATIVE:
-
-                        break;
-                    // нейтральная кнопка
-                    case Dialog.BUTTON_NEUTRAL:
-
-                        break;
-                }
+        myClickListener = (dialog, which) -> {
+            switch (which) {
+                // положительная кнопка
+                case Dialog.BUTTON_POSITIVE:
+                    break;
+                // негативная кнопка
+                case Dialog.BUTTON_NEGATIVE:
+                    break;
+                // нейтральная кнопка
+                case Dialog.BUTTON_NEUTRAL:
+                    break;
             }
         };
         Intent intent = getIntent();
@@ -94,10 +89,20 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
         //Log.i(TAG, name+" "+phone);
         this.interactor = Applications.INSTANCE.getHelperInteractors().getSendIteractor();
         if (TextTemplate != null & phone != null) {
+            this.send = true;
+            //String s =
             this.interactor.smsSend(this, phone, TextTemplate);
-           // finish();
+
+        //finish();
+        try {
+            TimeUnit.SECONDS.sleep(5);
             finishAndRemoveTask();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Log.d(TAG, String.valueOf(e));
         }
+        }
+        //}
     }
 
     @Override
@@ -169,8 +174,10 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
                                            String permissions[], int[] grantResults) {
 
         Log.i(TAG, "onRequestPermissionsResult - начало");
+        Log.i(TAG, String.valueOf(requestCode));
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE: {//Проверить, совпадает ли код с тем, который был использован в методе requestPermissions().
+                Log.i(TAG, String.valueOf(grantResults.length));
                 if (grantResults.length > 0 //Если запрос был отменен, результаты не возвращаются.
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.i(TAG, "onRequestPermissionsResult: +");
@@ -202,4 +209,39 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     public List<WeakReference<Fragment>> getChain() {
         return chain;
     }
+
+/*    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: +");
+//        finishAndRemoveTask();
+//        Log.i(TAG, "finishAndRemoveTask: +");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        Log.i(TAG, "onResume: +");
+//        Intent intent = getIntent();
+//        String TextTemplate = intent.getStringExtra("TextTemplate");
+//        String phone = intent.getStringExtra("Phone");
+//        //Log.i(TAG, name+" "+phone);
+//        this.interactor = Applications.INSTANCE.getHelperInteractors().getSendIteractor();
+//        if (TextTemplate != null & phone != null) {
+//            String s = this.interactor.smsSend(this, phone, TextTemplate);
+        //finish();
+            *//*try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Log.d(TAG, String.valueOf(e));
+            }*//*
+        if (this.send) {
+            this.send = false;
+//            finishAndRemoveTask();
+        }
+//        }
+        Log.i(TAG, "onResume: +");
+    }*/
 }

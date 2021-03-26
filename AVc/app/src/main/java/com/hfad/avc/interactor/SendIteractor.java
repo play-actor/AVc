@@ -10,6 +10,7 @@ public class SendIteractor {
     @SuppressLint("IntentReset")
     public void smsSend(Context context, String toSms, String messageText) {
         Intent sms;
+        //String Acsept ="";
         try {
             sms = new Intent(Intent.ACTION_SEND, Uri.parse("smsto:" + art(toSms)));
             sms.setType("text/plain");
@@ -19,6 +20,7 @@ public class SendIteractor {
             ex.printStackTrace();
             Log.i("AVc", String.valueOf(ex));
         }
+        //return Acsept;
     }
 
     public String art(String st) {
