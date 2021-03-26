@@ -91,12 +91,13 @@
                     android:text="@{contactDetail.date_congratulationsString}" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <TextView
                 android:id="@+id/ID_in_base"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="8dp"
                 android:text="@{contactDetail.id}"
                 android:textColor="@android:color/darker_gray"
@@ -110,25 +111,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="146dp"
-                android:layout_marginTop="104dp"
+                android:layout_marginTop="80dp"
                 android:layout_marginEnd="146dp"
                 android:checked="@={contactDetail.favorite}"
                 android:text="@string/favorite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ID_in_base" />
+                app:layout_constraintTop_toBottomOf="@+id/ID_in_base" />
+
+
+            <Button
+                android:id="@+id/timeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.setNewTime()}"
+                android:text="Изменить время"
+
+                app:layout_constraintHorizontal_bias="0.067"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/date_congratulations" />
+
+            <Button
+                android:id="@+id/dateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:onClick="@{() -> presenter.setNewDate()}"
+                android:text="Изменить дату"
+
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/timeButton"
+                app:layout_constraintTop_toBottomOf="@+id/date_congratulations" />
 
             <Button
                 android:id="@+id/buttonAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="140dp"
-                android:layout_marginTop="108dp"
-                android:text="Сохранить"
+                android:layout_marginTop="50dp"
                 android:onClick="@{() -> presenter.updateDBonContact()}"
+                android:text="Сохранить"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/favorite" />
+                app:layout_constraintTop_toBottomOf="@+id/favorite" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

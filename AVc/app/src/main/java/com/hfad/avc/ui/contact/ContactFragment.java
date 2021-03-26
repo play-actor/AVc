@@ -1,12 +1,17 @@
 package com.hfad.avc.ui.contact;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -19,8 +24,6 @@ import com.hfad.avc.Applications;
 import com.hfad.avc.R;
 import com.hfad.avc.databinding.FragmentContactBinding;
 import com.hfad.avc.ui.SendWorker;
-import com.hfad.avc.ui.calendar.Calendar;
-import com.hfad.avc.ui.calendar.CalendarType;
 import com.hfad.avc.ui.database.Contact;
 
 import org.joda.time.format.DateTimeFormat;
@@ -50,6 +53,15 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
     private final int NOTIFICATION_ID = 1118;
     private final String IFICATION_ID = "1118";
     public static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("dd.MM.yyyy, HH:mm");
+    SimpleDateFormat format = new SimpleDateFormat();
+
+
+
+    /**Новое*/
+    java.util.Calendar dateAndTime= java.util.Calendar.getInstance();
+
+
+
 
 
     public static ContactFragment newInstance(Integer congratulations) {
@@ -65,26 +77,23 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
         return new ContactPresenter(getArguments());
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false);
+
         return binding.getRoot();
     }
 
-    @Override
+/*    @Override
     public void openCalendar() {
         new Calendar(
                 CalendarType.SINGLE,
                 requireActivity().getSupportFragmentManager(),
                 selection -> {
+                    Log.i(TAG, "Дата поздравления long: " + String.valueOf(selection));
                     this.presenter.setDate(((Long) selection));
 //                    ((TextInputLayout) this.binding.getRoot().findViewById(R.id.date_congratulations))
 //                            .getEditText()
@@ -92,7 +101,7 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
                 },
                 "времени поздравления"
         );
-    }
+    }*/
 
     @Override
     public void setData(Contact contact) {
@@ -110,9 +119,9 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
                     .putString("TextTemplate", getTextTemplate)
                     .build();
             Log.i(TAG, String.valueOf(data));
-            SimpleDateFormat format = new SimpleDateFormat();
-            format.applyPattern("dd.MM.yyyy");
+
             try {
+                format.applyPattern("dd.MM.yyyy, HH:mm");
                 thisDateCon = format.parse(dateCon);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -139,4 +148,52 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
             Log.i(TAG, "разрешение на СМС: -");
         }
     }
+
+    /**Новое*/
+    // отображаем диалоговое окно для выбора даты
+    @Override
+    public void setDateNew() {
+        new DatePickerDialog(getActivity(), d,
+                dateAndTime.get(java.util.Calendar.YEAR),
+                dateAndTime.get(java.util.Calendar.MONTH),
+                dateAndTime.get(java.util.Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    // отображаем диалоговое окно для выбора времени
+    @Override
+    public void setTimeNew() {
+        new TimePickerDialog(getActivity(), t,
+                dateAndTime.get(java.util.Calendar.HOUR_OF_DAY),
+                dateAndTime.get(java.util.Calendar.MINUTE), true)
+                .show();
+    }
+    private void setInitialDateTime() {
+        String d =DateUtils.formatDateTime(getActivity(),
+                dateAndTime.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+                        | DateUtils.FORMAT_SHOW_TIME
+        );
+            this.presenter.setDate(dateAndTime.getTimeInMillis());
+
+    }
+
+    // установка обработчика выбора времени
+    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            dateAndTime.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay);
+            dateAndTime.set(java.util.Calendar.MINUTE, minute);
+            setInitialDateTime();
+        }
+    };
+
+    // установка обработчика выбора даты
+    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateAndTime.set(java.util.Calendar.YEAR, year);
+            dateAndTime.set(java.util.Calendar.MONTH, monthOfYear);
+            dateAndTime.set(java.util.Calendar.DAY_OF_MONTH, dayOfMonth);
+            setInitialDateTime();
+        }
+    };
 }
