@@ -49,11 +49,6 @@ public class NameListFragment extends BaseFragment implements INameListViewModel
             recyclerView.setAdapter(adapter);
             adapter.setClick(id -> {
                 this.presenter.openContact(id);
-//                ContactFragment contactFragment = ContactFragment.newInstance(id);
-//                getFragmentManager().beginTransaction()
-//                        .replace(R.id.root, contactFragment, "ContactFragment")
-//                        .addToBackStack("ContactFragment")
-//                        .commit();
             });
         }
     }
