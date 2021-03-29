@@ -33,7 +33,7 @@ public class TemplatePresenter extends MvpPresenter<ITemplateViewModel> {
     }
 
     public void back() {
-        this.router.exit();
+        this.router.backTo(new Screens.MainScreen());
     }
 }
 

@@ -61,6 +61,6 @@ public class NameListFragment extends BaseFragment implements INameListViewModel
     @Override
     public boolean onBackPressed() {
         this.presenter.back();
-        return false;
+        return true;
     }
 }

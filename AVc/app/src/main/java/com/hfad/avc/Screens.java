@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.hfad.avc.ui.contact.ContactFragment;
-import com.hfad.avc.ui.database.Db_Fragment;
 import com.hfad.avc.ui.main_fragment.MainFragment;
+import com.hfad.avc.ui.namelist.NameListFragment;
 import com.hfad.avc.ui.template.TemplateFragment;
 import com.hfad.avc.ui.templateWrite.TemplateWriteFragment;
 
@@ -35,11 +35,10 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            Db_Fragment fragment = new Db_Fragment();
+            NameListFragment fragment = new NameListFragment();
             return fragment;
         }
     }
-
 
     public static final class TemplateScreen extends SupportAppScreen {
 
@@ -51,8 +50,6 @@ public class Screens {
             return fragment;
         }
     }
-
-
 
     public static final class ConatctScreen extends SupportAppScreen {
 

@@ -20,7 +20,7 @@
 
     <string name="search">Поиск</string>
     <string name="content_description_search">Что найти?</string>
-    <string name="more">Больше</string>
+    <string name="more">Первоначальная загрузка БД</string>
     <string name="content_description_more">что-то</string>
     <string name="work_bace">Работа с базой данных</string>
     <string name="safe_text">Мои шаблоны</string>

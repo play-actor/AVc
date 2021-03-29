@@ -22,8 +22,9 @@
         android:contentDescription="@string/content_description_search"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/more"
+        android:id="@+id/baseLoad"
         android:title="@string/more"
-        android:contentDescription="@string/content_description_more"
+        android:onClick="onClickLoad"
+        android:contentDescription="@string/content_description_search"
         app:showAsAction="never"/>
 </menu>

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:id="@+id/mainFragApp"
     tools:context="com.hfad.avc.ui.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -22,7 +22,8 @@ import io.reactivex.rxjava3.core.Observable;
 public class LoadDBInteractor {
 
     private static final String TAG = "AVc";
-    @Inject AppDatabase db;
+    @Inject
+    AppDatabase db;
     private ArrayList<Contact> contactsList;
     private ArrayList<Template> templateList;
     private List<Contact> contacts;
@@ -42,7 +43,6 @@ public class LoadDBInteractor {
     }
 
 
-
     public ArrayList<Contact> getContactList(int position) {
         switch (position) {
             case 0:
@@ -59,7 +59,7 @@ public class LoadDBInteractor {
         switch (position) {
             case 0:
                 return this.templateList = (ArrayList<Template>) db.templateDao().getAll();
-            }
+        }
         return this.templateList = (ArrayList<Template>) db.templateDao().getAll();
     }
 
@@ -111,12 +111,13 @@ public class LoadDBInteractor {
         return Observable.just(Collections.emptyList());
         //нужен лишь на тот случай если у нас лист пустой (его и возвращаем)
     }
+
     public void AddTemplateFirstInsert(String[] countries) {
         for (int i = 0; i < 13; i++) {
             this.template.setId(String.valueOf(i));
             template.setTextTemplate(countries[i]);
             template.setFavorite(false);
-            Log.i(TAG, "В БД загружается поздавление: "+String.valueOf(template));
+            Log.i(TAG, "В БД загружается поздавление: " + String.valueOf(template));
             db.templateDao().insert(template);
 
         }

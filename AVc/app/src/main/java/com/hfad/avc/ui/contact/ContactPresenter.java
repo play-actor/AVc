@@ -53,9 +53,6 @@ public class ContactPresenter extends MvpPresenter<IContactViewModel> {
         }
     }
 
-    public void setDate2() {
-        //getViewState().openCalendar();
-    }
 
     public void setNewDate() {
         getViewState().setDateNew();

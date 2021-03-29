@@ -1,10 +1,9 @@
 package com.hfad.avc.ui;
 
-import android.app.Dialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,15 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.hfad.avc.Applications;
 import com.hfad.avc.BackButtonListener;
 import com.hfad.avc.ChainHolder;
 import com.hfad.avc.R;
 import com.hfad.avc.Screens;
+import com.hfad.avc.interactor.LoadDBInteractor;
 import com.hfad.avc.interactor.SendIteractor;
 import com.hfad.avc.ui.database.AppDatabase;
 
@@ -31,6 +34,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     @Inject
     NavigatorHolder navigatorHolder;
     SendIteractor interactor;
+    LoadDBInteractor interactorLoad;
     private boolean send = false;
 
     private Navigator navigator = new SupportAppNavigator(this, R.id.root) {
@@ -63,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     private final int PERMISSION_REQUEST_CODE = 666;
     DialogInterface.OnClickListener myClickListener;
 
+    public static final String PERMISSION_STRING = android.Manifest.permission.READ_CONTACTS;
+    SharedPreferences sPref;
+    String FIRST_LOAD_OK = "";
+
+    public CoordinatorLayout coordLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
         Applications.INSTANCE.getContactCompanent().inject(this);
         setContentView(R.layout.activity_main);
         navigator.applyCommands(new Command[]{new Replace(new Screens.MainScreen())});
-        myClickListener = (dialog, which) -> {
+/*        myClickListener = (dialog, which) -> {
             switch (which) {
                 // положительная кнопка
                 case Dialog.BUTTON_POSITIVE:
@@ -82,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
                 case Dialog.BUTTON_NEUTRAL:
                     break;
             }
-        };
+        };*/
         Intent intent = getIntent();
         String TextTemplate = intent.getStringExtra("TextTemplate");
         String phone = intent.getStringExtra("Phone");
@@ -168,12 +179,16 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     public void onClickTemplateBase(MenuItem item) {
         this.navigator.applyCommands(new Command[]{new Forward(new Screens.TemplateScreen())});
     }
+    public void onClickLoad(MenuItem item) {
+     onLoadBD();
+
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
 
-        Log.i(TAG, "onRequestPermissionsResult - начало");
+        /*Log.i(TAG, "onRequestPermissionsResult - начало");
         Log.i(TAG, String.valueOf(requestCode));
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE: {//Проверить, совпадает ли код с тем, который был использован в методе requestPermissions().
@@ -202,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
                     notificationManager.notify(NOTIFICATION_ID, builder.build());
                 }
             }
-        }
+        }*/
     }
 
     @Override
@@ -244,4 +259,49 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
 //        }
         Log.i(TAG, "onResume: +");
     }*/
+public void onLoadBD() {
+
+    // Log.i(TAG, String.valueOf(countries));
+    Log.i(TAG, "onLoadBD: +");
+    if (ContextCompat.checkSelfPermission(this, PERMISSION_STRING)
+            == PackageManager.PERMISSION_GRANTED) {
+        Log.i(TAG, "разрешение: +");
+        forLoadBD();
+        sPref = this.getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putBoolean(FIRST_LOAD_OK, true).apply();
+
+        Log.i(TAG, "FIRST_LOAD_OK = " + sPref.getBoolean(FIRST_LOAD_OK, false));
+    } else {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CODE);
+        Log.i(TAG, "разрешение: -");
+    }
+
+
+}
+
+    private void forLoadBD() {
+    //this.view = ;
+        coordLayout = findViewById(R.id.mainFragApp);
+        String[] countries = getResources().getStringArray(R.array.congratulations_templates);
+        //Log.i(TAG, "Загрузка countries"+countries);
+        this.interactorLoad = Applications.INSTANCE.getHelperInteractors().getContactInteractor();
+        sPref = this.getSharedPreferences("MyPref", MODE_PRIVATE);
+        Log.i(TAG, "FIRST_LOAD_OK: " + sPref.getBoolean(FIRST_LOAD_OK, false));
+        if (!sPref.getBoolean(FIRST_LOAD_OK, false)) {
+            Snackbar.make(coordLayout, "Загрузка БД", BaseTransientBottomBar.LENGTH_LONG).show();
+            this.interactorLoad.AddTemplateFirstInsert(countries);
+            this.interactorLoad.loadDB()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(list -> Snackbar.make(coordLayout, "Загрузка БД завершена "
+                                    + list.size(), BaseTransientBottomBar.LENGTH_LONG).show(),
+                            Throwable::printStackTrace);
+            Log.i(TAG, "Загрузка БД: +");
+        } else {
+            Log.i(TAG, "Загрузка была произведена ранее? " + sPref.getBoolean(FIRST_LOAD_OK, false));
+            Snackbar.make(coordLayout, "Загрузка была произведена ранее", BaseTransientBottomBar.LENGTH_LONG).show();
+        }
+    }
 }

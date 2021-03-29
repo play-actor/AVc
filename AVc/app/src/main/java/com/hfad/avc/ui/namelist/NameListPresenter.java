@@ -34,6 +34,6 @@ public class NameListPresenter extends MvpPresenter<INameListViewModel> {
     }
 
     public void back() {
-        this.router.exit();
+        this.router.backTo(new Screens.MainScreen());
     }
 }

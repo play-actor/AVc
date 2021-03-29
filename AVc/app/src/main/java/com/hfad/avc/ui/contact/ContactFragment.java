@@ -56,12 +56,10 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
     SimpleDateFormat format = new SimpleDateFormat();
 
 
-
-    /**Новое*/
-    java.util.Calendar dateAndTime= java.util.Calendar.getInstance();
-
-
-
+    /**
+     * Новое
+     */
+    java.util.Calendar dateAndTime = java.util.Calendar.getInstance();
 
 
     public static ContactFragment newInstance(Integer congratulations) {
@@ -78,7 +76,6 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,21 +84,6 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
         return binding.getRoot();
     }
 
-/*    @Override
-    public void openCalendar() {
-        new Calendar(
-                CalendarType.SINGLE,
-                requireActivity().getSupportFragmentManager(),
-                selection -> {
-                    Log.i(TAG, "Дата поздравления long: " + String.valueOf(selection));
-                    this.presenter.setDate(((Long) selection));
-//                    ((TextInputLayout) this.binding.getRoot().findViewById(R.id.date_congratulations))
-//                            .getEditText()
-//                            .setText(FORMATTER.print(((Long) selection)));
-                },
-                "времени поздравления"
-        );
-    }*/
 
     @Override
     public void setData(Contact contact) {
@@ -127,6 +109,11 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
                 e.printStackTrace();
             }
             long seconds = (thisDateCon.getTime() - myTime.getTime()) / (100);
+            Log.i(TAG, "Разница между датами в секундах: " + String.valueOf(seconds));
+            if (seconds < 0) {
+                seconds += 31536000;
+            }
+            ;
             Log.i(TAG, "----------------------------------------------------------");
             Log.i(TAG, "Дата поздравления: " + String.valueOf(thisDateCon));
             Log.i(TAG, "Текущая дата: " + String.valueOf(myTime));
@@ -135,7 +122,7 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
             Log.i(TAG, "----------------------------------------------------------");
 
             if (this.binding.favorite.isChecked()) {
-                myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 525600, TimeUnit.MINUTES)
+                myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 31536000, TimeUnit.MINUTES)
                         .setInputData(data)
                         .setInitialDelay(10, TimeUnit.SECONDS)
                         .build();
@@ -149,7 +136,9 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
         }
     }
 
-    /**Новое*/
+    /**
+     * Новое
+     */
     // отображаем диалоговое окно для выбора даты
     @Override
     public void setDateNew() {
@@ -168,18 +157,19 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
                 dateAndTime.get(java.util.Calendar.MINUTE), true)
                 .show();
     }
+
     private void setInitialDateTime() {
-        String d =DateUtils.formatDateTime(getActivity(),
+        String d = DateUtils.formatDateTime(getActivity(),
                 dateAndTime.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                         | DateUtils.FORMAT_SHOW_TIME
         );
-            this.presenter.setDate(dateAndTime.getTimeInMillis());
+        this.presenter.setDate(dateAndTime.getTimeInMillis());
 
     }
 
     // установка обработчика выбора времени
-    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
+    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             dateAndTime.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay);
             dateAndTime.set(java.util.Calendar.MINUTE, minute);
@@ -188,7 +178,7 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
     };
 
     // установка обработчика выбора даты
-    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             dateAndTime.set(java.util.Calendar.YEAR, year);
             dateAndTime.set(java.util.Calendar.MONTH, monthOfYear);

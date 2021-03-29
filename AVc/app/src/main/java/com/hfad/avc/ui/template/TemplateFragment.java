@@ -54,10 +54,9 @@ public class TemplateFragment extends BaseFragment implements ITemplateViewModel
         }
     }
 
-
     @Override
     public boolean onBackPressed() {
-       // this.presenter.back();
-        return false;
+        this.presenter.back();
+        return true;
     }
 }
