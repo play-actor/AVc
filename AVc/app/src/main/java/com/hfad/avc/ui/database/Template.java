@@ -21,8 +21,6 @@ public class Template extends BaseObservable {
     public Template() {
     }
 
-    ;
-
     @Bindable
     public String getId() {
         return id;

@@ -1,6 +1,8 @@
 package com.hfad.avc.ui.template;
 
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +38,25 @@ public class TemplateFragment extends BaseFragment implements ITemplateViewModel
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_template, container, false);
         this.recyclerView = inflate.findViewById(R.id.TemplateOnList);
+        recyclerView.addItemDecoration(new SpaceItemDecoration());
         return inflate;
+    }
+
+    private class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+            // вычисление пикселей по DP. Здесь отступ будет *8dp*
+            int margin = 88;
+            int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, view.getResources().getDisplayMetrics());
+            if(parent.getChildLayoutPosition(view) == (parent.getAdapter().getItemCount()-1)){
+                outRect.top = 0;
+                outRect.bottom = space;
+            }
+        }
     }
 
     @Override

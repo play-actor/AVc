@@ -1,6 +1,7 @@
 package com.hfad.avc.ui.templateWrite;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemp
     private String TAG = "AVc";
     private FragmentTemplateWriteBinding binding;
 
+
     public static TemplateWriteFragment newInstance(Integer templateFavorite) {
         TemplateWriteFragment templateWriteFragment = new TemplateWriteFragment();
         Bundle args = new Bundle();
@@ -46,7 +48,21 @@ public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemp
 
     @Override
     public void setData(Template template) {
+        if (template == null) {
+            Template templateNew = new Template();
+            templateNew.setTextTemplate("С праздником!");
+            Log.i("AVc", "template = " + templateNew.getTextTemplate());
+            template = templateNew;
+        }
         this.binding.setTemplateDetail(template);
+        /*EditText timeView = (EditText) findViewById(R.id.name_template);*/
+
         this.binding.setPresenterTemplate(this.presenter);
+    }
+
+    @Override
+    public void onInsertDB(String newId) {
+        String s = this.binding.getTemplateDetail().getTextTemplate();
+        this.presenter.setNewTemplateText(s);
     }
 }

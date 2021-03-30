@@ -1,7 +1,6 @@
 package com.hfad.avc.ui;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -46,13 +45,11 @@ import ru.terrakok.cicerone.commands.Replace;
 public class MainActivity extends AppCompatActivity implements ChainHolder {
 
     private List<WeakReference<Fragment>> chain = new ArrayList<>();
-
     @Inject
     NavigatorHolder navigatorHolder;
     SendIteractor interactor;
     LoadDBInteractor interactorLoad;
-    private boolean send = false;
-
+    //private boolean send = false;
     private Navigator navigator = new SupportAppNavigator(this, R.id.root) {
         @Override
         public void applyCommands(Command[] commands) {
@@ -60,15 +57,12 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
             getSupportFragmentManager().executePendingTransactions();
         }
     };
-
     public AppDatabase db = Applications.getInstance().getDatabase();
-    //private Router router;
     String TAG = "AVc";
     private final int NOTIFICATION_ID = 423;
     private final String IFICATION_ID = "423";
     private final int PERMISSION_REQUEST_CODE = 666;
-    DialogInterface.OnClickListener myClickListener;
-
+    String textTemplate,phone;
     public static final String PERMISSION_STRING = android.Manifest.permission.READ_CONTACTS;
     SharedPreferences sPref;
     String FIRST_LOAD_OK = "";
@@ -81,39 +75,21 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
         Applications.INSTANCE.getContactCompanent().inject(this);
         setContentView(R.layout.activity_main);
         navigator.applyCommands(new Command[]{new Replace(new Screens.MainScreen())});
-/*        myClickListener = (dialog, which) -> {
-            switch (which) {
-                // положительная кнопка
-                case Dialog.BUTTON_POSITIVE:
-                    break;
-                // негативная кнопка
-                case Dialog.BUTTON_NEGATIVE:
-                    break;
-                // нейтральная кнопка
-                case Dialog.BUTTON_NEUTRAL:
-                    break;
-            }
-        };*/
         Intent intent = getIntent();
-        String TextTemplate = intent.getStringExtra("TextTemplate");
-        String phone = intent.getStringExtra("Phone");
-        //Log.i(TAG, name+" "+phone);
+        this.textTemplate = intent.getStringExtra("TextTemplate");
+        this.phone = intent.getStringExtra("Phone");
         this.interactor = Applications.INSTANCE.getHelperInteractors().getSendIteractor();
-        if (TextTemplate != null & phone != null) {
-            this.send = true;
-            //String s =
-            this.interactor.smsSend(this, phone, TextTemplate);
-
-        //finish();
-        try {
-            TimeUnit.SECONDS.sleep(5);
-            finishAndRemoveTask();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Log.d(TAG, String.valueOf(e));
+        if (textTemplate != null & phone != null) {
+            //this.send = true;
+            this.interactor.smsSend(this, phone, textTemplate);
+            try {
+                TimeUnit.SECONDS.sleep(5);
+                finishAndRemoveTask();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Log.d(TAG, String.valueOf(e));
+            }
         }
-        }
-        //}
     }
 
     @Override
@@ -141,83 +117,19 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     }
 
     public void OnMenuItemClickListener(View view) {
-/*        Contact сontact = new Contact();
-        сontact.setId("665");
-        сontact.setName("Satana");
-        сontact.setPhone("4545");
-        сontact.setFavorite(true);
-        db.contactDao().insert(сontact);
-        Snackbar.make(view, сontact.toString(), BaseTransientBottomBar.LENGTH_LONG).show();
-        Log.i(TAG, "OnMenuItemClickListener: " + сontact.toString());*/
-/*        Template template = new Template();
-        template.setId("0");
-        template.setTextTemplate("С днем рождения! Пусть жизнь будет беспрерывным потоком счастливых дней и прекрасных мгновений. Желаю назад оглядываться только лишь с хорошими воспоминаниями, вперёд смотреть с уверенностью в собственных силах и доброй надеждой, а в настоящем всегда оставаться замечательным человеком с любящим сердцем и открытой душой!");
-        template.setFavorite(true);
-        db.templateDao().insert(template);
-        Snackbar.make(view, template.toString(), BaseTransientBottomBar.LENGTH_LONG).show();*/
-        //Log.i(TAG, "OnMenuItemClickListener: " + template.toString());
-  /*      ReminderFragment reminderFragment = new ReminderFragment();
-                getSupportFragmentManager().beginTransaction()
-                .replace(R.id.root, reminderFragment, "nameListFragment")
-                .addToBackStack("nameListFragment")
-                .commit();*/
-/*        CustomDialogFragment dialog = new CustomDialogFragment();
-        dialog.show(getSupportFragmentManager(), "custom");*/
-
+        this.navigator.applyCommands(new Command[]{new Forward(new Screens.TemplateWriteScreen(-1))});
     }
-
 
     public void onClickWorkBase(MenuItem item) {
         this.navigator.applyCommands(new Command[]{new Forward(new Screens.DbScreen())});
-//        Db_Fragment db_fragment = new Db_Fragment();
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.root, db_fragment, "db_fragment")
-//                .addToBackStack("db_fragment")
-//                .commit();
     }
 
     public void onClickTemplateBase(MenuItem item) {
         this.navigator.applyCommands(new Command[]{new Forward(new Screens.TemplateScreen())});
     }
+
     public void onClickLoad(MenuItem item) {
-     onLoadBD();
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-
-        /*Log.i(TAG, "onRequestPermissionsResult - начало");
-        Log.i(TAG, String.valueOf(requestCode));
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE: {//Проверить, совпадает ли код с тем, который был использован в методе requestPermissions().
-                Log.i(TAG, String.valueOf(grantResults.length));
-                if (grantResults.length > 0 //Если запрос был отменен, результаты не возвращаются.
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.i(TAG, "onRequestPermissionsResult: +");
-                    //делаем повторну загрузку
-                } else {
-                    NotificationChannel channel = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        channel = new NotificationChannel(IFICATION_ID, "asff", NotificationManager.IMPORTANCE_HIGH);
-                        NotificationManagerCompat.from(this).createNotificationChannel(channel);
-                    }
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, IFICATION_ID)
-                            //Эти настройки необходимы для всех уведомлений.
-                            .setSmallIcon(android.R.drawable.ic_menu_compass)
-                            .setContentTitle("Приложение " + getResources().getString(R.string.app_name) + " не получило разрешений")
-                            //А эти — только для всплывающих уведомлений.
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setVibrate(new long[]{1000, 1000})
-                            .setAutoCancel(true);//Благодаря этой строке уведомление исчезает после щелчка.
-                    //Выдача уведомления
-                    NotificationManager notificationManager =
-                            (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.notify(NOTIFICATION_ID, builder.build());
-                }
-            }
-        }*/
+        onLoadBD();
     }
 
     @Override
@@ -225,67 +137,23 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
         return chain;
     }
 
-/*    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult: +");
-//        finishAndRemoveTask();
-//        Log.i(TAG, "finishAndRemoveTask: +");
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        Log.i(TAG, "onResume: +");
-//        Intent intent = getIntent();
-//        String TextTemplate = intent.getStringExtra("TextTemplate");
-//        String phone = intent.getStringExtra("Phone");
-//        //Log.i(TAG, name+" "+phone);
-//        this.interactor = Applications.INSTANCE.getHelperInteractors().getSendIteractor();
-//        if (TextTemplate != null & phone != null) {
-//            String s = this.interactor.smsSend(this, phone, TextTemplate);
-        //finish();
-            *//*try {
-                TimeUnit.SECONDS.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                Log.d(TAG, String.valueOf(e));
-            }*//*
-        if (this.send) {
-            this.send = false;
-//            finishAndRemoveTask();
+    public void onLoadBD() {
+        if (ContextCompat.checkSelfPermission(this, PERMISSION_STRING)
+                == PackageManager.PERMISSION_GRANTED) {
+            forLoadBD();
+            sPref = this.getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putBoolean(FIRST_LOAD_OK, true).apply();
+            Log.i(TAG, "FIRST_LOAD_OK = " + sPref.getBoolean(FIRST_LOAD_OK, false));
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CODE);
         }
-//        }
-        Log.i(TAG, "onResume: +");
-    }*/
-public void onLoadBD() {
-
-    // Log.i(TAG, String.valueOf(countries));
-    Log.i(TAG, "onLoadBD: +");
-    if (ContextCompat.checkSelfPermission(this, PERMISSION_STRING)
-            == PackageManager.PERMISSION_GRANTED) {
-        Log.i(TAG, "разрешение: +");
-        forLoadBD();
-        sPref = this.getSharedPreferences("MyPref", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putBoolean(FIRST_LOAD_OK, true).apply();
-
-        Log.i(TAG, "FIRST_LOAD_OK = " + sPref.getBoolean(FIRST_LOAD_OK, false));
-    } else {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.READ_CONTACTS}, PERMISSION_REQUEST_CODE);
-        Log.i(TAG, "разрешение: -");
     }
-
-
-}
 
     private void forLoadBD() {
-    //this.view = ;
         coordLayout = findViewById(R.id.mainFragApp);
         String[] countries = getResources().getStringArray(R.array.congratulations_templates);
-        //Log.i(TAG, "Загрузка countries"+countries);
         this.interactorLoad = Applications.INSTANCE.getHelperInteractors().getContactInteractor();
         sPref = this.getSharedPreferences("MyPref", MODE_PRIVATE);
         Log.i(TAG, "FIRST_LOAD_OK: " + sPref.getBoolean(FIRST_LOAD_OK, false));
@@ -298,9 +166,7 @@ public void onLoadBD() {
                     .subscribe(list -> Snackbar.make(coordLayout, "Загрузка БД завершена "
                                     + list.size(), BaseTransientBottomBar.LENGTH_LONG).show(),
                             Throwable::printStackTrace);
-            Log.i(TAG, "Загрузка БД: +");
         } else {
-            Log.i(TAG, "Загрузка была произведена ранее? " + sPref.getBoolean(FIRST_LOAD_OK, false));
             Snackbar.make(coordLayout, "Загрузка была произведена ранее", BaseTransientBottomBar.LENGTH_LONG).show();
         }
     }

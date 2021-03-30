@@ -29,7 +29,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/name_template"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -40,7 +40,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Текст"
+                tools:text="Текст поздравления"
                 tools:textColor="@android:color/darker_gray"
                 android:autofillHints="Text" />
 
@@ -55,33 +55,22 @@
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/name_template"
                 tools:text="ID" />
 
-            <CheckBox
-                android:id="@+id/favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="104dp"
-                android:layout_marginEnd="146dp"
-                android:checked="@={templateDetail.favorite}"
-                android:text="@string/favorite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ID_in_base" />
 
             <Button
                 android:id="@+id/buttonAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="88dp"
+                android:layout_marginTop="66dp"
+                android:layout_marginBottom="85dp"
                 android:onClick="@{() -> presenterTemplate.updateTemplate()}"
                 android:text="Сохранить"
-                app:layout_constraintStart_toEndOf="@+id/favorite"
-                app:layout_constraintTop_toBottomOf="@+id/ID_in_base" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name_template" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,6 +15,9 @@ public interface TemplateDao {
     @Query("SELECT * FROM template WHERE id = :id")
     Template getById(String id);
 
+    @Query("SELECT COUNT(*) FROM template")
+    String getSize();
+
     @Insert
     void insert(Template template);
 

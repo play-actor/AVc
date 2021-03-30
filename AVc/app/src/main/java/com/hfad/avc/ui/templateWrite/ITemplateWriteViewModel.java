@@ -12,4 +12,7 @@ public interface ITemplateWriteViewModel extends MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void setData(Template template);
+
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void onInsertDB(String newId);
 }
