@@ -33,6 +33,8 @@
     <string name="no">Нет</string>
     <string name="cancel">Отмена</string>
     <string name="saved">Сохранено</string>
+    <string name="template_text_string">Шаблоны</string>
+    <string name="contact_text_string">Контакты</string>
 
     <string-array name="congratulations_templates">
         <item>Поздравляю с днем рождения! Пусть жизнь дарит тебе побольше ярких моментов и сбудутся все твои самые смелые и заветные желания! Желаю, чтобы в твоем доме всегда царили счастье и понимание. И пусть тебя окружают только искренние, верные, надежные друзья и добрые люди!</item>

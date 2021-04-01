@@ -15,4 +15,7 @@ public interface ITemplateWriteViewModel extends MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void onInsertDB(String newId);
+
+    @StateStrategyType(OneExecutionStateStrategy.class)
+    void sendOkUsers();
 }

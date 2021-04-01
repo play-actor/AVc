@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        coordLayout = findViewById(R.id.mainFragApp);
         Applications.INSTANCE.getContactCompanent().inject(this);
         setContentView(R.layout.activity_main);
         navigator.applyCommands(new Command[]{new Replace(new Screens.MainScreen())});
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
             //this.send = true;
             this.interactor.smsSend(this, phone, textTemplate);
             try {
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(10);
                 finishAndRemoveTask();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements ChainHolder {
     }
 
     private void forLoadBD() {
-        coordLayout = findViewById(R.id.mainFragApp);
+        //coordLayout = findViewById(R.id.mainFragApp);
         String[] countries = getResources().getStringArray(R.array.congratulations_templates);
         this.interactorLoad = Applications.INSTANCE.getHelperInteractors().getContactInteractor();
         sPref = this.getSharedPreferences("MyPref", MODE_PRIVATE);

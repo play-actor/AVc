@@ -30,6 +30,7 @@ public class TemplateFragment extends BaseFragment implements ITemplateViewModel
     private ArrayList<Template> templatesList = new ArrayList<>();
     int id = 0;
 
+
     @ProvidePresenter
     TemplatePresenter ProvidePresenterTemplatePresenter() {
         return new TemplatePresenter();
@@ -52,7 +53,7 @@ public class TemplateFragment extends BaseFragment implements ITemplateViewModel
             // вычисление пикселей по DP. Здесь отступ будет *8dp*
             int margin = 88;
             int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, view.getResources().getDisplayMetrics());
-            if(parent.getChildLayoutPosition(view) == (parent.getAdapter().getItemCount()-1)){
+            if (parent.getChildLayoutPosition(view) == (parent.getAdapter().getItemCount() - 1)) {
                 outRect.top = 0;
                 outRect.bottom = space;
             }
@@ -76,4 +77,7 @@ public class TemplateFragment extends BaseFragment implements ITemplateViewModel
         this.presenter.back();
         return true;
     }
+
+
+
 }

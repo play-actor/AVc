@@ -23,7 +23,8 @@
         android:visibility="visible"
         app:backgroundTint="@color/colorPrimary"
         app:menu="@menu/menu_main"
-        app:navigationIcon="@drawable/ic_menu_24dp" />
+        
+        />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

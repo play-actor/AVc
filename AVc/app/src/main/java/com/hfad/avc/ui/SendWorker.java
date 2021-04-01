@@ -70,7 +70,7 @@ public class SendWorker extends Worker {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, IFICATION_ID)
                 //Эти настройки необходимы для всех уведомлений.
                 .setSmallIcon(android.R.drawable.ic_menu_compass)
-                .setContentTitle("Поздравить абонента: " + inputData.getString("Name") + "?")
+                .setContentTitle("Предлогаю поздравить абонента: " + inputData.getString("Name"))
                 //А эти — только для всплывающих уведомлений.
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setVibrate(new long[]{1000, 1000})

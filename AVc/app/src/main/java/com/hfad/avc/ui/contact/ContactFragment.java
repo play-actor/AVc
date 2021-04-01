@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -20,6 +21,8 @@ import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.hfad.avc.Applications;
 import com.hfad.avc.R;
 import com.hfad.avc.databinding.FragmentContactBinding;
@@ -54,12 +57,14 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
     private final String IFICATION_ID = "1118";
     public static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("dd.MM.yyyy, HH:mm");
     SimpleDateFormat format = new SimpleDateFormat();
+    public CoordinatorLayout coordLayout;
 
 
     /**
      * Новое
      */
     java.util.Calendar dateAndTime = java.util.Calendar.getInstance();
+
 
 
     public static ContactFragment newInstance(Integer congratulations) {
@@ -93,6 +98,7 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
 
     @Override
     public void setWorker(String name, String phoneNumber, String dateCon, String getTextTemplate) {
+
         if (ContextCompat.checkSelfPermission(getActivity(), PERMISSION_STRING)
                 == PackageManager.PERMISSION_GRANTED) {
             data = new Data.Builder()
@@ -128,12 +134,15 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
                         .build();
                 WorkManager.getInstance(Applications.INSTANCE).enqueue(myWorkRequest);
                 Log.i(TAG, "Задача создана");
+                coordLayout = getActivity().findViewById(R.id.mainFragApp);
+                Snackbar.make(coordLayout, "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show();
             }
         } else {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_CODE);
             Log.i(TAG, "разрешение на СМС: -");
         }
+
     }
 
     /**

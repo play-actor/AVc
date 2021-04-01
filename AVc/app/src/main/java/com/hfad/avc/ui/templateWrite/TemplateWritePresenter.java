@@ -1,7 +1,6 @@
 package com.hfad.avc.ui.templateWrite;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.hfad.avc.Applications;
 import com.hfad.avc.ui.database.AppDatabase;
@@ -23,7 +22,13 @@ public class TemplateWritePresenter extends MvpPresenter<ITemplateWriteViewModel
         this.templateId = String.valueOf(bundle.getInt("template_Id", -1));
         this.localId = bundle.getInt("template_Id", -1);
         this.db = Applications.getInstance().getDatabase();
-        this.template = db.templateDao().getById(templateId);
+        if (this.localId != -1) {
+            this.template = db.templateDao().getById(String.valueOf(this.localId));
+        }
+        if (this.template == null) {
+            this.template = new Template();
+            this.template.setId(db.templateDao().getSize());
+        }
         getViewState().setData(template);
     }
 
@@ -35,15 +40,8 @@ public class TemplateWritePresenter extends MvpPresenter<ITemplateWriteViewModel
         if (this.localId > 0) {
             this.db.templateDao().update(this.template);
         } else {
-            this.newId = db.templateDao().getSize();
-            getViewState().onInsertDB(newId);
-            Log.i("AVc", "updateTemplate текст = {" + newTemplateText + "}");
-            Log.i("AVc", "updateTemplate ID = {" + newId + "}");
-            Template template = new Template();
-            template.setId(newId);
-            template.setTextTemplate(newTemplateText);
-            template.setFavorite(false);
             db.templateDao().insert(template);
         }
+        getViewState().sendOkUsers();
     }
 }

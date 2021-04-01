@@ -24,7 +24,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/name"
@@ -121,7 +122,7 @@
 
 
             <Button
-                android:id="@+id/timeButton"
+                android:id="@+id/dateButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.setNewTime()}"
@@ -134,7 +135,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/date_congratulations" />
 
             <Button
-                android:id="@+id/dateButton"
+                android:id="@+id/timeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -142,7 +143,7 @@
                 android:text="Изменить дату"
 
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/timeButton"
+                app:layout_constraintStart_toEndOf="@+id/dateButton"
                 app:layout_constraintTop_toBottomOf="@+id/date_congratulations" />
 
             <Button
@@ -156,6 +157,5 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/favorite" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

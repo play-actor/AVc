@@ -48,6 +48,7 @@ public class ContactPresenter extends MvpPresenter<IContactViewModel> {
         if (this.contact.getDate_congratulationsString() != null & this.contact.getFavorite()) {
             this.db.contactDao().update(this.contact);
             getViewState().setWorker(this.contact.getName(), this.contact.getPhone(), this.contact.getDate_congratulationsString(), this.template.getTextTemplate());
+
         } else {
             Log.i("AVc", "not yet");
         }

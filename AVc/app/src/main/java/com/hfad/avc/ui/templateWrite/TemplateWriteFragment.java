@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.hfad.avc.R;
 import com.hfad.avc.databinding.FragmentTemplateWriteBinding;
 import com.hfad.avc.ui.database.Template;
@@ -24,6 +27,7 @@ public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemp
 
     private String TAG = "AVc";
     private FragmentTemplateWriteBinding binding;
+    public CoordinatorLayout coordLayout;
 
 
     public static TemplateWriteFragment newInstance(Integer templateFavorite) {
@@ -65,4 +69,11 @@ public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemp
         String s = this.binding.getTemplateDetail().getTextTemplate();
         this.presenter.setNewTemplateText(s);
     }
+
+    @Override
+    public void sendOkUsers() {
+        coordLayout = getActivity().findViewById(R.id.mainFragApp);
+        Snackbar.make(coordLayout, "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show();
+    }
+
 }
