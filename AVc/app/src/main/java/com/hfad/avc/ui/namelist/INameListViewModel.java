@@ -11,5 +11,5 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface INameListViewModel extends MvpView {
 
-    void setData(ArrayList<Contact> contactsList);
+    void setData(ArrayList<Contact> contactsList, int typesort);
 }

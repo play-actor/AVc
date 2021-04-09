@@ -23,7 +23,8 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         SectionsPagerAdapter2 pagerAdapter =
                 new SectionsPagerAdapter2(
-                        Applications.INSTANCE,this
+                        Applications.INSTANCE,
+                        this
                 );
         ViewPager2 pager = view.findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);

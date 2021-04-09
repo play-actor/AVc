@@ -1,7 +1,6 @@
 package com.hfad.avc;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.room.Room;
 
@@ -35,7 +34,7 @@ public class Applications extends Application {
         this.component = DaggerContactCompanent.create();
         super.onCreate();
         initCicerone();
-        Log.i(TAG, "Applications: ok");
+        //Log.i(TAG, "Applications: ok");
     }
 
     private void initCicerone() {

@@ -2,17 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AllNameList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/AllNameList"
     tools:context="com.hfad.avc.ui.main_fragment.AllCongratulationsFragment">
 
-
-
-
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_favorites"
+        android:id="@+id/list_favorites_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -22,6 +18,5 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="5"
         tools:listitem="@layout/list_item" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

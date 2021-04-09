@@ -3,6 +3,7 @@ package com.hfad.avc.interactor;
 import com.hfad.avc.HelperModule;
 import com.hfad.avc.dagger.module.NavigationModule;
 import com.hfad.avc.ui.MainActivity;
+import com.hfad.avc.ui.MainActivityPresenter;
 import com.hfad.avc.ui.template.TemplatePresenter;
 import com.hfad.avc.ui.namelist.NameListPresenter;
 
@@ -22,4 +23,5 @@ public interface ContactCompanent {
 
     void inject(TemplatePresenter loadDBInteractor);
 
+    void inject(MainActivityPresenter loadDBInteractor);
 }

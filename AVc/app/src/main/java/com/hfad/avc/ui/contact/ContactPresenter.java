@@ -25,7 +25,7 @@ public class ContactPresenter extends MvpPresenter<IContactViewModel> {
     private Template template;
     private String contactId;
     TextView currentDateTime;
-    Calendar dateAndTime=Calendar.getInstance();
+    Calendar dateAndTime = Calendar.getInstance();
 
 
     public ContactPresenter(Bundle bundle) {
@@ -48,9 +48,9 @@ public class ContactPresenter extends MvpPresenter<IContactViewModel> {
         if (this.contact.getDate_congratulationsString() != null & this.contact.getFavorite()) {
             this.db.contactDao().update(this.contact);
             getViewState().setWorker(this.contact.getName(), this.contact.getPhone(), this.contact.getDate_congratulationsString(), this.template.getTextTemplate());
-
-        } else {
-            Log.i("AVc", "not yet");
+            Log.i("AVc", "Установлено время поздравления: " + this.contact.getDate_congratulations());
+        } else if (this.contact.getDate_congratulationsString() != null & !this.contact.getFavorite()) {
+            this.db.contactDao().update(this.contact);
         }
     }
 
@@ -58,6 +58,7 @@ public class ContactPresenter extends MvpPresenter<IContactViewModel> {
     public void setNewDate() {
         getViewState().setDateNew();
     }
+
     public void setNewTime() {
         getViewState().setTimeNew();
     }

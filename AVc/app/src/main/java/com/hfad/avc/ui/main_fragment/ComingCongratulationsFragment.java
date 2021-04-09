@@ -1,16 +1,20 @@
 package com.hfad.avc.ui.main_fragment;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.hfad.avc.R;
 import com.hfad.avc.ui.contact.ContactFragment;
 import com.hfad.avc.ui.database.AppDatabase;
 import com.hfad.avc.ui.database.Contact;
 import com.hfad.avc.ui.namelist.ListAdapter;
+
 import java.util.ArrayList;
+
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -23,7 +27,7 @@ public class ComingCongratulationsFragment extends MvpAppCompatFragment implemen
     private String TAG = "AVc";
     public AppDatabase db;
     private RecyclerView recyclerView;
-    private ArrayList<Contact> contactsList = new ArrayList<>();
+    private ArrayList<Contact> contactsListcom = new ArrayList<>();
 
     @ProvidePresenter
     ComingCongratulationsPresenter ProvidePresenterComingCongratulationsPresenter() {
@@ -40,9 +44,9 @@ public class ComingCongratulationsFragment extends MvpAppCompatFragment implemen
 
     @Override
     public void setData(ArrayList<Contact> listContactsList) {
-        this.contactsList = listContactsList;
+        this.contactsListcom = listContactsList;
         // создаем адаптер
-        ListAdapter adapter = new ListAdapter(contactsList);
+        ListAdapter adapter = new ListAdapter(contactsListcom);
         // устанавливаем для списка адаптер
         recyclerView.setAdapter(adapter);
         adapter.setClick(id -> {

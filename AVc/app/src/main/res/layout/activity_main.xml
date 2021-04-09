@@ -22,9 +22,7 @@
         android:layout_gravity="bottom"
         android:visibility="visible"
         app:backgroundTint="@color/colorPrimary"
-        app:menu="@menu/menu_main"
-        
-        />
+        app:menu="@menu/menu_main"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,7 +35,7 @@
         app:srcCompat="@drawable/ic_add_24dp" />
 
 <!--    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+        android:id="@+id/bottomAppBar"
         android:layout_gravity="bottom"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_width="match_parent"

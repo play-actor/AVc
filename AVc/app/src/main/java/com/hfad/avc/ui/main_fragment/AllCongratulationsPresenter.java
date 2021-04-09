@@ -9,15 +9,15 @@ import moxy.MvpPresenter;
 @InjectViewState
 public class AllCongratulationsPresenter extends MvpPresenter<IAllCongratulationsViewModel> {
 
-    private final LoadDBInteractor interactor;
+    private final LoadDBInteractor interactor1;
 
     public AllCongratulationsPresenter() {
-        this.interactor = Applications.INSTANCE.getHelperInteractors().getContactInteractor();
+        this.interactor1 = Applications.INSTANCE.getHelperInteractors().getContactInteractor();
     }
 
     @Override
     public void attachView(IAllCongratulationsViewModel view) {
         super.attachView(view);
-        getViewState().setData(this.interactor.getContactList(1));
+        getViewState().setData(this.interactor1.getContactList(1));
     }
 }

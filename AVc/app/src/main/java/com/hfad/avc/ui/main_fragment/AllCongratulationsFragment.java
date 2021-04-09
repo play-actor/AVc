@@ -22,12 +22,12 @@ import moxy.presenter.ProvidePresenter;
 public class AllCongratulationsFragment extends MvpAppCompatFragment implements IAllCongratulationsViewModel {
 
     @InjectPresenter
-    AllCongratulationsPresenter presenter;
+    AllCongratulationsPresenter presenter1;
 
     private String TAG = "AVc";
     public AppDatabase db;
-    private RecyclerView recyclerView;
-    private ArrayList<Contact> contactsList = new ArrayList<>();
+    private RecyclerView recyclerView1;
+    private ArrayList<Contact> contactsList1 = new ArrayList<>();
 
     @ProvidePresenter
     AllCongratulationsPresenter ProvidePresenterAllCongratulationsPresenter() {
@@ -37,19 +37,19 @@ public class AllCongratulationsFragment extends MvpAppCompatFragment implements 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_all_congratulations, container, false);
-        this.recyclerView = inflate.findViewById(R.id.list_favorites);
-        return inflate;
+        View inflate1 = inflater.inflate(R.layout.fragment_all_congratulations, container, false);
+        this.recyclerView1 = inflate1.findViewById(R.id.list_favorites_all);
+        return inflate1;
     }
 
     @Override
-    public void setData(ArrayList<Contact> listContactsList) {
-        this.contactsList = listContactsList;
+    public void setData(ArrayList<Contact> listContactsList1) {
+        this.contactsList1 = listContactsList1;
         // создаем адаптер
-        ListAdapter adapter = new ListAdapter(contactsList);
+        ListAdapter adapter1 = new ListAdapter(contactsList1);
         // устанавливаем для списка адаптер
-        recyclerView.setAdapter(adapter);
-        adapter.setClick(id -> {
+        recyclerView1.setAdapter(adapter1);
+        adapter1.setClick(id -> {
             ContactFragment contactFragment = ContactFragment.newInstance(id);
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.root, contactFragment, "ContactFragment")

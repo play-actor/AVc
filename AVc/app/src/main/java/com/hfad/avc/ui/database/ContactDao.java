@@ -13,10 +13,10 @@ public interface ContactDao {
     @Query("SELECT * FROM contact")
     List<Contact> getAll();
 
-    @Query("SELECT * FROM contact WHERE (favorite != 0)")
-    List<Contact> getComingCongratulations();
+    @Query("SELECT * FROM contact WHERE (favorite != 0)  & (date_congratulations <= :secondsDeadLine)")
+    List<Contact> getComingCongratulations(long secondsDeadLine);
 
-    @Query("SELECT * FROM contact WHERE favorite != 0")
+    @Query("SELECT * FROM contact WHERE (favorite != 0)")
     List<Contact> getAllCongratulations();
 
     @Query("SELECT * FROM contact WHERE id = :id")

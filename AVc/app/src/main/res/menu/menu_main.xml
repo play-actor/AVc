@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--<item
-        android:id="@+id/search"
-        android:icon="@drawable/ic_search_24dp"
-        android:title="@string/search"
-        android:contentDescription="@string/content_description_search"
-        app:showAsAction="ifRoom"/>-->
     <item
         android:id="@+id/work_bace"
         android:contentDescription="@string/content_description_search"
         android:icon="@drawable/ic_baseline_wysiwyg_24"
         android:onClick="onClickWorkBase"
         android:title="@string/work_bace"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always" />
+
     <item
-        android:id="@+id/template_text"
-        android:icon="@drawable/ic_baseline_star_24"
-        android:title="@string/safe_text"
-        android:onClick="onClickTemplateBase"
+        android:id="@+id/template_text1"
         android:contentDescription="@string/content_description_search"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/ic_baseline_star_24"
+        android:onClick="onClickTemplateBase"
+        android:title="@string/safe_text"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/baseLoad"
         android:title="@string/more"

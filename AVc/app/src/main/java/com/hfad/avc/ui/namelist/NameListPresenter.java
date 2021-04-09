@@ -26,7 +26,7 @@ public class NameListPresenter extends MvpPresenter<INameListViewModel> {
     @Override
     public void attachView(INameListViewModel view) {
         super.attachView(view);
-        getViewState().setData(this.interactor.getContactList(0));
+        reMove(0);
     }
 
     public void openContact(int id) {
@@ -36,4 +36,9 @@ public class NameListPresenter extends MvpPresenter<INameListViewModel> {
     public void back() {
         this.router.backTo(new Screens.MainScreen());
     }
+
+    public void reMove(int typesort) {
+        getViewState().setData(this.interactor.getContactList(0), typesort);
+    }
+
 }
