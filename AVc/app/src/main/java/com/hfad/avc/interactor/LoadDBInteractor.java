@@ -4,9 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.util.Log;
+
+import androidx.work.Data;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.hfad.avc.Applications;
+import com.hfad.avc.ui.SendWorker;
 import com.hfad.avc.ui.database.AppDatabase;
 import com.hfad.avc.ui.database.Contact;
 import com.hfad.avc.ui.database.Template;
@@ -18,15 +22,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public class LoadDBInteractor {
-
+    private PeriodicWorkRequest myWorkRequest;
     private static final String TAG = "AVc";
     @Inject
     AppDatabase db;
@@ -71,10 +77,25 @@ public class LoadDBInteractor {
         switch (position) {
             case 0:
                 return this.templateList = (ArrayList<Template>) db.templateDao().getAll();
+            case 1:
+                return this.templateList = (ArrayList<Template>) db.templateDao().getFavorite();
         }
         return this.templateList = (ArrayList<Template>) db.templateDao().getAll();
     }
 
+    @SuppressWarnings({"unused", "RedundantSuppression"})
+    public Completable myWork(Data data, long seconds) {
+        return Observable.just(data)
+                .flatMapCompletable(data1 -> {
+                    this.myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 31536000, TimeUnit.MINUTES)
+                            .setInputData(data1)
+                            .setInitialDelay(10, TimeUnit.SECONDS)
+                            .build();
+                    WorkManager.getInstance(Applications.INSTANCE).enqueue(this.myWorkRequest);
+
+                    return Completable.complete();
+                });
+    }
 
     public Observable<List<Contact>> loadDB(String[] countries) {
         Cursor cursor = context.getContentResolver().query(
@@ -120,7 +141,6 @@ public class LoadDBInteractor {
                                     pCur.close();
                                     db.contactDao().update(contactsListForUpdate.get(i));
                                     contacts.add(contactsListForUpdate.get(i));
-                                    Log.i(TAG, "+++ " + i + " " + String.valueOf(contactsListForUpdate.get(i)));
                                     break;
                                 }
                             }

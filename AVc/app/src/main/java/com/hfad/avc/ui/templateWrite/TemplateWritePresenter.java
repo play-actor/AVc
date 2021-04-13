@@ -1,6 +1,7 @@
 package com.hfad.avc.ui.templateWrite;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.hfad.avc.Applications;
 import com.hfad.avc.ui.database.AppDatabase;
@@ -29,11 +30,17 @@ public class TemplateWritePresenter extends MvpPresenter<ITemplateWriteViewModel
             this.template = new Template();
             this.template.setId(db.templateDao().getSize());
         }
+        if (this.template == null) {
+            Template templateNew = new Template();
+            templateNew.setTextTemplate("С праздником!");
+            Log.i("AVc", "template = " + templateNew.getTextTemplate());
+            this.template = templateNew;
+        }
         getViewState().setData(template);
     }
 
-    public void setNewTemplateText(String s) {
-        newTemplateText = s;
+    public void setNewTemplateText() {
+        newTemplateText = this.template.getTextTemplate();
     }
 
     public void updateTemplate() {

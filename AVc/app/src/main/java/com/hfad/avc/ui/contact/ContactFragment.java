@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,13 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.hfad.avc.Applications;
 import com.hfad.avc.R;
 import com.hfad.avc.databinding.FragmentContactBinding;
-import com.hfad.avc.ui.SendWorker;
+import com.hfad.avc.interactor.LoadDBInteractor;
 import com.hfad.avc.ui.database.Contact;
 
 import org.joda.time.format.DateTimeFormat;
@@ -34,8 +34,9 @@ import org.joda.time.format.DateTimeFormatter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -43,20 +44,19 @@ import moxy.presenter.ProvidePresenter;
 
 public class ContactFragment extends MvpAppCompatFragment implements IContactViewModel {
     PeriodicWorkRequest myWorkRequest;
+    LoadDBInteractor interactorLoad;
     @InjectPresenter
     ContactPresenter presenter;
     private String TAG = "AVc";
     Data data = null;
     Date thisDateCon;
+    public CoordinatorLayout coordLayout;
     Date myTime = java.util.Calendar.getInstance().getTime();
     private FragmentContactBinding binding;
     public static final String PERMISSION_STRING = Manifest.permission.SEND_SMS;
     private final int PERMISSION_REQUEST_CODE = 1118;
-    private final int NOTIFICATION_ID = 1118;
-    private final String IFICATION_ID = "1118";
     public static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("dd.MM.yyyy, HH:mm");
     SimpleDateFormat format = new SimpleDateFormat();
-    public CoordinatorLayout coordLayout;
     java.util.Calendar dateAndTime = java.util.Calendar.getInstance();
 
     public static ContactFragment newInstance(Integer congratulations) {
@@ -88,6 +88,7 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
 
     @Override
     public void setWorker(String name, String phoneNumber, String dateCon, String getTextTemplate) {
+        this.interactorLoad = Applications.INSTANCE.getHelperInteractors().getContactInteractor();
         if (ContextCompat.checkSelfPermission(getActivity(), PERMISSION_STRING)
                 == PackageManager.PERMISSION_GRANTED) {
             data = new Data.Builder()
@@ -101,24 +102,32 @@ public class ContactFragment extends MvpAppCompatFragment implements IContactVie
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            long seconds = (thisDateCon.getTime() - myTime.getTime()) / (100);
+            long seconds = ((thisDateCon.getTime() - myTime.getTime())/(1000));
             if (seconds < 0) {
                 seconds += 31536000;
             }
             if (this.binding.favorite.isChecked()) {
-                myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 31536000, TimeUnit.MINUTES)
-                        .setInputData(data)
-                        .setInitialDelay(10, TimeUnit.SECONDS)
-                        .build();
-                WorkManager.getInstance(Applications.INSTANCE).enqueue(myWorkRequest);
+                this.interactorLoad.myWork(data,seconds)
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> Log.i(TAG, "Worker создан"),
+                                throwable -> Log.e(TAG, "Worker error", (Throwable) throwable)
+                        );
+/*                    myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 31536000, TimeUnit.MINUTES)
+                            .setInputData(data)
+                            .setInitialDelay(10, TimeUnit.SECONDS)
+                            .build();
+                WorkManager.getInstance(Applications.INSTANCE).enqueue(myWorkRequest);*/
                 coordLayout = getActivity().findViewById(R.id.mainFragApp);
-                Snackbar.make(coordLayout, "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show();
+                 Snackbar.make(coordLayout, "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show();
             }
         } else {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_CODE);
         }
     }
+
 
     // отображаем диалоговое окно для выбора даты
     @Override

@@ -17,10 +17,4 @@
         android:title="@string/safe_text"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/baseLoad"
-        android:title="@string/more"
-        android:onClick="onClickLoad"
-        android:contentDescription="@string/content_description_search"
-        app:showAsAction="never"/>
 </menu>

@@ -13,7 +13,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {HelperModule.class, NavigationModule.class})
-public interface ContactCompanent {
+public interface ContactComponent {
 
     void inject(LoadDBInteractor loadDBInteractor);
 

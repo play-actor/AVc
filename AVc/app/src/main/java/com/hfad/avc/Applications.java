@@ -4,10 +4,9 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import com.hfad.avc.interactor.ContactCompanent;
-import com.hfad.avc.interactor.DaggerContactCompanent;
+import com.hfad.avc.interactor.ContactComponent;
+import com.hfad.avc.interactor.DaggerContactComponent;
 import com.hfad.avc.interactor.LoadDBInteractor;
-import com.hfad.avc.interactor.SendIteractor;
 import com.hfad.avc.ui.database.AppDatabase;
 
 import ru.terrakok.cicerone.Cicerone;
@@ -21,7 +20,7 @@ public class Applications extends Application {
     private HelperInteractors helperInteractors = null;
     public String TAG = "AVc";
     private Cicerone<Router> cicerone;
-    ContactCompanent component;
+    ContactComponent component;
 
 
     @Override
@@ -31,10 +30,9 @@ public class Applications extends Application {
         database = Room.databaseBuilder(this, AppDatabase.class, "database")
                 .allowMainThreadQueries()
                 .build();
-        this.component = DaggerContactCompanent.create();
+        this.component = DaggerContactComponent.create();
         super.onCreate();
         initCicerone();
-        //Log.i(TAG, "Applications: ok");
     }
 
     private void initCicerone() {
@@ -65,12 +63,9 @@ public class Applications extends Application {
         public LoadDBInteractor getContactInteractor() {
             return new LoadDBInteractor();
         }
-        public SendIteractor getSendIteractor() {
-            return new SendIteractor();
-        }
     }
 
-    public ContactCompanent getContactCompanent() {
+    public ContactComponent getContactCompanent() {
         return component;
     }
 }

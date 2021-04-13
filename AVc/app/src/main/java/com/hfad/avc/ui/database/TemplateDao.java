@@ -12,6 +12,9 @@ public interface TemplateDao {
     @Query("SELECT * FROM template")
     List<Template> getAll();
 
+    @Query("SELECT * FROM template WHERE (favorite != 0)")
+    List<Template> getFavorite();
+
     @Query("SELECT * FROM template WHERE id = :id")
     Template getById(String id);
 

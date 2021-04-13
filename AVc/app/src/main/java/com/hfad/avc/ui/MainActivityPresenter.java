@@ -29,4 +29,10 @@ public class MainActivityPresenter extends MvpPresenter<IMainActivityViewModel> 
     public void openTemplateList() {
         this.router.navigateTo(new Screens.TemplateScreen());
     }
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        this.router.navigateTo(new Screens.MainScreen());
+    }
 }
+
