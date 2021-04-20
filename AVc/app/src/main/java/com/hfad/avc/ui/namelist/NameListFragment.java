@@ -65,7 +65,7 @@ public class NameListFragment extends BaseFragment implements INameListViewModel
 
         searchMenuItem = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) searchMenuItem.getActionView();
-        //mSearchView.setQueryHint(HtmlCompat.fromHtml("i"+"Поиск"+"/i",HtmlCompat.FROM_HTML_MODE_LEGACY));
+
         SearchManager searchmanager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
         this.mSearchView.setSearchableInfo(searchmanager.getSearchableInfo(requireActivity().getComponentName()));
         this.mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
