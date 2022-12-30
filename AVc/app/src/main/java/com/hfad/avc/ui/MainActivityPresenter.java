@@ -12,27 +12,29 @@ import ru.terrakok.cicerone.Router;
 @InjectViewState
 public class MainActivityPresenter extends MvpPresenter<IMainActivityViewModel> {
 
-    @Inject
-    Router router;
+   @Inject
+   Router router;
 
-    public MainActivityPresenter() {
-        Applications.INSTANCE.getContactCompanent().inject(this);
-    }
+   public MainActivityPresenter() {
+      Applications.INSTANCE.getContactCompanent().inject(this);
+   }
 
-    public void openTemplateWrite() {
-        this.router.navigateTo(new Screens.TemplateWriteScreen(-1));
-    }
-    public void openDbContact() {
-        this.router.navigateTo(new Screens.DbScreen());
-    }
+   public void openTemplateWrite() {
+      this.router.navigateTo(new Screens.TemplateWriteScreen(-1));
+   }
 
-    public void openTemplateList() {
-        this.router.navigateTo(new Screens.TemplateScreen());
-    }
-    @Override
-    protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
-        this.router.navigateTo(new Screens.MainScreen());
-    }
+   public void openDbContact() {
+      this.router.navigateTo(new Screens.DbScreen());
+   }
+
+   public void openTemplateList() {
+      this.router.navigateTo(new Screens.TemplateScreen());
+   }
+
+   @Override
+   protected void onFirstViewAttach() {
+      super.onFirstViewAttach();
+      this.router.navigateTo(new Screens.MainScreen());
+   }
 }
 

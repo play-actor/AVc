@@ -10,12 +10,12 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface ITemplateWriteViewModel extends MvpView {
 
-    @StateStrategyType(OneExecutionStateStrategy.class)
-    void setData(Template template);
+   @StateStrategyType(OneExecutionStateStrategy.class)
+   void setData(Template template);
 
-    @StateStrategyType(OneExecutionStateStrategy.class)
-    void onInsertDB(String newId);
+   @StateStrategyType(OneExecutionStateStrategy.class)
+   void onInsertDB(String newId);
 
-    @StateStrategyType(OneExecutionStateStrategy.class)
-    void sendOkUsers();
+   @StateStrategyType(OneExecutionStateStrategy.class)
+   void sendOkUsers();
 }

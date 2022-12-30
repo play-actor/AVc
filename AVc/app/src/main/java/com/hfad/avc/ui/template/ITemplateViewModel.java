@@ -11,5 +11,5 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface ITemplateViewModel extends MvpView {
 
-    void setData(ArrayList<Template> templatesList);
+   void setData(ArrayList<Template> templatesList);
 }

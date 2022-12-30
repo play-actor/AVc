@@ -11,21 +11,21 @@ import ru.terrakok.cicerone.Router;
 @Module
 public class NavigationModule {
 
-    private Cicerone<Router> cicerone;
+   private Cicerone<Router> cicerone;
 
-    public NavigationModule() {
-        cicerone = Cicerone.create();
-    }
+   public NavigationModule() {
+      cicerone = Cicerone.create();
+   }
 
-    @Provides
-    @Singleton
-    Router provideRouter() {
-        return cicerone.getRouter();
-    }
+   @Provides
+   @Singleton
+   Router provideRouter() {
+      return cicerone.getRouter();
+   }
 
-    @Provides
-    @Singleton
-    NavigatorHolder provideNavigatorHolder() {
-        return cicerone.getNavigatorHolder();
-    }
+   @Provides
+   @Singleton
+   NavigatorHolder provideNavigatorHolder() {
+      return cicerone.getNavigatorHolder();
+   }
 }

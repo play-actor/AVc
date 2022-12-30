@@ -17,26 +17,26 @@ import com.hfad.avc.R;
 
 public class MainFragment extends Fragment {
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        SectionsPagerAdapter2 pagerAdapter =
-                new SectionsPagerAdapter2(
-                        Applications.INSTANCE,
-                        this
-                );
-        ViewPager2 pager = view.findViewById(R.id.pager);
-        pager.setAdapter(pagerAdapter);
-        TabLayout tabLayout = view.findViewById(R.id.tabs);
-        new TabLayoutMediator(tabLayout, pager,
-                (tab, position) -> tab.setText(pagerAdapter.getPageTitle(position))
-        ).attach();
-        return view;
-    }
+   @Nullable
+   @Override
+   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+      View view = inflater.inflate(R.layout.fragment_main, container, false);
+      SectionsPagerAdapter2 pagerAdapter =
+            new SectionsPagerAdapter2(
+                  Applications.INSTANCE,
+                  this
+            );
+      ViewPager2 pager = view.findViewById(R.id.pager);
+      pager.setAdapter(pagerAdapter);
+      TabLayout tabLayout = view.findViewById(R.id.tabs);
+      new TabLayoutMediator(tabLayout, pager,
+            (tab, position) -> tab.setText(pagerAdapter.getPageTitle(position))
+      ).attach();
+      return view;
+   }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
+   @Override
+   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+      super.onViewCreated(view, savedInstanceState);
+   }
 }

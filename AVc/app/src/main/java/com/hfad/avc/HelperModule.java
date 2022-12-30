@@ -11,16 +11,16 @@ import dagger.Provides;
 
 @Module
 public class HelperModule {
-    AppDatabase database;
+   AppDatabase database;
 
-    @Provides
-    @Singleton
-    AppDatabase getDatabase() {
-        //Избавиться от контакста в виде INSTANCE
-        database = Room.databaseBuilder(Applications.INSTANCE, AppDatabase.class, "database")
-                .allowMainThreadQueries()
-                .build();
-        return database;
-    }
+   @Provides
+   @Singleton
+   AppDatabase getDatabase() {
+      //Избавиться от контакста в виде INSTANCE
+      database = Room.databaseBuilder(Applications.INSTANCE, AppDatabase.class, "database")
+            .allowMainThreadQueries()
+            .build();
+      return database;
+   }
 
 }

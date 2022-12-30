@@ -22,8 +22,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            MainFragment fragment = new MainFragment();
-            return fragment;
+           return new MainFragment();
         }
     }
 
@@ -35,8 +34,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            NameListFragment fragment = new NameListFragment();
-            return fragment;
+           return new NameListFragment();
         }
     }
 
@@ -46,8 +44,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            TemplateFragment fragment = new TemplateFragment();
-            return fragment;
+           return new TemplateFragment();
         }
     }
 

@@ -15,13 +15,13 @@ import dagger.Component;
 @Component(modules = {HelperModule.class, NavigationModule.class})
 public interface ContactComponent {
 
-    void inject(LoadDBInteractor loadDBInteractor);
+   void inject(LoadDBInteractor loadDBInteractor);
 
-    void inject(NameListPresenter loadDBInteractor);
+   void inject(NameListPresenter loadDBInteractor);
 
-    void inject(MainActivity loadDBInteractor);
+   void inject(MainActivity loadDBInteractor);
 
-    void inject(TemplatePresenter loadDBInteractor);
+   void inject(TemplatePresenter loadDBInteractor);
 
-    void inject(MainActivityPresenter loadDBInteractor);
+   void inject(MainActivityPresenter loadDBInteractor);
 }

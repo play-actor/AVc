@@ -11,5 +11,5 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface IAllCongratulationsViewModel extends MvpView {
 
-    void setData(ArrayList<Contact> contactsList);
+   void setData(ArrayList<Contact> contactsList);
 }

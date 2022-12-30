@@ -22,59 +22,58 @@ import moxy.presenter.ProvidePresenter;
 
 public class TemplateFragment extends BaseFragment implements ITemplateViewModel, BackButtonListener {
 
-    @InjectPresenter
-    TemplatePresenter presenter;
-    private String TAG = "AVc";
-    public AppDatabase db;
-    private RecyclerView recyclerView;
-    private ArrayList<Template> templatesList = new ArrayList<>();
-    int id = 0;
+   @InjectPresenter
+   TemplatePresenter presenter;
+   private String TAG = "AVc";
+   public AppDatabase db;
+   private RecyclerView recyclerView;
+   private ArrayList<Template> templatesList = new ArrayList<>();
+   int id = 0;
 
-    @ProvidePresenter
-    TemplatePresenter ProvidePresenterTemplatePresenter() {
-        return new TemplatePresenter();
-    }
+   @ProvidePresenter
+   TemplatePresenter ProvidePresenterTemplatePresenter() {
+      return new TemplatePresenter();
+   }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_template, container, false);
-        this.recyclerView = inflate.findViewById(R.id.TemplateOnList);
-        recyclerView.addItemDecoration(new SpaceItemDecoration());
-        return inflate;
-    }
+   @Override
+   public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                            Bundle savedInstanceState) {
+      View inflate = inflater.inflate(R.layout.fragment_template, container, false);
+      this.recyclerView = inflate.findViewById(R.id.TemplateOnList);
+      recyclerView.addItemDecoration(new SpaceItemDecoration());
+      return inflate;
+   }
 
-    private class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+   private class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int margin = 88;
-            int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, view.getResources().getDisplayMetrics());
-            if (parent.getChildLayoutPosition(view) == (parent.getAdapter().getItemCount() - 1)) {
-                outRect.top = 0;
-                outRect.bottom = space;
-            }
-        }
-    }
+      @Override
+      public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+         int margin = 88;
+         int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin, view.getResources().getDisplayMetrics());
+         if (parent.getChildLayoutPosition(view) == (parent.getAdapter().getItemCount() - 1)) {
+            outRect.top = 0;
+            outRect.bottom = space;
+         }
+      }
+   }
 
-    @Override
-    public void setData(ArrayList<Template> templateList) {
-        if (templateList != null) {
-            this.templatesList = templateList;
-            TemplateAdapter adapter = new TemplateAdapter(templatesList);
-            recyclerView.setAdapter(adapter);
-            adapter.setClick(id -> {
-                this.presenter.openTemplate(id);
-            });
-        }
-    }
+   @Override
+   public void setData(ArrayList<Template> templateList) {
+      if (templateList != null) {
+         this.templatesList = templateList;
+         TemplateAdapter adapter = new TemplateAdapter(templatesList);
+         recyclerView.setAdapter(adapter);
+         adapter.setClick(id -> {
+            this.presenter.openTemplate(id);
+         });
+      }
+   }
 
-    @Override
-    public boolean onBackPressed() {
-        this.presenter.back();
-        return true;
-    }
-
+   @Override
+   public boolean onBackPressed() {
+      this.presenter.back();
+      return true;
+   }
 
 
 }

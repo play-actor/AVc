@@ -20,37 +20,37 @@ import moxy.presenter.ProvidePresenter;
 
 public class TemplateWriteFragment extends MvpAppCompatFragment implements ITemplateWriteViewModel {
 
-    @InjectPresenter
-    TemplateWritePresenter presenter;
-    private String TAG = "AVc";
-    private FragmentTemplateWriteBinding binding;
+   @InjectPresenter
+   TemplateWritePresenter presenter;
+   private String TAG = "AVc";
+   private FragmentTemplateWriteBinding binding;
 
-    @ProvidePresenter
-    TemplateWritePresenter ProvidePresenterContactPresenter() {
-        return new TemplateWritePresenter(getArguments());
-    }
+   @ProvidePresenter
+   TemplateWritePresenter ProvidePresenterContactPresenter() {
+      return new TemplateWritePresenter(getArguments());
+   }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_template_write, container, false);
-        return binding.getRoot();
-    }
+   @Override
+   public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                            Bundle savedInstanceState) {
+      binding = DataBindingUtil.inflate(inflater, R.layout.fragment_template_write, container, false);
+      return binding.getRoot();
+   }
 
-    @Override
-    public void setData(Template template) {
-        this.binding.setTemplateDetail(template);
-        this.binding.setPresenterTemplate(this.presenter);
-    }
+   @Override
+   public void setData(Template template) {
+      this.binding.setTemplateDetail(template);
+      this.binding.setPresenterTemplate(this.presenter);
+   }
 
-    @Override
-    public void onInsertDB(String newId) {
-        this.presenter.setNewTemplateText();
-    }
+   @Override
+   public void onInsertDB(String newId) {
+      this.presenter.setNewTemplateText();
+   }
 
-    @Override
-    public void sendOkUsers() {
-          Snackbar.make(requireView(), "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show();
-    }
+   @Override
+   public void sendOkUsers() {
+      Snackbar.make(requireView(), "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show();
+   }
 
 }

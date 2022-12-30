@@ -15,57 +15,57 @@ import ru.terrakok.cicerone.Router;
 
 public class Applications extends Application {
 
-    public static Applications INSTANCE;
-    private AppDatabase database;
-    private HelperInteractors helperInteractors = null;
-    public String TAG = "AVc";
-    private Cicerone<Router> cicerone;
-    ContactComponent component;
+   public static Applications INSTANCE;
+   private AppDatabase database;
+   private HelperInteractors helperInteractors = null;
+   public String TAG = "AVc";
+   private Cicerone<Router> cicerone;
+   ContactComponent component;
 
 
-    @Override
-    public void onCreate() {
-        this.helperInteractors = new HelperInteractors();
-        INSTANCE = this;
-        database = Room.databaseBuilder(this, AppDatabase.class, "database")
-                .allowMainThreadQueries()
-                .build();
-        this.component = DaggerContactComponent.create();
-        super.onCreate();
-        initCicerone();
-    }
+   @Override
+   public void onCreate() {
+      this.helperInteractors = new HelperInteractors();
+      INSTANCE = this;
+      database = Room.databaseBuilder(this, AppDatabase.class, "database")
+            .allowMainThreadQueries()
+            .build();
+      this.component = DaggerContactComponent.create();
+      super.onCreate();
+      initCicerone();
+   }
 
-    private void initCicerone() {
-        cicerone = Cicerone.create();
-    }
+   private void initCicerone() {
+      cicerone = Cicerone.create();
+   }
 
-    public NavigatorHolder getNavigatorHolder() {
-        return cicerone.getNavigatorHolder();
-    }
+   public NavigatorHolder getNavigatorHolder() {
+      return cicerone.getNavigatorHolder();
+   }
 
-    public Router getRouter() {
-        return cicerone.getRouter();
-    }
+   public Router getRouter() {
+      return cicerone.getRouter();
+   }
 
-    public static Applications getInstance() {
-        return INSTANCE;
-    }
+   public static Applications getInstance() {
+      return INSTANCE;
+   }
 
-    public AppDatabase getDatabase() {
-        return database;
-    }
+   public AppDatabase getDatabase() {
+      return database;
+   }
 
-    public HelperInteractors getHelperInteractors() {
-        return helperInteractors;
-    }
+   public HelperInteractors getHelperInteractors() {
+      return helperInteractors;
+   }
 
-    public final class HelperInteractors {
-        public LoadDBInteractor getContactInteractor() {
-            return new LoadDBInteractor();
-        }
-    }
+   public final class HelperInteractors {
+      public LoadDBInteractor getContactInteractor() {
+         return new LoadDBInteractor();
+      }
+   }
 
-    public ContactComponent getContactCompanent() {
-        return component;
-    }
+   public ContactComponent getContactCompanent() {
+      return component;
+   }
 }
