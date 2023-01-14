@@ -1,40 +1,22 @@
 <resources>
     <string name="app_name">Автопоздравления</string>
-    <string name="starbuzz_logo">Starbuzz logo</string>
-    <string name="favorite">Поздравлять</string>
+    <string name="worked">Поздравлять</string>
+    <string name="favorite">Избранное</string>
     <string name="favorites">Поздравляются</string>
-    <string name="favoritesComing">Поздравляются в скором времени</string>
-    <string-array name="options">
-        <item>Drinks</item>
-        <item>Food</item>
-        <item>Stores</item>
-    </string-array>
 
-    <string name="hello_blank_fragment">Поздравления</string>
     <string name="base_work">Работа с БД</string>
     <string name="congratulations">Поздравления</string>
-    <string name="congratulations_coming">Скорые поздравления</string>
-    <string name="create_order_title">Create Order</string>
-    <string name="action_share">Share</string>
-    <string name="home_tab">Home</string>
-
 
     <string name="content_description_search">Что найти?</string>
-    <string name="more">Первоначальная загрузка БД</string>
-    <string name="content_description_more">что-то</string>
-    <string name="work_bace">Список контактов</string>
-    <string name="safe_text">Шаблоны поздравлений</string>
-    <string name="null_text"> </string>
+    <string name="contactList">Контакты</string>
+    <string name="contactfavorites">Избранное</string>
+    <string name="templated_contacts">Поздравляемые</string>
+    <string name="safe_text">Шаблоны</string>
+    <string name="list_text">Поздравления</string>
+    <string name="setting_text">Настройки</string>
 
 
     <string name="exit">Выход</string>
-    <string name="save_data">Сохранить данные?</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
-    <string name="cancel">Отмена</string>
-    <string name="saved">Сохранено</string>
-    <string name="template_text_string">Шаблоны</string>
-    <string name="contact_text_string">Контакты</string>
     <string name="search">Поиск</string>
     <string name="sort_ab">Сортировка</string>
 

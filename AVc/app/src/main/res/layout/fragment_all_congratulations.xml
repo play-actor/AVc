@@ -5,7 +5,7 @@
     android:id="@+id/AllNameList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hfad.avc.ui.main_fragment.AllCongratulationsFragment">
+    tools:context="com.hfad.avc.ui.list.all_congratulations_list.AllCongratulationsListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_favorites_all"

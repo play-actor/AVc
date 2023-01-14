@@ -5,21 +5,8 @@
     android:id="@+id/TemplateList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hfad.avc.ui.namelist.NameListFragment">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/Widget.MaterialComponents.Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/background2"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:title="Шаблоны"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1" />
-    </com.google.android.material.appbar.AppBarLayout>
+    tools:context="com.hfad.avc.ui.list.contact_list.ContactListFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -40,7 +27,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="5"
-            tools:listitem="@layout/list_item">
+            tools:listitem="@layout/template_item">
 
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@ kapt {
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "33.0.1"
+    buildToolsVersion "32.0.0"
 //    def date = new Date()
 //    def formattedDate = date.format('yyMMddHHmm')
 //    def code = formattedDate.toInteger()
@@ -17,12 +17,19 @@ android {
 
     defaultConfig {
         applicationId "com.hfad.avc"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 33
 //        versionCode code
 //        versionName codeName
         resConfigs "ru"
-
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -60,10 +67,20 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
     //cicerone
-    implementation 'ru.terrakok.cicerone:cicerone:5.1.1'
+    implementation("com.github.terrakok:cicerone:7.1")
 
     //room
-    implementation "android.arch.persistence.room:runtime:1.1.1"
+    def room_version = "2.4.3"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-rxjava2:$room_version")
+    implementation("androidx.room:room-rxjava3:$room_version")
+    implementation("androidx.room:room-guava:$room_version")
+    implementation("androidx.room:room-paging:$room_version")
+
 
     //joda-time
     implementation 'joda-time:joda-time:2.10.10'
@@ -86,5 +103,8 @@ dependencies {
 
     //retrofit2
     implementation "com.squareup.retrofit2:converter-gson:2.7.2"
+
+    //Пикассо
+    implementation 'com.squareup.picasso:picasso:2.8'
 
 }

@@ -1,161 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background">
 
     <data>
 
         <variable
             name="contactDetail"
-            type="com.hfad.avc.ui.database.Contact" />
+            type="com.hfad.avc.data.model.Contact" />
 
         <variable
             name="presenter"
-            type="com.hfad.avc.ui.contact.ContactPresenter" />
+            type="com.hfad.avc.ui.contact.СhangeContactPresenter" />
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/fragContact"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        tools:context="com.hfad.avc.ui.MainActivity">
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/iconContact"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/no_foto" />
+
+        <ImageView
+            android:id="@+id/favoriteContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            tools:src="@drawable/ic_baseline_star"
+            android:text="@string/favorite"
+            app:layout_constraintBottom_toBottomOf="@+id/iconContact"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:radius="22dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iconContact">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Имя"
+                android:textColor="@color/colorItemText" />
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="@{contactDetail.name}"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Имя"
-                tools:textColor="@android:color/darker_gray" />
+                android:textColor="@color/colorItemText"
+                tools:text="Иванов Иван Иванович" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Номер телефона"
+                android:textColor="@color/colorItemText" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="8dp"
                 android:text="@{contactDetail.phone}"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/name"
-                tools:text="Номер" />
-
-            <!--        <EditText-->
-            <!--            android:id="@+id/date_congratulations"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginTop="55dp"-->
-            <!--            android:ems="10"-->
-            <!--            android:inputType="time"-->
-            <!--            android:text="@={contactDetail.date_congratulationsString}"-->
-            <!--            android:textSize="30sp"-->
-            <!--            app:layout_constraintTop_toTopOf="@+id/description"-->
-            <!--            tools:layout_editor_absoluteX="85dp"-->
-            <!--            tools:text="Дата" />-->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/date_congratulations"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusableInTouchMode="false"
-                    android:hint="Дата"
-                    android:inputType="none"
-                    android:text="@{contactDetail.date_congratulationsString}" />
-            </com.google.android.material.textfield.TextInputLayout>
-
+                android:textColor="@color/colorItemText"
+                tools:text="8 888 88 88 888" />
 
             <TextView
-                android:id="@+id/ID_in_base"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{contactDetail.id}"
-                android:textColor="@android:color/darker_gray"
+                android:text="Дата поздавления"
+                android:textColor="@color/colorItemText" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fitsSystemWindows="true"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/date_congratulations"
-                tools:text="ID" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/date_congratulations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{contactDetail.date_congratulationsString}"
+                    android:textColor="@color/colorItemText"
+                    tools:text="25 25 " />
+
+                <ImageButton
+                    android:id="@+id/dateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorItemBackground"
+                    android:onClick="@{() -> presenter.setNewTime()}"
+                    android:src="@drawable/schedule_black_24dp"
+                    android:text="Изменить время" />
+
+                <ImageButton
+                    android:id="@+id/timeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorItemBackground"
+                    android:onClick="@{() -> presenter.setNewDate()}"
+                    android:src="@drawable/event_black_24dp"
+                    android:text="Изменить дату" />
+
+            </LinearLayout>
+
 
             <CheckBox
-                android:id="@+id/favorite"
+                android:id="@+id/worked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="146dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="146dp"
-                android:checked="@={contactDetail.favorite}"
-                android:text="@string/favorite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ID_in_base" />
+                android:checked="@={contactDetail.worked}"
+                android:text="@string/worked" />
 
+        </GridLayout>
 
-            <Button
-                android:id="@+id/dateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{() -> presenter.setNewTime()}"
-                android:text="Изменить время"
-
-                app:layout_constraintHorizontal_bias="0.067"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-
-                app:layout_constraintTop_toBottomOf="@+id/date_congratulations" />
-
-            <Button
-                android:id="@+id/timeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:onClick="@{() -> presenter.setNewDate()}"
-                android:text="Изменить дату"
-
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/dateButton"
-                app:layout_constraintTop_toBottomOf="@+id/date_congratulations" />
-
-            <Button
-                android:id="@+id/buttonAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="140dp"
-                android:layout_marginTop="50dp"
-                android:onClick="@{() -> presenter.updateDBonContact()}"
-                android:text="Сохранить"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/favorite" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <Button
+            android:id="@+id/buttonAdd"
+            style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{() -> presenter.updateDBonContact()}"
+            android:text="Сохранить"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

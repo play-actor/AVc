@@ -6,10 +6,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="ThemeToolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="NavigationBar" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="colorPrimary">@color/colorItemText</item>
+        <item name="itemIconTint">@color/colorItemText</item>
+        <item name="itemTextColor">@color/colorItemText</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
-
 </resources>

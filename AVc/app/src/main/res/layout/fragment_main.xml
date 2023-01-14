@@ -6,17 +6,29 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:id="@+id/mainFrag"
-    tools:context="com.hfad.avc.ui.MainActivity">
+    android:background="@color/background"
+    tools:context="com.hfad.avc.ui.main_avtivity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarMain"
+            style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed"/>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/background"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_menu_24dp"
+            app:title="Контакты"
+            app:titleTextColor="@color/colorItemText"
+            app:subtitleTextColor="@color/subtitlecolorItemText" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -32,32 +44,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<!--    <com.google.android.material.bottomappbar.BottomAppBar
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="72dp"
+            android:visibility="visible"
+            app:backgroundTint="@color/colorfabAdd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add_24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomAppBar"
+        style="@style/NavigationBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-        app:navigationIcon="@drawable/ic_menu_24dp"
-        app:menu="@menu/menu_main"/>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@color/colorButton"
-        app:layout_anchor="@id/bottomAppBar"
-        app:srcCompat="@drawable/ic_add_24dp" />-->
-
-
-
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:menu="@menu/menu_main" />-->
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_main" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
