@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1B1C18</color>
-    <color name="colorPrimaryDark">#205C8A</color>
-    <color name="colorAccent">#FFC107</color>
-    <color name="colorButton">#2873AE</color>
-    <color name="background">#1F1F1F</color>
-
-
-    <color name="colorIcon">#57624A</color>
-    <color name="colorItemBackground">#44483D</color>
-    <color name="colorItemText">#E3E3DB</color>
-    <color name="subtitlecolorItemText">#9CD857</color>
-    <color name="colorItemTFavorite">#FFFFF0</color>
-    <color name="colorfabAdd">#B7F570</color>
+    <color name="actionModeCloseButtonStyle">@color/white</color>
 </resources>

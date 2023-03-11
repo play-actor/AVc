@@ -5,5 +5,5 @@
     android:viewportHeight="23">
   <path
       android:pathData="M7.59,19.05L12.3,16.23L17.01,19.08L15.75,13.74L19.89,10.14L14.43,9.66L12.3,4.62L10.17,9.63L4.71,10.11L8.85,13.71L7.59,19.05ZM4.89,22.8L6.84,14.37L0.3,8.7L8.94,7.95L12.3,0L15.66,7.95L24.3,8.7L17.76,14.37L19.71,22.8L12.3,18.33L4.89,22.8Z"
-      android:fillColor="@color/colorItemTFavorite"/>
+      android:fillColor="@color/actionModeCloseButtonStyle" />
 </vector>
