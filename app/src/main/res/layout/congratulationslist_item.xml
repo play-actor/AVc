@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/shape"
+    android:radius="22dp">
+
+    <ImageView
+        android:id="@+id/icon_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/date_and_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/name_contact"
+        tools:srcCompat="@drawable/user_images" />
+
+    <TextView
+        android:id="@+id/name_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorItemText"
+        app:layout_constraintStart_toEndOf="@+id/icon_contact"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names" />
+
+    <TextView
+        android:id="@+id/phone_number_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/colorItemText"
+        app:layout_constraintStart_toEndOf="@+id/icon_contact"
+        app:layout_constraintTop_toBottomOf="@+id/name_contact"
+        tools:text="@tools:sample/us_phones"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/date_and_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorItemText"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/icon_contact"
+        app:layout_constraintTop_toBottomOf="@+id/phone_number_contact"
+        tools:text="Дата и время" />
+
+    <TextView
+        android:id="@+id/date_and_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/colorItemText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/icon_contact"
+        app:layout_constraintTop_toBottomOf="@+id/date_and_time_title"
+        tools:text="@tools:sample/date/ddmmyy" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

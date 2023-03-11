@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/contactList"
+        android:contentDescription="@string/content_description_search"
+        android:icon="@drawable/contact_list"
+        android:title="@string/contactList"/>
+
+    <item
+        android:id="@+id/contactfavorites"
+        android:contentDescription="@string/content_description_search"
+        android:icon="@drawable/ic_baseline_star_favorite"
+        android:title="@string/contactfavorites" />
+
+    <item
+        android:id="@+id/templated_contacts"
+        android:contentDescription="@string/content_description_search"
+        android:icon="@drawable/notifications_active_black_24dp"
+        android:title="@string/templated_contacts" />
+
+    <item
+        android:id="@+id/templates"
+        android:contentDescription="@string/content_description_search"
+        android:icon="@drawable/list"
+        android:title="@string/list_text" />
+
+<!--    <item-->
+<!--        android:id="@+id/template_text3"-->
+<!--        android:contentDescription="@string/content_description_search"-->
+<!--        android:icon="@drawable/setting"-->
+<!--        android:title="@string/setting_text" />-->
+
+</menu>
