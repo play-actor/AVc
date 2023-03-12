@@ -21,6 +21,6 @@ public class AllCongratulationsListPresenter extends MvpPresenter<IAllCongratula
    @Override
    public void attachView(IAllCongratulationsListViewModel view) {
       super.attachView(view);
-      getViewState().setData(dbManager.getContactList(1));
+      getViewState().setData(dbManager.getCongratulationsList(1), dbManager.getContactList(1));
    }
 }

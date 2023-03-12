@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hfad.avc.BaseFragment;
 import com.hfad.avc.R;
 import com.hfad.avc.data.model.Template;
+import com.hfad.avc.ui.list.TemplateListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.list.template_list;
+package com.hfad.avc.ui.list;
 
 import android.view.LayoutInflater;
 import android.view.View;

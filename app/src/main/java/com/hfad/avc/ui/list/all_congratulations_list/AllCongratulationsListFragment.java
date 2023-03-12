@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hfad.avc.R;
 import com.hfad.avc.data.model.Contact;
+import com.hfad.avc.data.model.EventCongratulations;
 import com.hfad.avc.ui.contact.СhangeContactFragment;
-import com.hfad.avc.ui.list.ContactListAdapter;
+import com.hfad.avc.ui.list.CongratulationsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class AllCongratulationsListFragment extends MvpAppCompatFragment impleme
    AllCongratulationsListPresenter presenter1;
 
    private RecyclerView recyclerView;
-   private List<Contact> contactsList = new ArrayList<>();
+   private List<EventCongratulations> eventCongratulationsArrayList = new ArrayList<>();
 
    @ProvidePresenter
    AllCongratulationsListPresenter ProvidePresenterAllCongratulationsPresenter() {
@@ -35,19 +36,19 @@ public class AllCongratulationsListFragment extends MvpAppCompatFragment impleme
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      View inflate1 = inflater.inflate(R.layout.fragment_all_congratulations, container, false);
-      this.recyclerView = inflate1.findViewById(R.id.list_congratulations_all);
-      return inflate1;
+      View view = inflater.inflate(R.layout.fragment_all_congratulations, container, false);
+      this.recyclerView = view.findViewById(R.id.list_congratulations_all);
+      return view;
    }
 
    @Override
-   public void setData(List<Contact> listContactsList) {
-      this.contactsList = listContactsList;
+   public void setData(List<EventCongratulations> list, List<Contact> contactList) {
+      this.eventCongratulationsArrayList = list;
       // создаем адаптер
-      ContactListAdapter adapter1 = new ContactListAdapter(contactsList);
+      CongratulationsListAdapter recyclerListAdapter = new CongratulationsListAdapter(list, contactList);
       // устанавливаем для списка адаптер
-      recyclerView.setAdapter(adapter1);
-      adapter1.setClick(id -> {
+      recyclerView.setAdapter(recyclerListAdapter);
+      recyclerListAdapter.setClick(id -> {
          СhangeContactFragment contactFragment = СhangeContactFragment.newInstance(id);
          getActivity().getSupportFragmentManager().beginTransaction()
                .replace(R.id.root, contactFragment, "ContactFragment")

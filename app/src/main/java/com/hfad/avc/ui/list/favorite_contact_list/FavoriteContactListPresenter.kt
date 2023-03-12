@@ -18,6 +18,6 @@ class FavoriteContactListPresenter: MvpPresenter<IFavoriteContactListViewModel>(
 
    override fun attachView(view: IFavoriteContactListViewModel?) {
       super.attachView(view)
-      viewState.setData(dbManager.getContactList(2))
+      viewState.setData(dbManager.getContactList(1))
    }
 }

@@ -13,7 +13,10 @@ import com.hfad.avc.R;
 import com.hfad.avc.dagger.ComponentManager;
 import com.hfad.avc.data.database.AppDatabase;
 import com.hfad.avc.data.database.ContactDao;
+import com.hfad.avc.data.database.EventCongratulationsDao;
+import com.hfad.avc.data.database.TemplateDao;
 import com.hfad.avc.data.model.Contact;
+import com.hfad.avc.data.model.EventCongratulations;
 import com.hfad.avc.data.model.Template;
 
 import java.util.Collections;
@@ -35,6 +38,7 @@ public class DBManager {
    AppDatabase db;
    private List<Contact> contactsList;
    private List<Template> templateList;
+   private List<EventCongratulations> eventList;
    @Inject
    Context context;
    private final Contact contact;
@@ -54,8 +58,6 @@ public class DBManager {
             case 0:
                return this.contactsList = db_contactDao.all();
             case 1:
-               //return this.contactsList = db_contactDao.getAllCongratulations();
-            case 2:
                return this.contactsList = db_contactDao.getFavoriteContact();
          }
       } catch (Exception e) {
@@ -65,17 +67,33 @@ public class DBManager {
    }
 
    public List<Template> getTemplateList(int position) {
+      TemplateDao db_templateDao = db.templateDao();
       try {
          switch (position) {
             case 0:
-               return this.templateList = db.templateDao().getAll();
+               return this.templateList = db_templateDao.getAll();
             case 1:
-               return this.templateList = db.templateDao().getFavorite();
+               return this.templateList = db_templateDao.getFavorite();
          }
       } catch (Exception e) {
-         Log.e(TAG, "getContactList: " + e);
+         Log.e(TAG, "getTemplateList: " + e);
       }
       return this.templateList;
+   }
+
+   public List<EventCongratulations> getCongratulationsList(int position) {
+      EventCongratulationsDao db_eventCongratulationsDao = db.eventDao();
+      try {
+         switch (position) {
+            case 0:
+               return this.eventList = db_eventCongratulationsDao.getAll();
+            case 1:
+               return this.eventList = db_eventCongratulationsDao.getActiveEvent();
+         }
+      } catch (Exception e) {
+         Log.e(TAG, "getCongratulationsList: " + e);
+      }
+      return this.eventList;
    }
 
    @SuppressWarnings({"unused", "RedundantSuppression"})

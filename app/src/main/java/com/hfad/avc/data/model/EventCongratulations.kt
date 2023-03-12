@@ -2,16 +2,14 @@ package com.hfad.avc.data.model
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.databinding.library.baseAdapters.BR
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.hfad.avc.Util.Converter
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
-import androidx.databinding.library.baseAdapters.BR
 
 @Entity
-data class Event(
+data class EventCongratulations(
    @PrimaryKey
    private var id: String = "",
    private var listIDWorker: ArrayList<String> = ArrayList(),
@@ -19,7 +17,7 @@ data class Event(
    private var date_string: String = "",
    private var time: Long = 0,
    private var time_string: String = "",
-   private var worked: Boolean = false
+   private var worked: Boolean = false,
 ) : BaseObservable() {
 
    companion object {
