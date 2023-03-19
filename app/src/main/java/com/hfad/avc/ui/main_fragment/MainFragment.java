@@ -33,8 +33,8 @@ public class MainFragment extends Fragment {
    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
       View view = inflater.inflate(R.layout.fragment_main, container, false);
       this.barView = view.findViewById(R.id.bottomAppBar);
-      final SectionsPagerAdapter2 pagerAdapter =
-            new SectionsPagerAdapter2(
+      final SectionsPagerAdapter pagerAdapter =
+            new SectionsPagerAdapter(
                   this
             );
       this.viewPager = view.findViewById(R.id.pager);

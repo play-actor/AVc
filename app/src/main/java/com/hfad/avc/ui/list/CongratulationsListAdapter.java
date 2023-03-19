@@ -78,13 +78,14 @@ public class CongratulationsListAdapter extends RecyclerView.Adapter<Congratulat
 
    public static class ViewHolder extends RecyclerView.ViewHolder {
       final ImageView icon;
-      final TextView nameView, PhoneView;
+      final TextView nameView, PhoneView, dateAndTime;
 
       ViewHolder(View view) {
          super(view);
          icon = view.findViewById(R.id.icon_contact);
          nameView = view.findViewById(R.id.name_contact);
          PhoneView = view.findViewById(R.id.phone_number_contact);
+         dateAndTime = view.findViewById(R.id.date_and_time);
       }
    }
 
