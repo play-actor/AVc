@@ -37,7 +37,7 @@ public class TemplateListFragment extends BaseFragment implements ITemplateListV
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      View inflate = inflater.inflate(R.layout.fragment_template, container, false);
+      View inflate = inflater.inflate(R.layout.fragment_templatelist, container, false);
       this.recyclerView = inflate.findViewById(R.id.TemplateOnList);
       recyclerView.addItemDecoration(new SpaceItemDecoration());
       return inflate;

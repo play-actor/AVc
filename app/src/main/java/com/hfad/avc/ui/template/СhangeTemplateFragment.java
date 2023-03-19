@@ -40,7 +40,7 @@ public class СhangeTemplateFragment extends MvpAppCompatFragment implements IС
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      binding = DataBindingUtil.inflate(inflater, R.layout.fragment_template_write, container, false);
+      binding = DataBindingUtil.inflate(inflater, R.layout.fragment_template, container, false);
       final View view = binding.getRoot();
       this.toolbar = view.findViewById(R.id.toolbar);
       this.toolbar.inflateMenu(R.menu.menu_contact);

@@ -17,6 +17,8 @@ data class EventCongratulations(
    private var date_string: String = "",
    private var time: Long = 0,
    private var time_string: String = "",
+   private var idContact: Int,
+   private var idCongratulations: Int,
    private var worked: Boolean = false,
 ) : BaseObservable() {
 

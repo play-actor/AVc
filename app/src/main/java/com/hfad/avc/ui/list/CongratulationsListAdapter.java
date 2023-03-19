@@ -16,6 +16,7 @@ import com.hfad.avc.dagger.ComponentManager;
 import com.hfad.avc.dagger.module.ImageModule;
 import com.hfad.avc.data.model.Contact;
 import com.hfad.avc.data.model.EventCongratulations;
+import com.hfad.avc.managers.DBManager;
 
 import java.util.List;
 
@@ -33,10 +34,13 @@ public class CongratulationsListAdapter extends RecyclerView.Adapter<Congratulat
    @Inject
    ImageModule imageModule;
 
-   public CongratulationsListAdapter(List<EventCongratulations> eventCongratulationsList, List<Contact> contactList) {
+   @Inject
+   DBManager dbManager;
+
+   public CongratulationsListAdapter() {
       ComponentManager.Companion.getInstance().appComponent.inject(this);
-      this.eventCongratulationsList = eventCongratulationsList;
-      this.contactList = contactList;
+      this.eventCongratulationsList = dbManager.getCongratulationsList(0);
+      this.contactList = dbManager.getContactList(0);
    }
 
    @Override

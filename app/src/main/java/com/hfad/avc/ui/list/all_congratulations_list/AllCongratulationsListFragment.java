@@ -8,13 +8,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hfad.avc.R;
-import com.hfad.avc.data.model.Contact;
-import com.hfad.avc.data.model.EventCongratulations;
 import com.hfad.avc.ui.contact.СhangeContactFragment;
 import com.hfad.avc.ui.list.CongratulationsListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
@@ -26,7 +21,6 @@ public class AllCongratulationsListFragment extends MvpAppCompatFragment impleme
    AllCongratulationsListPresenter presenter1;
 
    private RecyclerView recyclerView;
-   private List<EventCongratulations> eventCongratulationsArrayList = new ArrayList<>();
 
    @ProvidePresenter
    AllCongratulationsListPresenter ProvidePresenterAllCongratulationsPresenter() {
@@ -42,10 +36,9 @@ public class AllCongratulationsListFragment extends MvpAppCompatFragment impleme
    }
 
    @Override
-   public void setData(List<EventCongratulations> list, List<Contact> contactList) {
-      this.eventCongratulationsArrayList = list;
+   public void setData() {
       // создаем адаптер
-      CongratulationsListAdapter recyclerListAdapter = new CongratulationsListAdapter(list, contactList);
+      CongratulationsListAdapter recyclerListAdapter = new CongratulationsListAdapter();
       // устанавливаем для списка адаптер
       recyclerView.setAdapter(recyclerListAdapter);
       recyclerListAdapter.setClick(id -> {
