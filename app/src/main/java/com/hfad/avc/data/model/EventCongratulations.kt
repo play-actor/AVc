@@ -17,8 +17,8 @@ data class EventCongratulations(
    private var date_string: String = "",
    private var time: Long = 0,
    private var time_string: String = "",
-   private var idContact: Int,
-   private var idCongratulations: Int,
+   private var idContact: Int = 0,
+   private var idCongratulations: Int = 0,
    private var worked: Boolean = false,
 ) : BaseObservable() {
 
@@ -36,6 +36,28 @@ data class EventCongratulations(
    @Bindable
    fun getId(): String {
       return id
+   }
+
+   @Bindable
+   fun setIdContact(idContact: Int) {
+      this.idContact = idContact
+      notifyPropertyChanged(BR.idContact)
+   }
+
+   @Bindable
+   fun getIdContact(): Int {
+      return idContact
+   }
+
+   @Bindable
+   fun setIdCongratulations(idCongratulations: Int) {
+      this.idCongratulations = idCongratulations
+      notifyPropertyChanged(BR.idCongratulations)
+   }
+
+   @Bindable
+   fun getIdCongratulations(): Int {
+      return idCongratulations
    }
 
    @Bindable

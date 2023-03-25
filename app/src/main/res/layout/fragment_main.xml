@@ -57,7 +57,8 @@
             app:backgroundTint="@color/colorfabAdd"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add_24dp" />
+            app:srcCompat="@drawable/ic_add_24dp"
+            app:tint="@color/background" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.hfad.avc.R;
 import com.hfad.avc.data.model.Template;
-import com.hfad.avc.databinding.FragmentTemplateWriteBinding;
+import com.hfad.avc.databinding.FragmentTemplateBinding;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
@@ -30,7 +30,7 @@ public class СhangeTemplateFragment extends MvpAppCompatFragment implements IС
    private MenuItem favoriteTemplate;
    private MenuItem changeTemplate;
    private EditText textTemplate;
-   private FragmentTemplateWriteBinding binding;
+   private FragmentTemplateBinding binding;
 
    @ProvidePresenter
    СhangeTemplatePresenter ProvidePresenterContactPresenter() {

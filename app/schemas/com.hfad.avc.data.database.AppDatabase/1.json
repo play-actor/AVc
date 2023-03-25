@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f8e941b59d5f774c761b6bac7afee587",
+    "identityHash": "4e832e0d5b709a725db54d74c5782891",
     "entities": [
       {
         "tableName": "Contact",
@@ -88,7 +88,7 @@
       },
       {
         "tableName": "EventCongratulations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `listIDWorker` TEXT NOT NULL, `date` INTEGER NOT NULL, `date_string` TEXT NOT NULL, `time` INTEGER NOT NULL, `time_string` TEXT NOT NULL, `worked` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `listIDWorker` TEXT NOT NULL, `date` INTEGER NOT NULL, `date_string` TEXT NOT NULL, `time` INTEGER NOT NULL, `time_string` TEXT NOT NULL, `idContact` INTEGER NOT NULL, `idCongratulations` INTEGER NOT NULL, `worked` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -127,6 +127,18 @@
             "notNull": true
           },
           {
+            "fieldPath": "idContact",
+            "columnName": "idContact",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idCongratulations",
+            "columnName": "idCongratulations",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "worked",
             "columnName": "worked",
             "affinity": "INTEGER",
@@ -146,7 +158,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f8e941b59d5f774c761b6bac7afee587')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4e832e0d5b709a725db54d74c5782891')"
     ]
   }
 }
