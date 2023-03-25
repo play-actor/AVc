@@ -4,15 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="contactDetail"
             type="com.hfad.avc.data.model.Contact" />
-
         <variable
             name="presenter"
             type="com.hfad.avc.ui.contact.СhangeContactPresenter" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,28 +21,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
+            android:background="@color/background"
+            android:minHeight="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/back"
+            app:subtitleTextColor="@color/subtitlecolorItemText"
+            app:titleTextColor="@color/colorItemText" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/background"
-                android:minHeight="?attr/actionBarSize"
-                app:navigationIcon="@drawable/back"
-                app:subtitleTextColor="@color/subtitlecolorItemText"
-                app:titleTextColor="@color/colorItemText" />
-
-        </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
             android:id="@+id/iconContact"
@@ -53,7 +43,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:srcCompat="@drawable/no_foto" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

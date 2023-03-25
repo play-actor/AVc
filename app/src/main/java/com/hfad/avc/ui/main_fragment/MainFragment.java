@@ -43,16 +43,16 @@ public class MainFragment extends Fragment {
          switch (item.getItemId()) {
             default:
             case R.id.contactList:
-               viewPager.setCurrentItem(0, true);
+               this.viewPager.setCurrentItem(0, true);
                break;
             case R.id.contactfavorites:
-               viewPager.setCurrentItem(1, true);
+               this.viewPager.setCurrentItem(1, true);
                break;
             case R.id.templated_contacts:
-               viewPager.setCurrentItem(2, true);
+               this.viewPager.setCurrentItem(2, true);
                break;
             case R.id.templates:
-               viewPager.setCurrentItem(3, true);
+               this.viewPager.setCurrentItem(3, true);
                break;
          }
          return true;
@@ -79,7 +79,7 @@ public class MainFragment extends Fragment {
             super.onPageSelected(position);
          }
       };
-      viewPager.registerOnPageChangeCallback(onPageChangeCallback);
+      this.viewPager.registerOnPageChangeCallback(onPageChangeCallback);
       return view;
    }
 
@@ -89,9 +89,20 @@ public class MainFragment extends Fragment {
    }
 
    @Override
+   public void onResume() {
+      //this.viewPager.registerOnPageChangeCallback(onPageChangeCallback);
+      super.onResume();
+   }
+
+   @Override
+   public void onPause() {
+      //this.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback);
+      super.onPause();
+   }
+
+   @Override
    public void onDestroy() {
       requireActivity().finish();
       super.onDestroy();
-      this.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback);
    }
 }
