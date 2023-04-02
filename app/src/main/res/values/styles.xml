@@ -7,4 +7,9 @@
         <item name="actionModeCloseButtonStyle">@color/black</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
+
+    <style name="Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="colorControlHighlight">@color/error</item>
+    </style>
 </resources>
