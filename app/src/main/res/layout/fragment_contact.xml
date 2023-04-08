@@ -9,7 +9,7 @@
             type="com.hfad.avc.data.model.Contact" />
         <variable
             name="presenter"
-            type="com.hfad.avc.ui.contact.СhangeContactPresenter" />
+            type="com.hfad.avc.ui.list.contact.СhangeContactPresenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

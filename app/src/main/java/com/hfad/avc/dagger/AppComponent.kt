@@ -7,12 +7,12 @@ import com.hfad.avc.dagger.module.HelperModule
 import com.hfad.avc.dagger.module.ImageModule
 import com.hfad.avc.dagger.module.NavigationModule
 import com.hfad.avc.managers.DBManager
-import com.hfad.avc.ui.contact.СhangeContactFragment
-import com.hfad.avc.ui.contact.СhangeContactPresenter
 import com.hfad.avc.ui.list.CongratulationsListAdapter
 import com.hfad.avc.ui.list.ContactListAdapter
 import com.hfad.avc.ui.list.PhoneListAdapter
 import com.hfad.avc.ui.list.all_congratulations_list.AllCongratulationsListPresenter
+import com.hfad.avc.ui.list.contact.СhangeContactFragment
+import com.hfad.avc.ui.list.contact.СhangeContactPresenter
 import com.hfad.avc.ui.list.contact_list.ContactListFragment
 import com.hfad.avc.ui.list.contact_list.ContactListPresenter
 import com.hfad.avc.ui.list.favorite_contact_list.FavoriteContactListPresenter

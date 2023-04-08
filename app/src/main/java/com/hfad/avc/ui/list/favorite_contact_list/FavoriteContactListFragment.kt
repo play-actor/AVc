@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.avc.R
 import com.hfad.avc.data.model.Contact
-import com.hfad.avc.ui.contact.СhangeContactFragment
 import com.hfad.avc.ui.list.ContactListAdapter
+import com.hfad.avc.ui.list.contact.СhangeContactFragment
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -30,9 +30,10 @@ class FavoriteContactListFragment : MvpAppCompatFragment(),IFavoriteContactListV
    @SuppressLint("MissingInflatedId")
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?
-   ): View? {
-      val inflate1: View = inflater.inflate(R.layout.fragment_favorite_contact_list, container, false)
+      savedInstanceState: Bundle?,
+   ): View {
+      val inflate1: View =
+         inflater.inflate(R.layout.fragment_favorite_contact_list, container, false)
       recyclerView1 = inflate1.findViewById(R.id.list_favorites_contact)
       return inflate1
    }
@@ -42,13 +43,16 @@ class FavoriteContactListFragment : MvpAppCompatFragment(),IFavoriteContactListV
       // создаем адаптер
       val adapter1 = ContactListAdapter(contactsList)
       // устанавливаем для списка адаптер
-      this.recyclerView1!!.adapter = adapter1
-      adapter1.setClick { id: Int ->
-         val contactFragment = СhangeContactFragment.newInstance(id)
-         requireActivity().getSupportFragmentManager().beginTransaction()
-            .replace(R.id.root, contactFragment, "ContactFragment")
-            .addToBackStack("ContactFragment")
-            .commitAllowingStateLoss()
+      this.recyclerView1?.adapter = adapter1
+      adapter1.setClick(object : ContactListAdapter.Click {
+         override fun click(id: Int) {
+            val contactFragment = СhangeContactFragment.newInstance(id)
+            requireActivity().supportFragmentManager.beginTransaction()
+               .replace(R.id.root, contactFragment, "ContactFragment")
+               .addToBackStack("ContactFragment")
+               .commitAllowingStateLoss()
+         }
       }
+      )
    }
 }

@@ -12,7 +12,7 @@
 
         <variable
             name="presenterTemplate"
-            type="com.hfad.avc.ui.template.СhangeTemplatePresenter" />
+            type="com.hfad.avc.ui.template.СhangeTemplatePresenter2" />
 
     </data>
     <ScrollView
