@@ -23,10 +23,12 @@ class TemplateListAdapter(private val templateList: List<Template>) :
 
    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val template = templateList[position]
-      holder.templateView.text = template.getTextTemplate()
-      holder.itemView.setOnClickListener {
-         if (click != null) {
-            click!!.click(template.getId().toInt())
+      holder.apply {
+         templateView.text = template.getTextTemplate()
+         itemView.setOnClickListener {
+            if (click != null) {
+               click!!.click(template.getId().toInt())
+            }
          }
       }
    }

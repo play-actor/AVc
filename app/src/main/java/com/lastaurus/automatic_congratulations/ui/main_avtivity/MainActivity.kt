@@ -100,8 +100,10 @@ class MainActivity : MvpAppCompatActivity(), ChainHolder, IMainViewModel {
    private fun smsSend(toSms: String?, messageText: String?) {
       try {
          val sms = Intent(Intent.ACTION_SEND, Uri.parse("smsto: ${toSms?.let { art(it) }}"))
-         sms.type = "text/plain"
-         sms.putExtra(Intent.EXTRA_TEXT, messageText)
+         sms.apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, messageText)
+         }
          startActivity(Intent.createChooser(sms, "Отправить"))
       } catch (exception: Exception) {
          Log.e("AVc", "smsSend $exception")

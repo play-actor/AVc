@@ -62,7 +62,7 @@ class СhangeContactPresenter(bundle: Bundle?) :
    }
 
    fun setIconContact(iconContact: ImageView) {
-      imageModule?.showImageForContact(iconContact, contact.getUriFull(), true)
+      imageModule.showImageForContact(iconContact, contact.getUriFull(), true)
    }
 
    fun setFavoriteContact(favoriteContact: MenuItem) {

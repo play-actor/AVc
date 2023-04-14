@@ -46,19 +46,23 @@ class СhangeTemplateFragment : MvpAppCompatFragment(), IСhangeTemplateViewMode
       this.textTemplate = binding.textTemplate
       this.favoriteTemplate.let { presenter.setFavoriteTemplate(it) }
       this.favoriteTemplate.setOnMenuItemClickListener {
-         presenter.setOnClickFavoriteTemplate()
-         presenter.setFavoriteTemplate(favoriteTemplate)
-         presenter.updateTemplateDB()
+         presenter.apply {
+            setOnClickFavoriteTemplate()
+            setFavoriteTemplate(favoriteTemplate)
+            updateTemplateDB()
+         }
          false
       }
       this.changeTemplate.setOnMenuItemClickListener {
-         val isCursorVisible = textTemplate.isCursorVisible
-         if (isCursorVisible) {
+         val isVisible = textTemplate.isCursorVisible
+         if (isVisible) {
             presenter.updateTemplateDB()
          }
-         textTemplate.isCursorVisible = !isCursorVisible
-         textTemplate.isFocusable = !isCursorVisible
-         textTemplate.isClickable = !isCursorVisible
+         textTemplate.apply {
+            isCursorVisible = !isVisible
+            isFocusable = !isVisible
+            isClickable = !isVisible
+         }
          false
       }
       return view
@@ -70,8 +74,10 @@ class СhangeTemplateFragment : MvpAppCompatFragment(), IСhangeTemplateViewMode
    }
 
    override fun setData(template: Template?) {
-      this.binding.templateDetail = template
-      this.binding.presenterTemplate = presenter
+      this.binding.apply {
+         templateDetail = template
+         presenterTemplate = presenter
+      }
    }
 
    override fun onInsertDB(newId: String?) {

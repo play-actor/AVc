@@ -39,13 +39,15 @@ class ContactListAdapter(private val contactList: List<Contact>) :
 
    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val contact = contactList[position]
-      holder.nameText.text = contact.getName()
-      holder.phoneText.text = contact.getPhoneList()[0]
-      holder.favorite.visibility = if (contact.getFavorite()) View.VISIBLE else View.INVISIBLE
       contact.getUriThumbnail().let { imageModule.showImageForContact(holder.icon, it, false) }
-      holder.itemView.setOnClickListener {
-         if (click != null) {
-            contact.getId().toInt().let { click?.click(it) }
+      holder.apply {
+         nameText.text = contact.getName()
+         phoneText.text = contact.getPhoneList()[0]
+         favorite.visibility = if (contact.getFavorite()) View.VISIBLE else View.INVISIBLE
+         itemView.setOnClickListener {
+            if (click != null) {
+               contact.getId().toInt().let { click?.click(it) }
+            }
          }
       }
    }

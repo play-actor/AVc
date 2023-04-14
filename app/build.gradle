@@ -9,7 +9,7 @@ kapt {
 android {
     namespace 'com.lastaurus.automatic_congratulations'
     compileSdkVersion 33
-    buildToolsVersion "33.0.1"
+    buildToolsVersion '33.0.2'
 
     defaultConfig {
         applicationId "com.lastaurus.automatic_congratulations"
