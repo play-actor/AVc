@@ -1,7 +1,7 @@
-package com.hfad.avc.ui.list.all_congratulations_list;
+package com.lastaurus.automatic_congratulations.ui.list.all_congratulations_list;
 
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.managers.DBManager;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.managers.DBManager;
 
 import javax.inject.Inject;
 

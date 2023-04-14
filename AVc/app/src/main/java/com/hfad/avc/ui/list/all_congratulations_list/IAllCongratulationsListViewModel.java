@@ -1,6 +1,6 @@
-package com.hfad.avc.ui.list.all_congratulations_list;
+package com.lastaurus.automatic_congratulations.ui.list.all_congratulations_list;
 
-import com.hfad.avc.data.model.Contact;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
 
 import java.util.List;
 

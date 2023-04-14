@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.list;
+package com.lastaurus.automatic_congratulations.ui.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hfad.avc.R;
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.dagger.module.ImageModule;
-import com.hfad.avc.data.model.Contact;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.dagger.module.ImageModule;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
 
 import java.util.List;
 

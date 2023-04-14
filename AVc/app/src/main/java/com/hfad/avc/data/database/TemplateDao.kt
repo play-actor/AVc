@@ -1,7 +1,7 @@
-package com.hfad.avc.data.database
+package com.lastaurus.avc.data.database
 
 import androidx.room.*
-import com.hfad.avc.data.model.Template
+import com.lastaurus.avc.data.model.Template
 
 @Dao
 interface TemplateDao {

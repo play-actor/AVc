@@ -1,4 +1,4 @@
-package com.hfad.avc;
+package com.lastaurus.automatic_congratulations;
 
 import android.content.Context;
 

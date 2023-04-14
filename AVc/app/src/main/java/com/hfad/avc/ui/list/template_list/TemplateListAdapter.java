@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.list.template_list;
+package com.lastaurus.automatic_congratulations.ui.list.template_list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hfad.avc.R;
-import com.hfad.avc.data.model.Template;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.data.model.Template;
 
 import java.util.List;
 

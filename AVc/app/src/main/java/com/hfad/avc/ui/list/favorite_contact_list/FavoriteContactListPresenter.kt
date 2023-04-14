@@ -1,8 +1,8 @@
-package com.hfad.avc.ui.list.favorite_contact_list
+package com.lastaurus.avc.ui.list.favorite_contact_list
 
 
-import com.hfad.avc.dagger.ComponentManager
-import com.hfad.avc.managers.DBManager
+import com.lastaurus.avc.dagger.ComponentManager
+import com.lastaurus.avc.managers.DBManager
 import moxy.MvpPresenter
 import javax.inject.Inject
 

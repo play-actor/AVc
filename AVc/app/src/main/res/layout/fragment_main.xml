@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/mainFrag"
     android:background="@color/background"
-    tools:context="com.hfad.avc.ui.main_avtivity.MainActivity">
+    tools:context="com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"

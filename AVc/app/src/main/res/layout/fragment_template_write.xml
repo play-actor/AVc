@@ -8,11 +8,11 @@
 
         <variable
             name="templateDetail"
-            type="com.hfad.avc.data.model.Template" />
+            type="com.lastaurus.automatic_congratulations.data.model.Template" />
 
         <variable
             name="presenterTemplate"
-            type="com.hfad.avc.ui.template.СhangeTemplatePresenter2" />
+            type="com.lastaurus.automatic_congratulations.ui.template.СhangeTemplatePresenter2" />
 
     </data>
     <ScrollView
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        tools:context="com.hfad.avc.ui.main_avtivity.MainActivity">
+        tools:context="com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

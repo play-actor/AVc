@@ -1,7 +1,7 @@
-package com.hfad.avc
+package com.lastaurus.avc
 
 import android.app.Application
-import com.hfad.avc.dagger.ComponentManager.Companion.instance
+import com.lastaurus.avc.dagger.ComponentManager.Companion.instance
 
 class AvcApplication : Application() {
    companion object {

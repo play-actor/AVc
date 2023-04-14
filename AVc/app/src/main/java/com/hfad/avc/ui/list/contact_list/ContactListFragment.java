@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.list.contact_list;
+package com.lastaurus.automatic_congratulations.ui.list.contact_list;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -18,12 +18,12 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hfad.avc.BaseFragment;
-import com.hfad.avc.R;
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.data.model.Contact;
-import com.hfad.avc.managers.DBManager;
-import com.hfad.avc.ui.list.ListAdapter;
+import com.lastaurus.automatic_congratulations.BaseFragment;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
+import com.lastaurus.automatic_congratulations.managers.DBManager;
+import com.lastaurus.automatic_congratulations.ui.list.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

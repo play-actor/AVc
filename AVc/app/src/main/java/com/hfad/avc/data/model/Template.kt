@@ -1,4 +1,4 @@
-package com.hfad.avc.data.model
+package com.lastaurus.avc.data.model
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable

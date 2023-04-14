@@ -1,6 +1,6 @@
-package com.hfad.avc.ui.contact;
+package com.lastaurus.automatic_congratulations.ui.contact;
 
-import com.hfad.avc.data.model.Contact;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
 
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;

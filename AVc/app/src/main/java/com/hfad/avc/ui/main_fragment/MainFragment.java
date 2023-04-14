@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.main_fragment;
+package com.lastaurus.automatic_congratulations.ui.main_fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.navigation.NavigationBarView;
-import com.hfad.avc.R;
-import com.hfad.avc.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
 
 public class MainFragment extends Fragment {
 

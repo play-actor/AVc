@@ -16,7 +16,7 @@ android {
 //    def codeName = formattedDate.toString()
 
     defaultConfig {
-        applicationId "com.hfad.avc"
+        applicationId "com.lastaurus.avc"
         minSdkVersion 24
         targetSdkVersion 33
 //        versionCode code

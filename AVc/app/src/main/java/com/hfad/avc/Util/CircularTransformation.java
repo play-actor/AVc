@@ -1,4 +1,4 @@
-package com.hfad.avc.Util;
+package com.lastaurus.automatic_congratulations.Util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

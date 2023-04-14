@@ -1,4 +1,4 @@
-package com.hfad.avc.Util
+package com.lastaurus.avc.Util
 
 import androidx.room.TypeConverter
 import java.util.*

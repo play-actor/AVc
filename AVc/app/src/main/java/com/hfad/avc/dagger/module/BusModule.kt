@@ -1,6 +1,6 @@
-package com.hfad.avc.dagger.module
+package com.lastaurus.avc.dagger.module
 
-import com.hfad.avc.bus.RxBus
+import com.lastaurus.avc.bus.RxBus
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

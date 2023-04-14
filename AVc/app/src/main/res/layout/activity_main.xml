@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/mainFragApp"
     android:background="@color/background"
-    tools:context="com.hfad.avc.ui.main_avtivity.MainActivity">
+    tools:context="com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"

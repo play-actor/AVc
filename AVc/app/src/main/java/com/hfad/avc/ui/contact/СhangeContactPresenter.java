@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.contact;
+package com.lastaurus.automatic_congratulations.ui.contact;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,13 +7,13 @@ import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
 
-import com.hfad.avc.R;
-import com.hfad.avc.bus.RxBus;
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.dagger.module.ImageModule;
-import com.hfad.avc.data.database.AppDatabase;
-import com.hfad.avc.data.model.Contact;
-import com.hfad.avc.data.model.Template;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.bus.RxBus;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.dagger.module.ImageModule;
+import com.lastaurus.automatic_congratulations.data.database.AppDatabase;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
+import com.lastaurus.automatic_congratulations.data.model.Template;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

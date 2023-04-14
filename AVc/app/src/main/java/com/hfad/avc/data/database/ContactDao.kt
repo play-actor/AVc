@@ -1,7 +1,7 @@
-package com.hfad.avc.data.database
+package com.lastaurus.avc.data.database
 
 import androidx.room.*
-import com.hfad.avc.data.model.Contact
+import com.lastaurus.avc.data.model.Contact
 
 @Dao
 interface ContactDao {

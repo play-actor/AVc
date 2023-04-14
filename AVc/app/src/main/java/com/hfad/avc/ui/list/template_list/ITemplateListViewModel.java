@@ -1,6 +1,6 @@
-package com.hfad.avc.ui.list.template_list;
+package com.lastaurus.automatic_congratulations.ui.list.template_list;
 
-import com.hfad.avc.data.model.Template;
+import com.lastaurus.automatic_congratulations.data.model.Template;
 
 import java.util.List;
 

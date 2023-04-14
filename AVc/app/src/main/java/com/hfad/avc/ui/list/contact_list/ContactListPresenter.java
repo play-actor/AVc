@@ -1,9 +1,9 @@
-package com.hfad.avc.ui.list.contact_list;
+package com.lastaurus.automatic_congratulations.ui.list.contact_list;
 
 import com.github.terrakok.cicerone.Router;
-import com.hfad.avc.cicerone.Screens;
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.managers.DBManager;
+import com.lastaurus.automatic_congratulations.cicerone.Screens;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.managers.DBManager;
 
 import javax.inject.Inject;
 

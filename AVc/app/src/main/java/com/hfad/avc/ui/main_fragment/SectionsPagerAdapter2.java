@@ -1,13 +1,13 @@
-package com.hfad.avc.ui.main_fragment;
+package com.lastaurus.automatic_congratulations.ui.main_fragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.hfad.avc.ui.list.all_congratulations_list.AllCongratulationsListFragment;
-import com.hfad.avc.ui.list.contact_list.ContactListFragment;
-import com.hfad.avc.ui.list.favorite_contact_list.FavoriteContactListFragment;
-import com.hfad.avc.ui.list.template_list.TemplateListFragment;
+import com.lastaurus.automatic_congratulations.ui.list.all_congratulations_list.AllCongratulationsListFragment;
+import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment;
+import com.lastaurus.automatic_congratulations.ui.list.favorite_contact_list.FavoriteContactListFragment;
+import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListFragment;
 
 public class SectionsPagerAdapter2 extends FragmentStateAdapter {
 

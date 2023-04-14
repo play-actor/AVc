@@ -1,4 +1,4 @@
-package com.hfad.avc.bus
+package com.lastaurus.avc.bus
 
 
 import io.reactivex.rxjava3.core.Observable

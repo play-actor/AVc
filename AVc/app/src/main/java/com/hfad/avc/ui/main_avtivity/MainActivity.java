@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.main_avtivity;
+package com.lastaurus.automatic_congratulations.ui.main_avtivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,12 +17,12 @@ import androidx.fragment.app.Fragment;
 import com.github.terrakok.cicerone.Command;
 import com.github.terrakok.cicerone.Navigator;
 import com.github.terrakok.cicerone.NavigatorHolder;
-import com.hfad.avc.ChainHolder;
-import com.hfad.avc.R;
-import com.hfad.avc.bus.RxBus;
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.dagger.ExtSupportAppNavigator;
-import com.hfad.avc.managers.DBManager;
+import com.lastaurus.automatic_congratulations.ChainHolder;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.bus.RxBus;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.dagger.ExtSupportAppNavigator;
+import com.lastaurus.automatic_congratulations.managers.DBManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.main_avtivity;
+package com.lastaurus.automatic_congratulations.ui.main_avtivity;
 
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;

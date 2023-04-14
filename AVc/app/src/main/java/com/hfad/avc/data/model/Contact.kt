@@ -1,4 +1,4 @@
-package com.hfad.avc.data.model
+package com.lastaurus.avc.data.model
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
@@ -6,7 +6,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.hfad.avc.Util.Converter
+import com.lastaurus.avc.Util.Converter
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.format.DateTimeFormat

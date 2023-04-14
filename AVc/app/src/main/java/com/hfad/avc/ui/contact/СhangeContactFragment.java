@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.contact;
+package com.lastaurus.automatic_congratulations.ui.contact;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -22,11 +22,11 @@ import androidx.work.Data;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.avc.R;
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.data.model.Contact;
-import com.hfad.avc.databinding.FragmentContactBinding;
-import com.hfad.avc.managers.DBManager;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
+import com.lastaurus.automatic_congratulations.databinding.FragmentContactBinding;
+import com.lastaurus.automatic_congratulations.managers.DBManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

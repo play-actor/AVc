@@ -1,4 +1,4 @@
-package com.hfad.avc.managers;
+package com.lastaurus.automatic_congratulations.managers;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -12,11 +12,11 @@ import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.data.database.AppDatabase;
-import com.hfad.avc.data.database.ContactDao;
-import com.hfad.avc.data.model.Contact;
-import com.hfad.avc.data.model.Template;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.data.database.AppDatabase;
+import com.lastaurus.automatic_congratulations.data.database.ContactDao;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
+import com.lastaurus.automatic_congratulations.data.model.Template;
 
 import java.util.ArrayList;
 import java.util.Collections;

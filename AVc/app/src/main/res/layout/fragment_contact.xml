@@ -8,11 +8,11 @@
 
         <variable
             name="contactDetail"
-            type="com.hfad.avc.data.model.Contact" />
+            type="com.lastaurus.automatic_congratulations.data.model.Contact" />
 
         <variable
             name="presenter"
-            type="com.hfad.avc.ui.contact.СhangeContactPresenter" />
+            type="com.lastaurus.automatic_congratulations.ui.contact.СhangeContactPresenter" />
 
     </data>
 

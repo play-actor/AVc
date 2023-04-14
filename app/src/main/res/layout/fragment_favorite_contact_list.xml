@@ -5,7 +5,7 @@
     android:id="@+id/ContactFavoritesList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hfad.avc.ui.list.favorite_contact_list.FavoriteContactListFragment">
+    tools:context="com.lastaurus.automatic_congratulations.ui.list.favorite_contact_list.FavoriteContactListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_favorites_contact"

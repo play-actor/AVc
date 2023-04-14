@@ -1,8 +1,8 @@
-package com.hfad.avc.ui.main_avtivity;
+package com.lastaurus.automatic_congratulations.ui.main_avtivity;
 
 import com.github.terrakok.cicerone.Router;
-import com.hfad.avc.cicerone.Screens;
-import com.hfad.avc.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.cicerone.Screens;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
 
 import javax.inject.Inject;
 

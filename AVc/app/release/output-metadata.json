@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.hfad.avc",
+  "applicationId": "com.lastaurus.avc",
   "variantName": "processReleaseResources",
   "elements": [
     {

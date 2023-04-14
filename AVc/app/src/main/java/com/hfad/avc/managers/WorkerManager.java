@@ -1,4 +1,4 @@
-package com.hfad.avc.managers;
+package com.lastaurus.automatic_congratulations.managers;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,8 +13,8 @@ import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.hfad.avc.R;
-import com.hfad.avc.ui.main_avtivity.MainActivity;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity;
 
 
 public class WorkerManager extends Worker {

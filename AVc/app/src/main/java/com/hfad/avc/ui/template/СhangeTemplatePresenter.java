@@ -1,13 +1,13 @@
-package com.hfad.avc.ui.template;
+package com.lastaurus.automatic_congratulations.ui.template;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import com.github.terrakok.cicerone.Router;
-import com.hfad.avc.cicerone.Screens;
-import com.hfad.avc.dagger.ComponentManager;
-import com.hfad.avc.data.database.AppDatabase;
-import com.hfad.avc.data.model.Template;
+import com.lastaurus.automatic_congratulations.cicerone.Screens;
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager;
+import com.lastaurus.automatic_congratulations.data.database.AppDatabase;
+import com.lastaurus.automatic_congratulations.data.model.Template;
 
 import javax.inject.Inject;
 

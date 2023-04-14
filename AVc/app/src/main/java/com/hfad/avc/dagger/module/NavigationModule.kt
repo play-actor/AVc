@@ -1,4 +1,4 @@
-package com.hfad.avc.dagger.module
+package com.lastaurus.avc.dagger.module
 
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder

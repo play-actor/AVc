@@ -1,4 +1,4 @@
-package com.hfad.starbuzz;
+package com.lastaurus.starbuzz;
 
 import org.junit.Test;
 

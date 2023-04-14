@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.template;
+package com.lastaurus.automatic_congratulations.ui.template;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.hfad.avc.R;
-import com.hfad.avc.data.model.Template;
-import com.hfad.avc.databinding.FragmentTemplateWriteBinding;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.data.model.Template;
+import com.lastaurus.automatic_congratulations.databinding.FragmentTemplateWriteBinding;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;

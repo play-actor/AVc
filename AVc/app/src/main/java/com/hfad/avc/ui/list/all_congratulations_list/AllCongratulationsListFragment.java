@@ -1,4 +1,4 @@
-package com.hfad.avc.ui.list.all_congratulations_list;
+package com.lastaurus.automatic_congratulations.ui.list.all_congratulations_list;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hfad.avc.R;
-import com.hfad.avc.data.model.Contact;
-import com.hfad.avc.ui.contact.СhangeContactFragment;
-import com.hfad.avc.ui.list.ListAdapter;
+import com.lastaurus.automatic_congratulations.R;
+import com.lastaurus.automatic_congratulations.data.model.Contact;
+import com.lastaurus.automatic_congratulations.ui.contact.СhangeContactFragment;
+import com.lastaurus.automatic_congratulations.ui.list.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

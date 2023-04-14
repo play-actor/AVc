@@ -1,6 +1,6 @@
-package com.hfad.avc.ui.template;
+package com.lastaurus.automatic_congratulations.ui.template;
 
-import com.hfad.avc.data.model.Template;
+import com.lastaurus.automatic_congratulations.data.model.Template;
 
 import moxy.MvpView;
 import moxy.viewstate.strategy.AddToEndSingleStrategy;

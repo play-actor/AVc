@@ -8,11 +8,11 @@
 
         <variable
             name="templateDetail"
-            type="com.hfad.avc.data.model.Template" />
+            type="com.lastaurus.automatic_congratulations.data.model.Template" />
 
         <variable
             name="presenterTemplate"
-            type="com.hfad.avc.ui.template.СhangeTemplatePresenter" />
+            type="com.lastaurus.automatic_congratulations.ui.template.СhangeTemplatePresenter" />
 
     </data>
 

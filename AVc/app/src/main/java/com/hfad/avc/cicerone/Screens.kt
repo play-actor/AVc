@@ -1,13 +1,13 @@
-package com.hfad.avc.cicerone
+package com.lastaurus.avc.cicerone
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentFactory
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import com.hfad.avc.ui.contact.СhangeContactFragment
-import com.hfad.avc.ui.main_fragment.MainFragment
-import com.hfad.avc.ui.list.contact_list.ContactListFragment
-import com.hfad.avc.ui.list.template_list.TemplateListFragment
-import com.hfad.avc.ui.template.СhangeTemplateFragment
+import com.lastaurus.avc.ui.contact.СhangeContactFragment
+import com.lastaurus.avc.ui.main_fragment.MainFragment
+import com.lastaurus.avc.ui.list.contact_list.ContactListFragment
+import com.lastaurus.avc.ui.list.template_list.TemplateListFragment
+import com.lastaurus.avc.ui.template.СhangeTemplateFragment
 
 
 object Screens {

@@ -1,11 +1,11 @@
-package com.hfad.avc.dagger.module;
+package com.lastaurus.automatic_congratulations.dagger.module;
 
 import android.content.Context;
 import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
 
-import com.hfad.avc.Util.CircularTransformation;
+import com.lastaurus.automatic_congratulations.Util.CircularTransformation;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 

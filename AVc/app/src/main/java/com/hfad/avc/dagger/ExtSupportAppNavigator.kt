@@ -1,4 +1,4 @@
-package com.hfad.avc.dagger
+package com.lastaurus.avc.dagger
 
 import android.content.ActivityNotFoundException
 import androidx.fragment.app.*

@@ -1,8 +1,8 @@
-package com.hfad.starbuzz;
-
-import org.junit.Test;
+package com.lastaurus.starbuzz;
 
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
