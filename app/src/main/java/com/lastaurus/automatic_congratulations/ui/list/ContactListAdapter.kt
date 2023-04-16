@@ -59,14 +59,12 @@ class ContactListAdapter(private val contactList: List<Contact>) :
    class ViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
       val icon: ImageView
       val favorite: ImageView
-      private val iconNotification: ImageView
       val nameText: TextView
       val phoneText: TextView
 
       init {
          icon = view.findViewById(R.id.icon)
          favorite = view.findViewById(R.id.favorite)
-         iconNotification = view.findViewById(R.id.icon_notification)
          nameText = view.findViewById(R.id.nameListContact)
          phoneText = view.findViewById(R.id.nameListPhone)
       }

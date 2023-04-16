@@ -185,7 +185,7 @@ class DBManager @Singleton constructor() {
             val countries = context.resources.getStringArray(R.array.congratulations_templates)
             if (db.templateDao().size == "0") {
                for (i in countries.indices) {
-                  template.setId(i.toString())
+                  template.setId(i)
                   template.setTextTemplate(countries[i])
                   template.setFavorite(false)
                   db.templateDao().insert(template)

@@ -15,7 +15,7 @@ interface TemplateDao {
    fun getById(id: String): Template?
 
    @get:Query("SELECT COUNT(*) FROM template")
-   val size: String
+   val size: Int
 
    @Insert
    fun insert(template: Template)

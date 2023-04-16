@@ -10,17 +10,17 @@ import androidx.room.PrimaryKey
 @Entity
 data class Template(
    @PrimaryKey
-   private var id: String = "",
+   private var id: Int = Int.MIN_VALUE,
    private var textTemplate: String = "",
    private var favorite: Boolean = false
 ) : BaseObservable() {
 
    @Bindable
-   fun getId(): String {
+   fun getId(): Int {
       return id
    }
 
-   fun setId(id: String) {
+   fun setId(id: Int) {
       this.id = id
       notifyPropertyChanged(BR.id)
    }

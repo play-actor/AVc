@@ -21,16 +21,6 @@
         app:layout_constraintTop_toTopOf="@+id/nameListContact"
         tools:srcCompat="@drawable/user_images" />
 
-    <ImageView
-        android:id="@+id/icon_notification"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/nameListContact"
-        app:layout_constraintStart_toEndOf="@+id/nameListContact"
-        app:layout_constraintTop_toTopOf="@+id/nameListContact"
-        app:srcCompat="@drawable/notifications_active_black_24dp" />
-
     <TextView
         android:id="@+id/nameListContact"
         android:layout_width="wrap_content"
