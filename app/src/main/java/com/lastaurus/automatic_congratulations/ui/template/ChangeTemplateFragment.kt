@@ -7,36 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
+import androidx.lifecycle.ViewModelProvider
 import com.lastaurus.automatic_congratulations.R
-import com.lastaurus.automatic_congratulations.data.model.Template
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.databinding.FragmentTemplateBinding
 import moxy.MvpAppCompatFragment
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 
 
-class СhangeTemplateFragment : MvpAppCompatFragment(), IСhangeTemplateViewModel {
-   @InjectPresenter
-   lateinit var presenter: СhangeTemplatePresenter
+class ChangeTemplateFragment : MvpAppCompatFragment() {
    lateinit var toolbar: Toolbar
    lateinit var favoriteTemplate: MenuItem
    lateinit var changeTemplate: MenuItem
    lateinit var textTemplate: EditText
    lateinit var binding: FragmentTemplateBinding
+   private lateinit var viewModel: TemplateViewModel
 
-   @ProvidePresenter
-   fun ProvidePresenterContactPresenter(): СhangeTemplatePresenter {
-      return СhangeTemplatePresenter(arguments)
+   init {
+      ComponentManager.instance.appComponent.inject(this)
    }
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
-      this.binding = DataBindingUtil.inflate(inflater, R.layout.fragment_template, container, false)
+      this.binding = FragmentTemplateBinding.inflate(inflater, container, false)
       val view: View = binding.root
       this.toolbar = view.findViewById(R.id.toolbar)
       this.toolbar.inflateMenu(R.menu.menu_contact)
@@ -44,21 +38,21 @@ class СhangeTemplateFragment : MvpAppCompatFragment(), IСhangeTemplateViewMode
       this.favoriteTemplate = toolbar.menu.findItem(R.id.favoriteObject)
       this.changeTemplate = toolbar.menu.findItem(R.id.changeObject)
       this.textTemplate = binding.textTemplate
-      this.favoriteTemplate.let { presenter.setFavoriteTemplate(it) }
+
+      this.textTemplate.setText(this.viewModel.getText())
+      this.favoriteTemplate.let { setFavoriteTemplate(it, viewModel.getFavorite()) }
       this.favoriteTemplate.setOnMenuItemClickListener {
-         presenter.apply {
-            setOnClickFavoriteTemplate()
-            setFavoriteTemplate(favoriteTemplate)
-            updateTemplateDB()
+         with(viewModel) {
+            setFavoriteTemplate(favoriteTemplate, changeFavorite())
+            viewModel.update()
          }
          false
       }
       this.changeTemplate.setOnMenuItemClickListener {
-         val isVisible = textTemplate.isCursorVisible
-         if (isVisible) {
-            presenter.updateTemplateDB()
+         if (textTemplate.isCursorVisible) {
+            viewModel.saveText(textTemplate.text.toString())
          }
-         textTemplate.apply {
+         with(textTemplate) {
             isCursorVisible = !isVisible
             isFocusable = !isVisible
             isClickable = !isVisible
@@ -68,23 +62,17 @@ class СhangeTemplateFragment : MvpAppCompatFragment(), IСhangeTemplateViewMode
       return view
    }
 
+   fun setFavoriteTemplate(favoriteTemplate: MenuItem, favorite: Boolean) {
+      val iconId: Int =
+         if (favorite) R.drawable.ic_baseline_star_favorite else R.drawable.ic_baseline_star_no_favorite
+      favoriteTemplate.setIcon(iconId)
+   }
+
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
+      this.viewModel = ViewModelProvider(this)[TemplateViewModel::class.java]
+      viewModel.initTemplate(arguments?.getInt("template_Id", -1))
       setHasOptionsMenu(true)
    }
 
-   override fun setData(template: Template?) {
-      this.binding.apply {
-         templateDetail = template
-         presenterTemplate = presenter
-      }
-   }
-
-   override fun onInsertDB(newId: String?) {
-      this.presenter.setNewTemplateText()
-   }
-
-   override fun sendOkUsers() {
-      Snackbar.make(requireView(), "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show()
-   }
 }

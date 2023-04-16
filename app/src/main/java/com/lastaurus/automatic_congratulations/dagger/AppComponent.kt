@@ -20,7 +20,8 @@ import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateLis
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainPresenter
 import com.lastaurus.automatic_congratulations.ui.main_fragment.MainFragment
-import com.lastaurus.automatic_congratulations.ui.template.СhangeTemplatePresenter
+import com.lastaurus.automatic_congratulations.ui.template.ChangeTemplateFragment
+import com.lastaurus.automatic_congratulations.ui.template.TemplateViewModel
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -39,6 +40,9 @@ interface AppComponent {
    fun inject(classes: MainFragment)
 
    fun inject(classes: СhangeContactFragment)
+
+   fun inject(classes: ChangeTemplateFragment)
+   fun inject(classes: TemplateViewModel)
 
    fun inject(classes: ContactListFragment)
 
@@ -64,5 +68,4 @@ interface AppComponent {
 
    fun inject(classes: СhangeContactPresenter)
 
-   fun inject(classes: СhangeTemplatePresenter)
 }
