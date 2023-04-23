@@ -7,7 +7,7 @@ import com.lastaurus.automatic_congratulations.ui.list.contact.СhangeContactFra
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment
 import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListFragment
 import com.lastaurus.automatic_congratulations.ui.main_fragment.MainFragment
-import com.lastaurus.automatic_congratulations.ui.template.СhangeTemplateFragment
+import com.lastaurus.automatic_congratulations.ui.template.ChangeTemplateFragment
 
 
 object Screens {
@@ -41,7 +41,7 @@ object Screens {
    @JvmStatic
    fun changeTemplateScreen(templateId:Int) = object : FragmentScreen {
       override fun createFragment(factory: FragmentFactory) =
-         СhangeTemplateFragment().apply {
+         ChangeTemplateFragment().apply {
             val bundle = Bundle()
             bundle.putInt("template_Id", templateId)
             arguments = bundle

@@ -12,7 +12,7 @@ interface TemplateDao {
    val favorite: List<Template>
 
    @Query("SELECT * FROM template WHERE id = :id")
-   fun getById(id: String): Template?
+   fun getById(id: Int): Template?
 
    @get:Query("SELECT COUNT(*) FROM template")
    val size: Int

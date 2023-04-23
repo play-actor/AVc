@@ -22,7 +22,7 @@ class TemplateListPresenter : MvpPresenter<ITemplateListViewModel?>() {
 
    override fun attachView(view: ITemplateListViewModel?) {
       super.attachView(view)
-      dbManager.getTemplateList(0)?.let { viewState!!.setData(it) }
+      dbManager.getTemplateList(0).let { viewState!!.setData(it) }
    }
 
    fun openTemplate(id: Int) {

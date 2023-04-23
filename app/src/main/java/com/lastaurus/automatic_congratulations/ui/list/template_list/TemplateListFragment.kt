@@ -17,7 +17,6 @@ import moxy.presenter.ProvidePresenter
 class TemplateListFragment : BaseFragment(), ITemplateListViewModel {
    @InjectPresenter
    lateinit var presenter: TemplateListPresenter
-   private val TAG = "AVc"
    private var recyclerView: RecyclerView? = null
    private var templatesList: List<Template> = ArrayList()
 

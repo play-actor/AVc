@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.ui.list.CongratulationsListAdapter
-import com.lastaurus.automatic_congratulations.ui.list.CongratulationsListAdapter.Click
-import com.lastaurus.automatic_congratulations.ui.list.contact.СhangeContactFragment
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -26,7 +24,8 @@ class AllCongratulationsListFragment : MvpAppCompatFragment(),
    }
 
    override fun onCreateView(
-      inflater: LayoutInflater, container: ViewGroup?,
+      inflater: LayoutInflater,
+      container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
       val view: View =
@@ -36,18 +35,16 @@ class AllCongratulationsListFragment : MvpAppCompatFragment(),
    }
 
    override fun setData() {
-      // создаем адаптер
       val recyclerListAdapter = CongratulationsListAdapter()
-      // устанавливаем для списка адаптер
-      recyclerView!!.adapter = recyclerListAdapter
-      recyclerListAdapter.setClick(object : Click {
-         override fun click(id: Int) {
-            val contactFragment = СhangeContactFragment.newInstance(id)
-            activity?.supportFragmentManager?.beginTransaction()
-               ?.replace(R.id.root, contactFragment, "ContactFragment")
-               ?.addToBackStack("ContactFragment")
-               ?.commitAllowingStateLoss()
-         }
-      })
+      recyclerView?.adapter = recyclerListAdapter
+//      recyclerListAdapter.setClick(object : Click {
+//         override fun click(id: Int) {
+//            val contactFragment = СhangeContactFragment.newInstance(id)
+//            activity?.supportFragmentManager?.beginTransaction()
+//               ?.replace(R.id.root, contactFragment, "ContactFragment")
+//               ?.addToBackStack("ContactFragment")
+//               ?.commitAllowingStateLoss()
+//         }
+//      })
    }
 }

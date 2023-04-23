@@ -40,7 +40,9 @@ class ChangeTemplateFragment : MvpAppCompatFragment() {
       this.textTemplate = binding.textTemplate
 
       this.textTemplate.setText(this.viewModel.getText())
-      this.favoriteTemplate.let { setFavoriteTemplate(it, viewModel.getFavorite()) }
+      this.favoriteTemplate.let {
+         setFavoriteTemplate(it, viewModel.getFavorite())
+      }
       this.favoriteTemplate.setOnMenuItemClickListener {
          with(viewModel) {
             setFavoriteTemplate(favoriteTemplate, changeFavorite())

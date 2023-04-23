@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        viewBinding = true
     }
 }
 allprojects {
@@ -53,7 +54,6 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
-    implementation "androidx.work:work-runtime:2.8.1"
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
     //RX
@@ -100,6 +100,13 @@ dependencies {
 
     //Пикассо
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
+    implementation 'androidx.activity:activity-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.fragment:fragment-ktx:1.5.6'
 
     implementation project(path: ':ui')
 

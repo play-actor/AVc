@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
          this
       )
       viewPager = view.findViewById(R.id.pager)
-      viewPager?.setAdapter(pagerAdapter)
+      viewPager?.adapter = pagerAdapter
       barView?.setOnItemSelectedListener { item: MenuItem ->
          when (item.itemId) {
             R.id.contactList -> viewPager?.setCurrentItem(0, true)
@@ -60,22 +60,4 @@ class MainFragment : Fragment() {
       return view
    }
 
-   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      super.onViewCreated(view, savedInstanceState)
-   }
-
-   override fun onResume() {
-      // this.viewPager.registerOnPageChangeCallback(onPageChangeCallback);
-      super.onResume()
-   }
-
-   override fun onPause() {
-      //this.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback);
-      super.onPause()
-   }
-
-   override fun onDestroy() {
-      requireActivity().finish()
-      super.onDestroy()
-   }
 }

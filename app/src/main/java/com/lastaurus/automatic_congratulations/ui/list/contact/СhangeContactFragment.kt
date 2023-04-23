@@ -69,22 +69,25 @@ class СhangeContactFragment : MvpAppCompatFragment(), IСhangeContactViewModel 
    ): View? {
       binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
       val view = binding?.root
-      recyclerView = view?.findViewById(R.id.phonelist)
-      iconContact = view?.findViewById(R.id.iconContact)
-      mActionBarToolbar = view?.findViewById(R.id.toolbar)
-      mActionBarToolbar?.inflateMenu(R.menu.menu_contact)
-      mActionBarToolbar?.setNavigationOnClickListener { requireActivity().onBackPressed() }
+      view?.let {
+         recyclerView = it.findViewById(R.id.phonelist)
+         iconContact = it.findViewById(R.id.iconContact)
+         mActionBarToolbar = it.findViewById(R.id.toolbar)
+      }
+      mActionBarToolbar?.let {
+         it.inflateMenu(R.menu.menu_contact)
+         it.setNavigationOnClickListener { requireActivity().onBackPressed() }
+      }
       favoriteContact = mActionBarToolbar?.menu?.findItem(R.id.favoriteObject)
       iconContact?.let { presenter.setIconContact(it) }
-      favoriteContact?.let { it ->
-         presenter.setFavoriteContact(it)
-         it.setOnMenuItemClickListener {
+      favoriteContact?.let { favoriteContact ->
+         presenter.setFavoriteContact(favoriteContact)
+         favoriteContact.setOnMenuItemClickListener {
             presenter.setOnClickFavoriteContact()
-            presenter.setFavoriteContact(it)
+            presenter.setFavoriteContact(favoriteContact)
             presenter.updateContactDB()
             false
          }
-
       }
       return view
    }

@@ -3,6 +3,7 @@ package com.lastaurus.automatic_congratulations.ui.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lastaurus.automatic_congratulations.R
@@ -25,9 +26,10 @@ class TemplateListAdapter(private val templateList: List<Template>) :
       val template = templateList[position]
       holder.apply {
          templateView.text = template.getTextTemplate()
+         favorite.visibility = if (template.getFavorite()) View.VISIBLE else View.INVISIBLE
          itemView.setOnClickListener {
             if (click != null) {
-               click!!.click(template.getId().toInt())
+               click!!.click(template.getId())
             }
          }
       }
@@ -39,9 +41,11 @@ class TemplateListAdapter(private val templateList: List<Template>) :
 
    inner class ViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
       val templateView: TextView
+      val favorite: ImageView
 
       init {
          templateView = view.findViewById<View>(R.id.text_template) as TextView
+         favorite = view.findViewById(R.id.favorite_template)
       }
    }
 

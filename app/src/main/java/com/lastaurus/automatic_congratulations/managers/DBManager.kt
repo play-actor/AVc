@@ -132,8 +132,6 @@ class DBManager @Singleton constructor() {
          null
       )
       try {
-         val contactsListForUpdate = db.contactDao().all()
-         val map: Map<String, Contact> = HashMap()
          if (cursor != null) {
             while (cursor.moveToNext()) {
                @SuppressLint("Range") val id =
@@ -179,11 +177,12 @@ class DBManager @Singleton constructor() {
                   }
                   pCur.close()
                }
-               db.contactDao().upsert(contact)
+               db.contactDao().insert(contact)
+               db.contactDao().update(contact)
                contact.clear()
             }
             val countries = context.resources.getStringArray(R.array.congratulations_templates)
-            if (db.templateDao().size == "0") {
+            if (db.templateDao().size == 0) {
                for (i in countries.indices) {
                   template.setId(i)
                   template.setTextTemplate(countries[i])

@@ -61,7 +61,6 @@ class MainActivity : MvpAppCompatActivity(), ChainHolder, IMainViewModel {
          supportFragmentManager.executePendingTransactions()
       }
    }
-   private var TAG = "gera"
    private val PERMISSION_REQUEST_CODE_READ_CONTACTS = 1
    private var coordLayout: CoordinatorLayout? = null
 
@@ -114,15 +113,14 @@ class MainActivity : MvpAppCompatActivity(), ChainHolder, IMainViewModel {
       var finalText = text
       val taboo = "+-"
       for (c in taboo.toCharArray()) {
-         finalText = finalText.replace(c, ' ')
-         finalText = finalText.replace(" ".toRegex(), "")
+         finalText = finalText.replace(c, ' ').replace(" ".toRegex(), "")
       }
       return finalText
    }
 
-   override fun onResumeFragments() {
-      super.onResumeFragments()
+   override fun onResume() {
       navigatorHolder.setNavigator(navigator)
+      super.onResume()
    }
 
    override fun onPause() {
@@ -131,8 +129,8 @@ class MainActivity : MvpAppCompatActivity(), ChainHolder, IMainViewModel {
    }
 
    @SuppressLint("CheckResult")
-   fun updateDB(): Boolean {
-      return if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+   fun updateDB() {
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
          == PackageManager.PERMISSION_GRANTED
       ) {
          dbManager.loadDB()
@@ -141,19 +139,17 @@ class MainActivity : MvpAppCompatActivity(), ChainHolder, IMainViewModel {
             .subscribe(
                { list: List<Contact?> ->
                   Log.i(
-                     TAG, "Обновление базы данных завершено. " +
+                     "gera", "Обновление базы данных завершено. " +
                            "Количество записей: " + list.size
                   )
                }
             ) { obj: Throwable -> obj.printStackTrace() }
-         true
       } else {
          ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.READ_CONTACTS),
             PERMISSION_REQUEST_CODE_READ_CONTACTS
          )
-         false
       }
    }
 

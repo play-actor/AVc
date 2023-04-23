@@ -12,7 +12,7 @@ data class Template(
    @PrimaryKey
    private var id: Int = Int.MIN_VALUE,
    private var textTemplate: String = "",
-   private var favorite: Boolean = false
+   private var favorite: Boolean = false,
 ) : BaseObservable() {
 
    @Bindable
