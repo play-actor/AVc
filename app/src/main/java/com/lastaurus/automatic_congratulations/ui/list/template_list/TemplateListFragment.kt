@@ -14,23 +14,24 @@ import com.lastaurus.automatic_congratulations.ui.list.TemplateListAdapter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
-class TemplateListFragment : BaseFragment(), ITemplateListViewModel {
-   @InjectPresenter
-   lateinit var presenter: TemplateListPresenter
+
+class TemplateListFragment : MvpAppCompatFragment() {
+
    private var recyclerView: RecyclerView? = null
-   private var templatesList: List<Template> = ArrayList()
-
-   @ProvidePresenter
-   fun ProvidePresenterTemplatePresenter(): TemplateListPresenter {
-      return TemplateListPresenter()
-   }
-
+   private lateinit var viewModel: TemplateListViewModel
+   lateinit var addTemplate: View
+   lateinit var filter: View
+   lateinit var adapter: TemplateListAdapter
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
-      val inflate: View = inflater.inflate(R.layout.fragment_templatelist, container, false)
-      recyclerView = inflate.findViewById(R.id.TemplateOnList)
+      val view: View = inflater.inflate(
+         com.lastaurus.automatic_congratulations.R.layout.fragment_template_of_congratulations_text_list,
+         container,
+         false
+      )
+      recyclerView = view.findViewById(com.lastaurus.automatic_congratulations.R.id.templateList)
       recyclerView?.addItemDecoration(SpaceItemDecoration())
       return inflate
    }
@@ -55,14 +56,8 @@ class TemplateListFragment : BaseFragment(), ITemplateListViewModel {
       }
    }
 
-   override fun setData(templatesList: List<Template>) {
-      this.templatesList = templatesList
-      val adapter = TemplateListAdapter(this.templatesList)
-      recyclerView?.adapter = adapter
-      adapter.setClick(object : TemplateListAdapter.Click {
-         override fun click(id: Int) {
-            presenter.openTemplate(id)
-         }
-      })
+   override fun onCreate(savedInstanceState: Bundle?) {
+      super.onCreate(savedInstanceState)
+      this.viewModel = ViewModelProvider(this)[TemplateListViewModel::class.java]
    }
 }

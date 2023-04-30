@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
-import com.lastaurus.automatic_congratulations.databinding.FragmentTemplateBinding
 import moxy.MvpAppCompatFragment
 
 

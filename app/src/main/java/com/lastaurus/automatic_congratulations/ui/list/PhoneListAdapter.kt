@@ -23,7 +23,7 @@ class PhoneListAdapter(private val phonelist: ArrayList<String>) :
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       val view: View =
-         LayoutInflater.from(parent.context).inflate(R.layout.phonenomber_item, parent, false)
+         LayoutInflater.from(parent.context).inflate(R.layout.phone_number_item, parent, false)
       return ViewHolder(view)
    }
 

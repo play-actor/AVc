@@ -16,7 +16,7 @@ import com.lastaurus.automatic_congratulations.ui.list.contact.СhangeContactPre
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListPresenter
 import com.lastaurus.automatic_congratulations.ui.list.favorite_contact_list.FavoriteContactListPresenter
-import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListPresenter
+import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListViewModel
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainPresenter
 import com.lastaurus.automatic_congratulations.ui.main_fragment.MainFragment
@@ -43,6 +43,7 @@ interface AppComponent {
 
    fun inject(classes: ChangeTemplateFragment)
    fun inject(classes: TemplateViewModel)
+   fun inject(classes: TemplateListViewModel)
 
    fun inject(classes: ContactListFragment)
 
@@ -61,8 +62,6 @@ interface AppComponent {
    fun inject(classes: FavoriteContactListPresenter)
 
    fun inject(classes: MainActivity)
-
-   fun inject(classes: TemplateListPresenter)
 
    fun inject(classes: MainPresenter)
 

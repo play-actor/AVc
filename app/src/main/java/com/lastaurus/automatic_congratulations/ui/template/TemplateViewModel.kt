@@ -70,6 +70,6 @@ class TemplateViewModel : ViewModel() {
 
    fun saveText(text: String) {
       setText(text)
-      update()
+      upsert()
    }
 }

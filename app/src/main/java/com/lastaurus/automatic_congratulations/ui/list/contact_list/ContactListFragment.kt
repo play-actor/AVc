@@ -101,7 +101,7 @@ class ContactListFragment : BaseFragment(), IContactListViewModel {
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
-      val inflate: View = inflater.inflate(R.layout.fragment_contactlist, container, false)
+      val inflate: View = inflater.inflate(R.layout.fragment_contact_list, container, false)
       recyclerView = inflate.findViewById(R.id.list)
       recyclerView?.addItemDecoration(SpaceItemDecoration())
       return inflate
