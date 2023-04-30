@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -45,10 +43,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:inputType="none"
-                android:backgroundTint="@android:color/transparent"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:clickable="false"
                 android:textColor="@color/colorItemText"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +52,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@tools:sample/lorem/random" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/changeTemplate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:visibility="visible"
+                app:backgroundTint="@color/colorfabAdd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/save_fill0_wght400_grad0_opsz48"
+                app:tint="@color/background" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

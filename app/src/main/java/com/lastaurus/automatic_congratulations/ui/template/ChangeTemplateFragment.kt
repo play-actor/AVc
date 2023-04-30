@@ -9,34 +9,39 @@ import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.lastaurus.automatic_congratulations.R
+import com.lastaurus.automatic_congratulations.bus.RxBus
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import moxy.MvpAppCompatFragment
+import javax.inject.Inject
 
 
 class ChangeTemplateFragment : MvpAppCompatFragment() {
    lateinit var toolbar: Toolbar
    lateinit var favoriteTemplate: MenuItem
-   lateinit var changeTemplate: MenuItem
+   lateinit var changeTemplate: View
    lateinit var textTemplate: EditText
-   lateinit var binding: FragmentTemplateBinding
    private lateinit var viewModel: TemplateViewModel
+
+   @Inject
+   lateinit var rxBus: RxBus
 
    init {
       ComponentManager.instance.appComponent.inject(this)
    }
 
    override fun onCreateView(
-      inflater: LayoutInflater, container: ViewGroup?,
+      inflater: LayoutInflater,
+      container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
-      this.binding = FragmentTemplateBinding.inflate(inflater, container, false)
-      val view: View = binding.root
+      val view: View =
+         inflater.inflate(R.layout.fragment_template_of_congratulations_text, container, false)
       this.toolbar = view.findViewById(R.id.toolbar)
       this.toolbar.inflateMenu(R.menu.menu_contact)
       this.toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
       this.favoriteTemplate = toolbar.menu.findItem(R.id.favoriteObject)
-      this.changeTemplate = toolbar.menu.findItem(R.id.changeObject)
-      this.textTemplate = binding.textTemplate
+      this.changeTemplate = view.findViewById(R.id.changeTemplate)
+      this.textTemplate = view.findViewById(R.id.text_template)
 
       this.textTemplate.setText(this.viewModel.getText())
       this.favoriteTemplate.let {
@@ -49,16 +54,9 @@ class ChangeTemplateFragment : MvpAppCompatFragment() {
          }
          false
       }
-      this.changeTemplate.setOnMenuItemClickListener {
-         if (textTemplate.isCursorVisible) {
-            viewModel.saveText(textTemplate.text.toString())
-         }
-         with(textTemplate) {
-            isCursorVisible = !isVisible
-            isFocusable = !isVisible
-            isClickable = !isVisible
-         }
-         false
+      this.changeTemplate.setOnClickListener {
+         viewModel.saveText(textTemplate.text.toString())
+         rxBus.send("Сохранено")
       }
       return view
    }
