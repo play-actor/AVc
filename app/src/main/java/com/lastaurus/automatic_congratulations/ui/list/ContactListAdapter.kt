@@ -13,8 +13,8 @@ import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import javax.inject.Inject
 
-class ContactListAdapter(private val contactList: List<Contact>) :
-   RecyclerView.Adapter<ContactListAdapter.ViewHolder?>() {
+class ContactListAdapter : RecyclerView.Adapter<ContactListAdapter.ViewHolder?>() {
+   private var contactList: List<Contact> = emptyList()
    private var click: Click? = null
 
    @Inject
@@ -31,6 +31,10 @@ class ContactListAdapter(private val contactList: List<Contact>) :
       val view: View =
          LayoutInflater.from(parent.context).inflate(R.layout.contactlist_item, parent, false)
       return ViewHolder(view)
+   }
+
+   fun setList(contactList: List<Contact>?) {
+      contactList?.let { this.contactList = it }
    }
 
    fun setClick(click: Click) {

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/contactList"
         android:contentDescription="@string/content_description_search"
         android:icon="@drawable/contact_list"
-        android:title="@string/contactList"/>
-
-    <item
-        android:id="@+id/contactfavorites"
-        android:contentDescription="@string/content_description_search"
-        android:icon="@drawable/ic_baseline_star_favorite"
-        android:title="@string/contactfavorites" />
+        android:title="@string/contactList" />
 
     <item
         android:id="@+id/templated_contacts"

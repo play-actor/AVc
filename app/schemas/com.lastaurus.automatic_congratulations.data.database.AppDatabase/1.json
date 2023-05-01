@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cbdf6fee835a69a99b89b6a381927b75",
+    "identityHash": "600b00bea9db3334c83f30b1dcaf5e76",
     "entities": [
       {
         "tableName": "Contact",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `phoneList` TEXT NOT NULL, `uriThumbnail` TEXT NOT NULL, `uriFull` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `phoneList` TEXT NOT NULL, `uriThumbnail` TEXT NOT NULL, `uriFull` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -158,7 +158,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cbdf6fee835a69a99b89b6a381927b75')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '600b00bea9db3334c83f30b1dcaf5e76')"
     ]
   }
 }

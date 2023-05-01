@@ -72,7 +72,7 @@ class MainActivity : MvpAppCompatActivity(), ChainHolder, IMainViewModel {
             smsSend(phone, textTemplate)
          }
       }
-      updateDB()
+      if (dbManager.db.contactDao().size == 0) updateDB()
    }
 
    @SuppressLint("IntentReset")

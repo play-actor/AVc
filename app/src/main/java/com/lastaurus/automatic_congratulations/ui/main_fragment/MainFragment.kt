@@ -37,9 +37,8 @@ class MainFragment : Fragment() {
       barView?.setOnItemSelectedListener { item: MenuItem ->
          when (item.itemId) {
             R.id.contactList -> viewPager?.setCurrentItem(0, true)
-            R.id.contactfavorites -> viewPager?.setCurrentItem(1, true)
-            R.id.templated_contacts -> viewPager?.setCurrentItem(2, true)
-            R.id.templates -> viewPager?.setCurrentItem(3, true)
+            R.id.templated_contacts -> viewPager?.setCurrentItem(1, true)
+            R.id.templates -> viewPager?.setCurrentItem(2, true)
             else -> viewPager?.setCurrentItem(0, true)
          }
          true
@@ -48,9 +47,8 @@ class MainFragment : Fragment() {
          override fun onPageSelected(position: Int) {
             when (position) {
                0 -> barView?.setSelectedItemId(R.id.contactList)
-               1 -> barView?.setSelectedItemId(R.id.contactfavorites)
-               2 -> barView?.setSelectedItemId(R.id.templated_contacts)
-               3 -> barView?.setSelectedItemId(R.id.templates)
+               1 -> barView?.setSelectedItemId(R.id.templated_contacts)
+               2 -> barView?.setSelectedItemId(R.id.templates)
                else -> barView?.setSelectedItemId(R.id.contactList)
             }
             super.onPageSelected(position)

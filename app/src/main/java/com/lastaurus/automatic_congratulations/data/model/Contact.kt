@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Contact(
    @PrimaryKey
-   private var id: String = "",
+   private var id: Int = Int.MIN_VALUE,
    private var name: String = "",
    private var phoneList: ArrayList<String> = ArrayList(),
    private var uriThumbnail: String = "",
@@ -43,7 +43,7 @@ data class Contact(
       return name
    }
 
-   fun setId(id: String) {
+   fun setId(id: Int) {
       this.id = id
       notifyPropertyChanged(BR.id)
    }
@@ -73,7 +73,7 @@ data class Contact(
    }
 
    @Bindable
-   fun getId(): String {
+   fun getId(): Int {
       return id
    }
 
@@ -88,7 +88,7 @@ data class Contact(
    }
 
    fun clear() {
-      id = ""
+      id = Int.MIN_VALUE
       name = ""
       phoneList.clear()
       uriThumbnail = ""

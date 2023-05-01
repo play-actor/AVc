@@ -1,6 +1,8 @@
 package com.lastaurus.automatic_congratulations.ui.template
 
+import android.view.MenuItem
 import androidx.lifecycle.ViewModel
+import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.data.model.Template
 import javax.inject.Inject
@@ -40,7 +42,7 @@ class TemplateViewModel : ViewModel() {
       template?.let { changeTemplateUseCase.upsertTemplateDB(it) }
    }
 
-   fun getListSize(): Int {
+   private fun getListSize(): Int {
       return changeTemplateUseCase.getTemplateListSize()
    }
 
@@ -48,9 +50,6 @@ class TemplateViewModel : ViewModel() {
       return template?.getFavorite() ?: false
    }
 
-   fun setFavorite(favorite: Boolean) {
-      this.favorite = favorite
-   }
 
    fun changeFavorite(): Boolean {
       this.favorite = !this.favorite
@@ -63,7 +62,7 @@ class TemplateViewModel : ViewModel() {
       return textTemplate
    }
 
-   fun setText(text: String) {
+   private fun setText(text: String) {
       template?.setTextTemplate(text)
       this.textTemplate = text
    }
@@ -71,5 +70,11 @@ class TemplateViewModel : ViewModel() {
    fun saveText(text: String) {
       setText(text)
       upsert()
+   }
+
+   fun setFavoriteTemplate(favoriteTemplate: MenuItem, favorite: Boolean) {
+      val iconId: Int =
+         if (favorite) R.drawable.ic_baseline_star_favorite else R.drawable.ic_baseline_star_no_favorite
+      favoriteTemplate.setIcon(iconId)
    }
 }

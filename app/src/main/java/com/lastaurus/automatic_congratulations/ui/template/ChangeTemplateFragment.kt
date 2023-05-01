@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.bus.RxBus
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
-import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
 
-class ChangeTemplateFragment : MvpAppCompatFragment() {
+class ChangeTemplateFragment : Fragment() {
    lateinit var toolbar: Toolbar
    lateinit var favoriteTemplate: MenuItem
    lateinit var changeTemplate: View
@@ -45,12 +45,12 @@ class ChangeTemplateFragment : MvpAppCompatFragment() {
 
       this.textTemplate.setText(this.viewModel.getText())
       this.favoriteTemplate.let {
-         setFavoriteTemplate(it, viewModel.getFavorite())
+         viewModel.setFavoriteTemplate(it, viewModel.getFavorite())
       }
       this.favoriteTemplate.setOnMenuItemClickListener {
          with(viewModel) {
             setFavoriteTemplate(favoriteTemplate, changeFavorite())
-            viewModel.update()
+            update()
          }
          false
       }
@@ -59,12 +59,6 @@ class ChangeTemplateFragment : MvpAppCompatFragment() {
          rxBus.send("Сохранено")
       }
       return view
-   }
-
-   fun setFavoriteTemplate(favoriteTemplate: MenuItem, favorite: Boolean) {
-      val iconId: Int =
-         if (favorite) R.drawable.ic_baseline_star_favorite else R.drawable.ic_baseline_star_no_favorite
-      favoriteTemplate.setIcon(iconId)
    }
 
    override fun onCreate(savedInstanceState: Bundle?) {

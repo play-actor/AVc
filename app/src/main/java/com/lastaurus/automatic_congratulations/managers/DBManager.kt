@@ -42,8 +42,8 @@ class DBManager @Singleton constructor() {
       val db_contactDao = db.contactDao()
       try {
          when (position) {
-            0 -> return db_contactDao.all().also { contactsList = it }
-            1 -> return db_contactDao.getFavoriteContact().also { contactsList = it }
+            0 -> return db_contactDao.all.also { contactsList = it }
+            1 -> return db_contactDao.favorite.also { contactsList = it }
          }
       } catch (e: Exception) {
          Log.e(TAG, "getContactList: $e")
@@ -136,7 +136,7 @@ class DBManager @Singleton constructor() {
             while (cursor.moveToNext()) {
                @SuppressLint("Range") val id =
                   cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-               contact.setId(id)
+               contact.setId(db.contactDao().size)
                @SuppressLint("Range") val name = cursor.getString(
                   cursor.getColumnIndex(
                      ContactsContract.Contacts.DISPLAY_NAME
@@ -191,7 +191,7 @@ class DBManager @Singleton constructor() {
                }
             }
             return Observable.just(
-               db.contactDao().all()
+               db.contactDao().all
             )
          }
       } catch (exception: Exception) {

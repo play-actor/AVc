@@ -20,5 +20,4 @@ class ChangeTemplateUseCase @Inject constructor(var dataRepository: DataReposito
    fun getTemplateListSize(): Int {
       return dataRepository.getTemplateListSize()
    }
-
 }

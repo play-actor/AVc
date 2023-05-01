@@ -7,15 +7,13 @@ import com.lastaurus.automatic_congratulations.dagger.module.HelperModule
 import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
 import com.lastaurus.automatic_congratulations.dagger.module.NavigationModule
 import com.lastaurus.automatic_congratulations.managers.DBManager
+import com.lastaurus.automatic_congratulations.ui.contact.ChangeContactFragment
+import com.lastaurus.automatic_congratulations.ui.contact.ContactViewModel
 import com.lastaurus.automatic_congratulations.ui.list.CongratulationsListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.ContactListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.PhoneListAdapter
-import com.lastaurus.automatic_congratulations.ui.list.all_congratulations_list.AllCongratulationsListPresenter
-import com.lastaurus.automatic_congratulations.ui.list.contact.СhangeContactFragment
-import com.lastaurus.automatic_congratulations.ui.list.contact.СhangeContactPresenter
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment
-import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListPresenter
-import com.lastaurus.automatic_congratulations.ui.list.favorite_contact_list.FavoriteContactListPresenter
+import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListViewModel
 import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListViewModel
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainPresenter
@@ -39,9 +37,11 @@ interface AppComponent {
 
    fun inject(classes: MainFragment)
 
-   fun inject(classes: СhangeContactFragment)
+   fun inject(classes: ChangeContactFragment)
 
    fun inject(classes: ChangeTemplateFragment)
+   fun inject(classes: ContactViewModel)
+   fun inject(classes: ContactListViewModel)
    fun inject(classes: TemplateViewModel)
    fun inject(classes: TemplateListViewModel)
 
@@ -55,16 +55,8 @@ interface AppComponent {
 
    fun inject(classes: PhoneListAdapter)
 
-   fun inject(classes: ContactListPresenter)
-
-   fun inject(classes: AllCongratulationsListPresenter)
-
-   fun inject(classes: FavoriteContactListPresenter)
-
    fun inject(classes: MainActivity)
 
    fun inject(classes: MainPresenter)
-
-   fun inject(classes: СhangeContactPresenter)
 
 }

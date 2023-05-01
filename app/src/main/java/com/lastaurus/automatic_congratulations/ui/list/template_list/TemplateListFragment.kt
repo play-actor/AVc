@@ -1,18 +1,15 @@
 package com.lastaurus.automatic_congratulations.ui.list.template_list
 
-import android.graphics.Rect
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.lastaurus.automatic_congratulations.BaseFragment
-import com.lastaurus.automatic_congratulations.R
+import com.lastaurus.automatic_congratulations.Util.SpaceItemDecoration
 import com.lastaurus.automatic_congratulations.data.model.Template
 import com.lastaurus.automatic_congratulations.ui.list.TemplateListAdapter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
+import moxy.MvpAppCompatFragment
 
 
 class TemplateListFragment : MvpAppCompatFragment() {
