@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.data.model.Template
 
-class TemplateListAdapter(private val templateList: List<Template>) :
-   RecyclerView.Adapter<TemplateListAdapter.ViewHolder?>() {
+class TemplateListAdapter : RecyclerView.Adapter<TemplateListAdapter.ViewHolder?>() {
+   private var templateList: List<Template> = emptyList()
    private var click: Click? = null
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       val view: View =
@@ -20,6 +20,10 @@ class TemplateListAdapter(private val templateList: List<Template>) :
 
    fun setClick(click: Click) {
       this.click = click
+   }
+
+   fun setList(templateList: List<Template>) {
+      this.templateList = templateList
    }
 
    override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -26,6 +26,11 @@ class MainPresenter : MvpPresenter<IMainViewModel>() {
 
    override fun onFirstViewAttach() {
       super.onFirstViewAttach()
+      disposables.addAll(
+         rxBus.waitCall().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { msg -> viewState.sendMsg(msg) },
+      )
       router.navigateTo(main())
    }
 }

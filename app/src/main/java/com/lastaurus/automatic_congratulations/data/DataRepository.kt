@@ -6,6 +6,14 @@ import javax.inject.Inject
 
 class DataRepository @Inject constructor(var db: AppDatabase) {
 
+   fun getTemplateList(): List<Template> {
+      return db.templateDao().all
+   }
+
+   fun getFavoriteTemplateList(): List<Template> {
+      return db.templateDao().favorite
+   }
+
    fun updateTemplateDB(template: Template) {
       db.templateDao().update(template)
    }

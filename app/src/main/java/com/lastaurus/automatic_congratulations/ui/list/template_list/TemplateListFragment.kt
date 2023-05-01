@@ -32,28 +32,29 @@ class TemplateListFragment : MvpAppCompatFragment() {
          false
       )
       recyclerView = view.findViewById(com.lastaurus.automatic_congratulations.R.id.templateList)
-      recyclerView?.addItemDecoration(SpaceItemDecoration())
-      return inflate
+
+      this.addTemplate = view.findViewById(com.lastaurus.automatic_congratulations.R.id.addTemplate)
+      this.filter = view.findViewById(com.lastaurus.automatic_congratulations.R.id.filter)
+      adapter = TemplateListAdapter()
+      init(viewModel.getTemplateList())
+      this.addTemplate.setOnClickListener {
+         viewModel.openNewTemplate()
+      }
+      this.filter.setOnClickListener {
+         init(viewModel.getTemplateListFavorite())
+      }
+      return view
    }
 
-   private inner class SpaceItemDecoration : RecyclerView.ItemDecoration() {
-      override fun getItemOffsets(
-         outRect: Rect,
-         view: View,
-         parent: RecyclerView,
-         state: RecyclerView.State,
-      ) {
-         val margin = 88
-         val space = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            margin.toFloat(),
-            view.resources.displayMetrics
-         ).toInt()
-         if (parent.getChildLayoutPosition(view) == (parent.adapter?.itemCount?.minus(1))) {
-            outRect.top = 0
-            outRect.bottom = space
+   fun init(templateList: List<Template>) {
+      adapter.setList(templateList)
+      recyclerView?.adapter = adapter
+      recyclerView?.addItemDecoration(SpaceItemDecoration())
+      adapter.setClick(object : TemplateListAdapter.Click {
+         override fun click(id: Int) {
+            viewModel.openTemplate(id)
          }
-      }
+      })
    }
 
    override fun onCreate(savedInstanceState: Bundle?) {
