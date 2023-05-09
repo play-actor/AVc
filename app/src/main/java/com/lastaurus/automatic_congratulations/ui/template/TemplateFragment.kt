@@ -15,12 +15,12 @@ import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import javax.inject.Inject
 
 
-class ChangeTemplateFragment : Fragment() {
-   lateinit var toolbar: Toolbar
-   lateinit var favoriteTemplate: MenuItem
-   lateinit var changeTemplate: View
-   lateinit var textTemplate: EditText
-   private lateinit var viewModel: TemplateViewModel
+class TemplateFragment : Fragment() {
+   private var toolbar: Toolbar? = null
+   private var favoriteTemplate: MenuItem? = null
+   private var saveView: View? = null
+   private var textTemplate: EditText? = null
+   private var viewModel: TemplateViewModel? = null
 
    @Inject
    lateinit var rxBus: RxBus
@@ -36,26 +36,30 @@ class ChangeTemplateFragment : Fragment() {
    ): View {
       val view: View =
          inflater.inflate(R.layout.fragment_template_of_congratulations_text, container, false)
-      this.toolbar = view.findViewById(R.id.toolbar)
-      this.toolbar.inflateMenu(R.menu.menu_contact)
-      this.toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
-      this.favoriteTemplate = toolbar.menu.findItem(R.id.favoriteObject)
-      this.changeTemplate = view.findViewById(R.id.changeTemplate)
-      this.textTemplate = view.findViewById(R.id.text_template)
-
-      this.textTemplate.setText(this.viewModel.getText())
-      this.favoriteTemplate.let {
-         viewModel.setFavoriteTemplate(it, viewModel.getFavorite())
+      with(view) {
+         toolbar = this.findViewById(R.id.toolbar)
+         saveView = this.findViewById(R.id.changeTemplate)
+         textTemplate = this.findViewById(R.id.text_template)
       }
-      this.favoriteTemplate.setOnMenuItemClickListener {
-         with(viewModel) {
-            setFavoriteTemplate(favoriteTemplate, changeFavorite())
-            update()
+      toolbar?.let {
+         this.toolbar?.inflateMenu(R.menu.menu_contact)
+         this.toolbar?.setNavigationOnClickListener { requireActivity().onBackPressed() }
+      }
+      this.favoriteTemplate = toolbar?.menu?.findItem(R.id.favoriteObject)
+
+      this.textTemplate?.setText(this.viewModel?.getText())
+      this.favoriteTemplate.let {
+         viewModel?.setFavoriteTemplate(it, viewModel?.getFavorite())
+      }
+      this.favoriteTemplate?.setOnMenuItemClickListener {
+         viewModel?.let {
+            it.setFavoriteTemplate(favoriteTemplate, it.changeFavorite())
+            it.update()
          }
          false
       }
-      this.changeTemplate.setOnClickListener {
-         viewModel.saveText(textTemplate.text.toString())
+      this.saveView?.setOnClickListener {
+         viewModel?.saveText(textTemplate?.text.toString())
          rxBus.send("Сохранено")
       }
       return view
@@ -64,7 +68,7 @@ class ChangeTemplateFragment : Fragment() {
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       this.viewModel = ViewModelProvider(this)[TemplateViewModel::class.java]
-      viewModel.initTemplate(arguments?.getInt("template_Id", -1))
+      viewModel?.init(arguments?.getInt("template_Id", -1))
       setHasOptionsMenu(true)
    }
 

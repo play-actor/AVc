@@ -4,7 +4,7 @@ import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import javax.inject.Inject
 
-class ChangeContactUseCase @Inject constructor(var dataRepository: DataRepository) {
+class ContactUseCase @Inject constructor(var dataRepository: DataRepository) {
    fun getContact(id: Int): Contact? {
       return dataRepository.getContactById(id)
    }

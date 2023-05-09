@@ -4,7 +4,7 @@ import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Template
 import javax.inject.Inject
 
-class ChangeTemplateUseCase @Inject constructor(var dataRepository: DataRepository) {
+class TemplateUseCase @Inject constructor(var dataRepository: DataRepository) {
    fun getTemplate(id: Int): Template? {
       return dataRepository.getTemplateById(id)
    }

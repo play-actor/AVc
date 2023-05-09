@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.ui.list
+package com.lastaurus.automatic_congratulations.ui.list.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -50,7 +50,7 @@ class ContactListAdapter : RecyclerView.Adapter<ContactListAdapter.ViewHolder?>(
          favorite.visibility = if (contact.getFavorite()) View.VISIBLE else View.INVISIBLE
          itemView.setOnClickListener {
             if (click != null) {
-               contact.getId().toInt().let { click?.click(it) }
+               contact.getId().let { click?.click(it) }
             }
          }
       }

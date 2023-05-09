@@ -11,48 +11,46 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.Data
 import com.lastaurus.automatic_congratulations.R
-import com.lastaurus.automatic_congratulations.ui.list.PhoneListAdapter
+import com.lastaurus.automatic_congratulations.ui.list.adapters.PhoneListAdapter
 
-class ChangeContactFragment : Fragment() {
+class ContactFragment : Fragment() {
 
-   var data: Data? = null
    private var iconContact: ImageView? = null
    private var mActionBarToolbar: Toolbar? = null
    private var favoriteContact: MenuItem? = null
    private var phonelist: RecyclerView? = null
    private var name: TextView? = null
-   private lateinit var viewModel: ContactViewModel
+   private var viewModel: ContactViewModel? = null
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
       val view: View = inflater.inflate(R.layout.fragment_contact, container, false)
-      view.let {
-         phonelist = it.findViewById(R.id.phonelist)
-         iconContact = it.findViewById(R.id.iconContact)
-         mActionBarToolbar = it.findViewById(R.id.toolbar)
-         name = it.findViewById(R.id.name)
+      with(view) {
+         phonelist = this.findViewById(R.id.phonelist)
+         iconContact = this.findViewById(R.id.iconContact)
+         mActionBarToolbar = this.findViewById(R.id.toolbar)
+         name = this.findViewById(R.id.name)
       }
       mActionBarToolbar?.let {
          it.inflateMenu(R.menu.menu_contact)
          it.setNavigationOnClickListener { requireActivity().onBackPressed() }
       }
-      name?.text = viewModel.getName()
+      name?.text = viewModel?.getName()
       favoriteContact = mActionBarToolbar?.menu?.findItem(R.id.favoriteObject)
-      iconContact?.let { viewModel.setIconContact(it) }
-      viewModel.getPhoneListFromContact().let {
+      iconContact?.let { viewModel?.setIconContact(it) }
+      viewModel?.getPhoneListFromContact().let {
          phonelist?.adapter = it?.let { it1 -> PhoneListAdapter(it1) }
       }
       this.favoriteContact?.let {
-         viewModel.setFavoriteContact(it, viewModel.getFavorite())
+         viewModel?.setFavoriteContact(it, viewModel?.getFavorite())
       }
       this.favoriteContact?.setOnMenuItemClickListener {
-         with(viewModel) {
-            setFavoriteContact(favoriteContact!!, changeFavorite())
-            update()
+         viewModel?.let {
+            it.setFavoriteContact(favoriteContact!!, it.changeFavorite())
+            it.update()
          }
          false
       }
@@ -62,7 +60,7 @@ class ChangeContactFragment : Fragment() {
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       this.viewModel = ViewModelProvider(this)[ContactViewModel::class.java]
-      viewModel.initContact(arguments?.getInt("contactId", -1))
+      viewModel?.initContact(arguments?.getInt("contactId", -1))
       setHasOptionsMenu(true)
    }
 }

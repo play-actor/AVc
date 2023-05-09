@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.ui.list
+package com.lastaurus.automatic_congratulations.ui.list.adapters
 
 import android.view.LayoutInflater
 import android.view.View

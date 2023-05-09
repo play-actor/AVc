@@ -2,14 +2,15 @@ package com.lastaurus.automatic_congratulations.data.database
 
 import androidx.room.*
 import com.lastaurus.automatic_congratulations.data.model.Template
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TemplateDao {
    @get:Query("SELECT * FROM template")
-   val all: List<Template>
+   val all: Flow<List<Template>>
 
    @get:Query("SELECT * FROM template WHERE (favorite != 0)")
-   val favorite: List<Template>
+   val favorite: Flow<List<Template>>
 
    @Query("SELECT * FROM template WHERE id = :id")
    fun getById(id: Int): Template?

@@ -12,7 +12,6 @@ class SpaceItemDecoration : RecyclerView.ItemDecoration() {
       parent: RecyclerView,
       state: RecyclerView.State,
    ) {
-
       val marginTop = 48
       val marginBottom = 88
       val spaceTop = TypedValue.applyDimension(

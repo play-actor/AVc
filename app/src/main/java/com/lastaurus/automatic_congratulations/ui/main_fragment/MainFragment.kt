@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationBarView
@@ -16,6 +17,7 @@ class MainFragment : Fragment() {
    private var barView: NavigationBarView? = null
    private var viewPager: ViewPager2? = null
    private var onPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
+   private var mActionBarToolbar: Toolbar? = null
    override fun onCreate(savedInstanceState: Bundle?) {
       instance.appComponent.inject(this)
       super.onCreate(savedInstanceState)
@@ -28,11 +30,16 @@ class MainFragment : Fragment() {
       savedInstanceState: Bundle?,
    ): View {
       val view: View = inflater.inflate(R.layout.fragment_main, container, false)
-      barView = view.findViewById(R.id.bottomAppBar)
-      val pagerAdapter = SectionsPagerAdapter(
-         this
-      )
-      viewPager = view.findViewById(R.id.pager)
+      with(view) {
+         barView = this.findViewById(R.id.bottomAppBar)
+         mActionBarToolbar = this.findViewById(R.id.toolbarMain)
+         viewPager = this.findViewById(R.id.pager)
+      }
+      mActionBarToolbar?.let {
+         it.inflateMenu(R.menu.menu_contactlist)
+//         it.setNavigationOnClickListener { requireActivity().onBackPressed() }
+      }
+      val pagerAdapter = SectionsPagerAdapter(this)
       viewPager?.adapter = pagerAdapter
       barView?.setOnItemSelectedListener { item: MenuItem ->
          when (item.itemId) {
@@ -46,10 +53,10 @@ class MainFragment : Fragment() {
       onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
          override fun onPageSelected(position: Int) {
             when (position) {
-               0 -> barView?.setSelectedItemId(R.id.contactList)
-               1 -> barView?.setSelectedItemId(R.id.templated_contacts)
-               2 -> barView?.setSelectedItemId(R.id.templates)
-               else -> barView?.setSelectedItemId(R.id.contactList)
+               0 -> barView?.selectedItemId = R.id.contactList
+               1 -> barView?.selectedItemId = R.id.templated_contacts
+               2 -> barView?.selectedItemId = R.id.templates
+               else -> barView?.selectedItemId = R.id.contactList
             }
             super.onPageSelected(position)
          }

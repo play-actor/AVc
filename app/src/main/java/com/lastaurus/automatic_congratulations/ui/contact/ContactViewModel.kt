@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class ContactViewModel : ViewModel() {
    @Inject
-   lateinit var changeContactUseCase: ChangeContactUseCase
+   lateinit var changeContactUseCase: ContactUseCase
 
    @Inject
    lateinit var imageModule: ImageModule
@@ -74,9 +74,12 @@ class ContactViewModel : ViewModel() {
       return this.favorite
    }
 
-   fun setFavoriteContact(favoriteContact: MenuItem, favorite: Boolean) {
-      val iconId: Int =
-         if (favorite) R.drawable.ic_baseline_star_favorite else R.drawable.ic_baseline_star_no_favorite
-      favoriteContact.setIcon(iconId)
+   fun setFavoriteContact(favoriteContact: MenuItem, favorite: Boolean?) {
+      favorite?.let {
+         favoriteContact.setIcon(
+            if (it) R.drawable.ic_baseline_star_favorite
+            else R.drawable.ic_baseline_star_no_favorite
+         )
+      }
    }
 }

@@ -29,7 +29,11 @@ class WorkerManager(
       Log.i(TAG, inputData.toString())
       val channel: NotificationChannel
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-         channel = NotificationChannel(IFICATION_ID, "Avc", NotificationManager.IMPORTANCE_HIGH)
+         channel = NotificationChannel(
+            IFICATION_ID,
+            "Automatic congratulations",
+            NotificationManager.IMPORTANCE_HIGH
+         )
          NotificationManagerCompat.from(context).createNotificationChannel(channel)
       }
       val actionIntent = Intent(context, MainActivity::class.java)

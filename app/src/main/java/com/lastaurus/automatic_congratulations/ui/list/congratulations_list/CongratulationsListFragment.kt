@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.ui.list.contact_list
+package com.lastaurus.automatic_congratulations.ui.list.congratulations_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,13 +11,13 @@ import com.lastaurus.automatic_congratulations.BaseFragment
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.Util.SpaceItemDecoration
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
-import com.lastaurus.automatic_congratulations.data.model.Contact
-import com.lastaurus.automatic_congratulations.ui.list.adapters.ContactListAdapter
+import com.lastaurus.automatic_congratulations.data.model.Congratulation
+import com.lastaurus.automatic_congratulations.ui.list.adapters.CongratulationsListAdapter
 
-class ContactListFragment : BaseFragment() {
+class CongratulationsListFragment : BaseFragment() {
    private var recyclerView: RecyclerView? = null
-   private var adapter: ContactListAdapter? = null
-   private var viewModel: ContactListViewModel? = null
+   private var adapter: CongratulationsListAdapter? = null
+   private var viewModel: CongratulationsListViewModel? = null
    private var addContact: View? = null
    private var filterContact: View? = null
 
@@ -27,40 +27,38 @@ class ContactListFragment : BaseFragment() {
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      this.viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
+      this.viewModel = ViewModelProvider(this)[CongratulationsListViewModel::class.java]
    }
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
-      val view: View = inflater.inflate(R.layout.fragment_contact_list, container, false)
+      val view: View = inflater.inflate(R.layout.fragment_congratulations_list, container, false)
       with(view) {
-         recyclerView = this.findViewById(R.id.list)
-         addContact = this.findViewById(R.id.addContactToList)
-         filterContact = this.findViewById(R.id.filterContact)
-
+         recyclerView = this.findViewById(R.id.list_congratulations_all)
+         addContact = this.findViewById(R.id.addCongratulationsToList)
       }
-      adapter = ContactListAdapter()
+      adapter = CongratulationsListAdapter()
       init(viewModel?.getContactList())
       this.addContact?.setOnClickListener {
          viewModel?.openNewContact()
       }
       this.filterContact?.setOnClickListener {
-         init(viewModel?.getContactListFavorite())
+         init(viewModel?.getActiveCongratulationsList())
       }
       recyclerView?.addItemDecoration(SpaceItemDecoration())
-      adapter?.setClick(object : ContactListAdapter.Click {
+      adapter?.setClick(object : CongratulationsListAdapter.Click {
          override fun click(id: Int) {
-            viewModel?.openContact(id)
+            viewModel?.openCongratulation(id)
          }
       })
       return view
    }
 
-   fun init(contactList: LiveData<List<Contact>>?) {
-      contactList?.observe(viewLifecycleOwner) { contacts ->
-         adapter?.setList(contacts?.sortedBy { it.getName() })
+   fun init(list: LiveData<List<Congratulation>>?) {
+      list?.observe(viewLifecycleOwner) { congratulations ->
+         adapter?.setList(congratulations?.sortedBy { it.getId() })
          recyclerView?.adapter = adapter
       }
    }

@@ -4,25 +4,26 @@ import com.github.terrakok.cicerone.Router
 import com.lastaurus.automatic_congratulations.cicerone.Screens
 import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Contact
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ContactListUseCase @Inject constructor(
    var dataRepository: DataRepository,
    var router: Router,
 ) {
-   fun getTemplateList(): List<Contact> {
+   fun getContactList(): Flow<List<Contact>> {
       return dataRepository.getContactList()
    }
 
-   fun getFavoriteTemplateList(): List<Contact> {
+   fun getFavoriteContactList(): Flow<List<Contact>> {
       return dataRepository.getFavoriteContactList()
    }
 
    fun openContact(id: Int) {
-      router.navigateTo(Screens.changeContactScreen(id))
+      router.navigateTo(Screens.contactScreen(id))
    }
 
    fun openNewContact() {
-      router.navigateTo(Screens.changeContactScreen(dataRepository.getContactListSize()))
+      router.navigateTo(Screens.contactScreen(dataRepository.getContactListSize()))
    }
 }

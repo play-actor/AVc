@@ -18,7 +18,8 @@
 
     <string name="exit">Выход</string>
     <string name="search">Поиск</string>
-    <string name="sort_ab">Сортировка</string>
+    <string name="sort">Сортировка</string>
+    <string name="sync">Обновить список контактов</string>
 
     <string-array name="congratulations_templates">
         <item>Поздравляю с днем рождения! Пусть жизнь дарит тебе побольше ярких моментов и сбудутся все твои самые смелые и заветные желания! Желаю, чтобы в твоем доме всегда царили счастье и понимание. И пусть тебя окружают только искренние, верные, надежные друзья и добрые люди!</item>

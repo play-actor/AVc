@@ -13,13 +13,13 @@ class TemplateViewModel : ViewModel() {
    private var favorite: Boolean = false
 
    @Inject
-   lateinit var changeTemplateUseCase: ChangeTemplateUseCase
+   lateinit var changeTemplateUseCase: TemplateUseCase
 
    init {
       ComponentManager.instance.appComponent.inject(this)
    }
 
-   fun initTemplate(id: Int? = null) {
+   fun init(id: Int? = null) {
       if (id == null) {
          if (template == null) {
             template = Template()
@@ -62,19 +62,21 @@ class TemplateViewModel : ViewModel() {
       return textTemplate
    }
 
-   private fun setText(text: String) {
-      template?.setTextTemplate(text)
-      this.textTemplate = text
+   private fun setText(text: String?) {
+      text?.let {
+         template?.setTextTemplate(it)
+         this.textTemplate = it
+      }
    }
 
-   fun saveText(text: String) {
+   fun saveText(text: String?) {
       setText(text)
       upsert()
    }
 
-   fun setFavoriteTemplate(favoriteTemplate: MenuItem, favorite: Boolean) {
+   fun setFavoriteTemplate(favoriteTemplate: MenuItem?, favorite: Boolean?) {
       val iconId: Int =
-         if (favorite) R.drawable.ic_baseline_star_favorite else R.drawable.ic_baseline_star_no_favorite
-      favoriteTemplate.setIcon(iconId)
+         if (favorite == true) R.drawable.ic_baseline_star_favorite else R.drawable.ic_baseline_star_no_favorite
+      favoriteTemplate?.setIcon(iconId)
    }
 }

@@ -6,11 +6,18 @@
         android:icon="@drawable/ic_search_24dp"
         android:title="@android:string/search_go"
         yourapp:actionViewClass="androidx.appcompat.widget.SearchView"
-        yourapp:showAsAction="always|collapseActionView" />
+        yourapp:showAsAction="collapseActionView" />
     <item
         android:id="@+id/action_sort"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:title="@string/sort_ab"
-        yourapp:showAsAction="always" />
+        android:icon="@drawable/sort"
+        android:title="@string/sort"
+        yourapp:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_upload_contact_list"
+        android:enabled="true"
+        android:icon="@drawable/sync"
+        android:title="@string/sync"
+        yourapp:showAsAction="collapseActionView" />
 </menu>

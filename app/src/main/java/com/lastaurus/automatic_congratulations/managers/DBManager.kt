@@ -5,79 +5,77 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
 import android.util.Log
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequest
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
 import com.lastaurus.automatic_congratulations.data.database.AppDatabase
+import com.lastaurus.automatic_congratulations.data.model.Congratulation
 import com.lastaurus.automatic_congratulations.data.model.Contact
-import com.lastaurus.automatic_congratulations.data.model.EventCongratulations
 import com.lastaurus.automatic_congratulations.data.model.Template
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 class DBManager @Singleton constructor() {
-   private val myWorkRequest: PeriodicWorkRequest? = null
+   private var myWorkRequest: PeriodicWorkRequest? = null
 
    @Inject
    lateinit var db: AppDatabase
    private var contactsList: List<Contact>? = null
-   private var templateList: List<Template>? = null
-   private var eventList: List<EventCongratulations>? = null
+   private var eventList: List<Congratulation>? = null
 
    @Inject
    lateinit var context: Context
-   private val contact: Contact
-   private val template: Template
+   private val contact: Contact by lazy { Contact() }
+   private val template: Template by lazy { Template() }
+   private val scope: CoroutineScope by lazy { CoroutineScope(Job()) }
+   private var dbJob: Job? = null
 
    init {
       instance.appComponent.inject(this)
-      contact = Contact()
-      template = Template()
+      loadTemplateList()
    }
 
-   fun getContactList(position: Int): List<Contact> {
-      val db_contactDao = db.contactDao()
-      try {
-         when (position) {
-            0 -> return db_contactDao.all.also { contactsList = it }
-            1 -> return db_contactDao.favorite.also { contactsList = it }
-         }
-      } catch (e: Exception) {
-         Log.e(TAG, "getContactList: $e")
-      }
-      return emptyList()
-   }
+//   fun startWorkRequest(data: Data, idContact: Int, start: Boolean) {
+//      if(db.eventDao().getById(idContact)?.getIdWorker()!=null)
+//      WorkManager.getInstance(context).enqueue(it)
+//   }
 
-   fun getTemplateList(position: Int): List<Template> {
-      val db_templateDao = db.templateDao()
-      try {
-         when (position) {
-            0 -> return db_templateDao.all.also { templateList = it }
-            1 -> return db_templateDao.favorite.also { templateList = it }
-         }
-      } catch (e: Exception) {
-         Log.e(TAG, "getTemplateList: $e")
-      }
-      return emptyList()
-   }
+   fun createWorkRequest(data: Data, idContact: Int) {
+//      var periodicWorkRequest: PeriodicWorkRequest?
+      var periodicWorkRequest: OneTimeWorkRequest?
+      scope.launch {
+         periodicWorkRequest = OneTimeWorkRequest.Builder(WorkerManager::class.java)
+//            PeriodicWorkRequest.Builder(WorkerManager::class.java, 1, TimeUnit.MINUTES)
+            .setInputData(data)
+            .setInitialDelay(10, TimeUnit.SECONDS)
+            .build()
 
-   fun getCongratulationsList(position: Int): List<EventCongratulations> {
-      val db_eventCongratulationsDao = db.eventDao()
-      try {
-         when (position) {
-            0 -> return db_eventCongratulationsDao.getAll().also {
-               eventList = it
+         periodicWorkRequest?.let {
+            db.eventDao().getById(idContact)?.let { congratulation ->
+               congratulation.setIdWorker(it.id)
+               db.eventDao().update(congratulation)
             }
-            1 -> return db_eventCongratulationsDao.getActiveEvent().also { eventList = it }
          }
-      } catch (e: Exception) {
-         Log.e(TAG, "getCongratulationsList: $e")
       }
-      return emptyList()
    }
+
+//      return Observable.just(data)
+//         .flatMapCompletable { data1 ->
+//            myWorkRequest11 = PeriodicWorkRequest.Builder(WorkerManager::class.java, seconds, TimeUnit.MINUTES)
+//               .setInputData(data1)
+//               .setInitialDelay(10, TimeUnit.SECONDS)
+//               .build()
+//            WorkManager.getInstance(context).enqueue(myWorkRequest11!!)
+//            Completable.complete()
+//         }
 
    //   public Completable createWorkRequest(Data data, long seconds, String id) {
    //      return Observable.just(data)
@@ -122,101 +120,105 @@ class DBManager @Singleton constructor() {
    //      contact.setListIDWorker(Collections.emptyList());
    //      db.contactDao().update(contact);
    //   }
-   fun loadDB(): Observable<List<Contact>> {
-      val contentResolver = context.contentResolver
-      @SuppressLint("Recycle") val cursor = contentResolver.query(
-         ContactsContract.Contacts.CONTENT_URI,
-         null,
-         null,
-         null,
-         null
-      )
-      try {
-         if (cursor != null) {
-            while (cursor.moveToNext()) {
-               @SuppressLint("Range") val id =
-                  cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-               contact.setId(db.contactDao().size)
-               @SuppressLint("Range") val name = cursor.getString(
-                  cursor.getColumnIndex(
-                     ContactsContract.Contacts.DISPLAY_NAME
-                  )
-               )
-               contact.setName(name ?: "")
-               @SuppressLint("Range") val uriThumbnail = cursor.getString(
-                  cursor.getColumnIndex(
-                     ContactsContract.Contacts.PHOTO_THUMBNAIL_URI
-                  )
-               )
-               contact.setUriThumbnail(uriThumbnail ?: "")
-               @SuppressLint("Range") val uriFull = cursor.getString(
-                  cursor.getColumnIndex(
-                     ContactsContract.Contacts.PHOTO_URI
-                  )
-               )
-               contact.setUriFull(uriFull ?: "")
-               @SuppressLint("Range") val has_phone = cursor.getString(
-                  cursor.getColumnIndex(
-                     ContactsContract.Contacts.HAS_PHONE_NUMBER
-                  )
-               )
-               if (has_phone.toInt() > 0) {
-                  val pCur: Cursor? = context.contentResolver.query(
-                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                     null,
-                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", arrayOf(id),
-                     null
-                  )
-                  while (pCur!!.moveToNext()) {
-                     @SuppressLint("Range") val phone = pCur.getString(
-                        pCur.getColumnIndex(
-                           ContactsContract.CommonDataKinds.Phone.NUMBER
-                        )
+
+   fun loadSistemContactList() {
+      dbJob = scope.launch {
+         val contentResolver = context.contentResolver
+         @SuppressLint("Recycle") val cursor = contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+         )
+         try {
+            cursor?.let {
+               while (cursor.moveToNext()) {
+                  @SuppressLint("Range") val id =
+                     cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+                  contact.setId(db.contactDao().size)
+                  @SuppressLint("Range") val name = cursor.getString(
+                     cursor.getColumnIndex(
+                        ContactsContract.Contacts.DISPLAY_NAME
                      )
-                     contact.addToPhoneList(phone)
+                  )
+                  contact.setName(name ?: "")
+                  @SuppressLint("Range") val uriThumbnail = cursor.getString(
+                     cursor.getColumnIndex(
+                        ContactsContract.Contacts.PHOTO_THUMBNAIL_URI
+                     )
+                  )
+                  contact.setUriThumbnail(uriThumbnail ?: "")
+                  @SuppressLint("Range") val uriFull = cursor.getString(
+                     cursor.getColumnIndex(
+                        ContactsContract.Contacts.PHOTO_URI
+                     )
+                  )
+                  contact.setUriFull(uriFull ?: "")
+                  @SuppressLint("Range") val has_phone = cursor.getString(
+                     cursor.getColumnIndex(
+                        ContactsContract.Contacts.HAS_PHONE_NUMBER
+                     )
+                  )
+                  if (has_phone.toInt() > 0) {
+                     val pCur: Cursor? = context.contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", arrayOf(id),
+                        null
+                     )
+                     while (pCur!!.moveToNext()) {
+                        @SuppressLint("Range") val phone = pCur.getString(
+                           pCur.getColumnIndex(
+                              ContactsContract.CommonDataKinds.Phone.NUMBER
+                           )
+                        )
+                        contact.addToPhoneList(phone)
+                     }
+                     pCur.close()
                   }
-                  pCur.close()
-               }
-               db.contactDao().insert(contact)
-               db.contactDao().update(contact)
-               contact.clear()
-            }
-            val countries = context.resources.getStringArray(R.array.congratulations_templates)
-            if (db.templateDao().size == 0) {
-               for (i in countries.indices) {
-                  template.setId(i)
-                  template.setTextTemplate(countries[i])
-                  template.setFavorite(false)
-                  db.templateDao().insert(template)
+                  db.contactDao().insert(contact)
+                  db.contactDao().update(contact)
+                  contact.clear()
                }
             }
-            return Observable.just(
-               db.contactDao().all
-            )
+         } catch (exception: Exception) {
+            Log.e("gera", "loadSistemContactList", exception)
          }
-      } catch (exception: Exception) {
-         Log.e(TAG, "loadDB: exception: ", exception)
       }
-      return Observable.just(emptyList())
    }
 
-   fun Filt(searchText: String): Single<List<Contact>> {
-      contactsList = getContactList(0)
-      return Observable.fromIterable(this.contactsList!!)
-         .filter { contact: Contact ->
-            val searchTextfinal = searchText.lowercase(Locale.getDefault())
-            if (contact.getName().lowercase(Locale.getDefault())
-                  .contains(searchTextfinal)
-            ) {
-               return@filter true
+   fun loadTemplateList() {
+      scope.launch {
+         val countries = context.resources.getStringArray(R.array.congratulations_templates)
+         if (db.templateDao().size == 0) {
+            for (i in countries.indices) {
+               template.setId(i)
+               template.setTextTemplate(countries[i])
+               template.setFavorite(false)
+               db.templateDao().insert(template)
             }
-            contact.getPhoneList()[0].lowercase(Locale.getDefault())
-               .contains(searchTextfinal)
          }
-         .toList()
+      }
    }
 
-   companion object {
-      private const val TAG = "DBManager"
+   fun cancelJob() {
+      dbJob?.cancel()
    }
+
+//   fun Filt(searchText: String): Single<List<Contact>> {
+//      contactsList = getContactList(0)
+//      return Observable.fromIterable(this.contactsList!!)
+//         .filter { contact: Contact ->
+//            val searchTextfinal = searchText.lowercase(Locale.getDefault())
+//            if (contact.getName().lowercase(Locale.getDefault())
+//                  .contains(searchTextfinal)
+//            ) {
+//               return@filter true
+//            }
+//            contact.getPhoneList()[0].lowercase(Locale.getDefault())
+//               .contains(searchTextfinal)
+//         }
+//         .toList()
+//   }
 }

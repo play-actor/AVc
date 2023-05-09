@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <path
+        android:fillColor="@color/actionModeCloseButtonStyle"
+        android:pathData="M167,800v-60h130l-15,-12q-64,-51 -93,-111t-29,-134q0,-106 62.5,-190.5T387,176v62q-75,29 -121,96.5T220,483q0,63 23.5,109.5T307,673l30,21L337,570h60v230L167,800ZM574,785v-63q76,-29 121,-96.5T740,477q0,-48 -23.5,-97.5T655,292l-29,-26v124h-60L566,160h230v60L665,220l15,14q60,56 90,120t30,123q0,106 -62,191T574,785Z" />
+</vector>

@@ -47,22 +47,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginEnd="24dp"-->
-            <!--                android:layout_marginBottom="98dp"-->
-            <!--                android:visibility="visible"-->
-            <!--                app:backgroundTint="@color/colorfabAdd"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:srcCompat="@drawable/ic_add_24dp"-->
-            <!--                app:tint="@color/background" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomAppBar"
             style="@style/NavigationBar"
+            app:itemActiveIndicatorStyle="@style/Indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

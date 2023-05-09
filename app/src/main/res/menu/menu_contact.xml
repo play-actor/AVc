@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:yourapp="http://schemas.android.com/apk/res-auto">
-    <!--    <item-->
-    <!--        android:id="@+id/changeObject"-->
-    <!--        android:icon="@drawable/change"-->
-    <!--        android:title="@string/exit"-->
-    <!--        yourapp:showAsAction="always|collapseActionView" />-->
     <item
         android:id="@+id/favoriteObject"
         android:icon="@drawable/ic_baseline_star_no_favorite"

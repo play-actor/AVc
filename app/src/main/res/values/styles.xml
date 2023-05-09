@@ -17,4 +17,42 @@
         <item name="android:textColor">@color/onSecondaryContainer</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/secondaryContainer</item>
+    </style>
+
+
+    <!--Floating label text style-->
+    <style name="MyHintText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <!--Input field style-->
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/error</item>
+        <item name="colorControlActivated">@color/errorContainer</item>
+    </style>
+
+    <style name="The" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">#d32f2f</item>
+        <item name="colorControlActivated">#2196F3</item>
+        <item name="colorControlHighlight">#009688</item>
+    </style>
+
+    <style name="TextInputEditTextM3" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="colorPrimary">@color/onPrimaryContainer</item>
+
+    </style>
+
+    <style name="TextInputEditText" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/colorItemBackground</item>
+        <item name="boxStrokeColor">@color/onPrimaryContainer</item>
+        <item name="android:textColor">@color/onBackground</item>
+        <item name="endIconTint">@color/onBackground</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="android:textColorHint">@color/primary</item>
+        <item name="endIconMode">custom</item>
+
+    </style>
 </resources>
