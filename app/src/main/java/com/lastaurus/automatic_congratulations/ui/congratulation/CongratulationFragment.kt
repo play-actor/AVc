@@ -18,7 +18,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.Util.TimePickerDialogCreator
-import com.lastaurus.automatic_congratulations.bus.RxBus
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.managers.DBManager
 import javax.inject.Inject
@@ -45,8 +44,6 @@ class CongratulationFragment : Fragment() {
    private var saveCongratulation: View? = null
    val PERMISSION_STRING = Manifest.permission.SEND_SMS
 
-   @Inject
-   lateinit var rxBus: RxBus
 
    @Inject
    lateinit var dbManager: DBManager
@@ -146,7 +143,6 @@ class CongratulationFragment : Fragment() {
       this.saveCongratulation?.setOnClickListener {
          createWorkerForNotification()
          viewModel?.save()
-         rxBus.send("Сохранено")
       }
       return view
    }

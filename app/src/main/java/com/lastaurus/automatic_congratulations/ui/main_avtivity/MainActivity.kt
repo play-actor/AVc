@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.terrakok.cicerone.Command
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
+import com.google.android.material.snackbar.Snackbar
 import com.lastaurus.automatic_congratulations.R
-import com.lastaurus.automatic_congratulations.bus.RxBus
+import com.lastaurus.automatic_congratulations.bus.BusEvent
+import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
 import com.lastaurus.automatic_congratulations.dagger.ExtSupportAppNavigator
 import com.lastaurus.automatic_congratulations.managers.DBManager
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
    lateinit var dbManager: DBManager
 
    @Inject
-   lateinit var rxBus: RxBus
+   lateinit var eventHandler: EventHandler
 
    private lateinit var viewModel: MainActivityViewModel
 
@@ -48,6 +50,16 @@ class MainActivity : AppCompatActivity() {
       this.viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
       viewModel.initIntent(intent, supportFragmentManager)
       if (viewModel.getContactListSize() == 0) uploadContactList()
+      eventHandler.subscribeEvent { busEvent ->
+         (busEvent as? BusEvent.TextOfSave)?.let {
+            Snackbar.make(
+               findViewById(R.id.root),
+               it.getTextSave(),
+               Snackbar.LENGTH_SHORT
+            ).show()
+         }
+         false
+      }
    }
 
 //   @SuppressLint("IntentReset")

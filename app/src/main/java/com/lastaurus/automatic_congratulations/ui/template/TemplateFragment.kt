@@ -10,9 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.lastaurus.automatic_congratulations.R
-import com.lastaurus.automatic_congratulations.bus.RxBus
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
-import javax.inject.Inject
 
 
 class TemplateFragment : Fragment() {
@@ -21,9 +19,6 @@ class TemplateFragment : Fragment() {
    private var saveView: View? = null
    private var textTemplate: EditText? = null
    private var viewModel: TemplateViewModel? = null
-
-   @Inject
-   lateinit var rxBus: RxBus
 
    init {
       ComponentManager.instance.appComponent.inject(this)
@@ -60,7 +55,6 @@ class TemplateFragment : Fragment() {
       }
       this.saveView?.setOnClickListener {
          viewModel?.saveText(textTemplate?.text.toString())
-         rxBus.send("Сохранено")
       }
       return view
    }

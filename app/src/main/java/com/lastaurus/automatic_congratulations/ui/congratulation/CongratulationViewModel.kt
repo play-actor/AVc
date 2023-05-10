@@ -3,6 +3,8 @@ package com.lastaurus.automatic_congratulations.ui.congratulation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.lastaurus.automatic_congratulations.bus.BusEvent
+import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
 import com.lastaurus.automatic_congratulations.data.model.Congratulation
@@ -20,6 +22,9 @@ class CongratulationViewModel : ViewModel() {
    lateinit var imageModule: ImageModule
 
    private var congratulation: Congratulation? = null
+
+   @Inject
+   lateinit var eventHandler: EventHandler
 
    init {
       ComponentManager.instance.appComponent.inject(this)
@@ -124,6 +129,7 @@ class CongratulationViewModel : ViewModel() {
    }
 
    fun save() {
+      eventHandler.postEvent(BusEvent.TextOfSave)
       congratulation?.let { congratulationUseCase.upsertCongratulationDB(it) }
    }
 

@@ -3,6 +3,8 @@ package com.lastaurus.automatic_congratulations.ui.template
 import android.view.MenuItem
 import androidx.lifecycle.ViewModel
 import com.lastaurus.automatic_congratulations.R
+import com.lastaurus.automatic_congratulations.bus.BusEvent
+import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.data.model.Template
 import javax.inject.Inject
@@ -14,6 +16,9 @@ class TemplateViewModel : ViewModel() {
 
    @Inject
    lateinit var changeTemplateUseCase: TemplateUseCase
+
+   @Inject
+   lateinit var eventHandler: EventHandler
 
    init {
       ComponentManager.instance.appComponent.inject(this)
@@ -63,6 +68,7 @@ class TemplateViewModel : ViewModel() {
    }
 
    private fun setText(text: String?) {
+      eventHandler.postEvent(BusEvent.TextOfSave)
       text?.let {
          template?.setTextTemplate(it)
          this.textTemplate = it
