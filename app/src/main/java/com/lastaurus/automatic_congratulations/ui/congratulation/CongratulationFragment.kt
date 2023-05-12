@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.work.Data
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lastaurus.automatic_congratulations.R
@@ -29,6 +29,9 @@ class CongratulationFragment : Fragment() {
    private var contactText: TextInputEditText? = null
    private var contact: TextInputLayout? = null
 
+   private var contactPhoneText: TextInputEditText? = null
+   private var addContactPhone: TextInputLayout? = null
+
    private var dateText: TextInputEditText? = null
    private var date: TextInputLayout? = null
 
@@ -38,7 +41,7 @@ class CongratulationFragment : Fragment() {
    private var timeText: TextInputEditText? = null
    private var time: TextInputLayout? = null
 
-   private var active: SwitchMaterial? = null
+   private var active: MaterialSwitch? = null
 
    private var viewModel: CongratulationViewModel? = null
    private var saveCongratulation: View? = null
@@ -62,6 +65,9 @@ class CongratulationFragment : Fragment() {
 
          contactText = this.findViewById(R.id.contactText)
          contact = this.findViewById(R.id.addContact)
+
+         contactPhoneText = this.findViewById(R.id.contactPhoneText)
+         addContactPhone = this.findViewById(R.id.addContactPhone)
 
          dateText = this.findViewById(R.id.dateText)
          date = this.findViewById(R.id.addDate)
@@ -90,6 +96,8 @@ class CongratulationFragment : Fragment() {
          array = items.toArray(arrayOfNulls<String>(0))
       }
 
+      var items1: Array<String> = emptyArray()
+
       var arrayT: Array<String> = emptyArray()
       viewModel?.getTemplateList()?.observe(viewLifecycleOwner) { templates ->
          val items = ArrayList<String>()
@@ -114,6 +122,17 @@ class CongratulationFragment : Fragment() {
             .setItems(array) { _, which ->
                contactText?.setText(viewModel?.getNameContact(which))
                viewModel?.setContact(which)
+               viewModel?.getContactPhoneList()
+                  ?.let { items1 = it.toArray(arrayOfNulls<String>(0)) }
+            }
+            .show()
+      }
+      addContactPhone?.setEndIconOnClickListener {
+         MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Номера телефонов")
+            .setItems(items1) { _, which ->
+               contactPhoneText?.setText(viewModel?.getTextPhone(which))
+               viewModel?.setPhone(items1[which])
             }
             .show()
       }
@@ -136,13 +155,15 @@ class CongratulationFragment : Fragment() {
          viewModel?.setActive(isChecked)
       }
       viewModel?.getActive()?.let { active?.isChecked = it }
+      viewModel?.getContactPhoneList()?.let { items1 = it.toArray(arrayOfNulls<String>(0)) }
       contactText?.setText(viewModel?.getNameContact())
+      contactPhoneText?.setText(viewModel?.getTextPhone())
       templateText?.setText(viewModel?.getTextTemplate())
       dateText?.setText(viewModel?.getDate())
       timeText?.setText(viewModel?.getTime())
       this.saveCongratulation?.setOnClickListener {
-         createWorkerForNotification()
          viewModel?.save()
+         createWorkerForNotification()
       }
       return view
    }
@@ -153,10 +174,10 @@ class CongratulationFragment : Fragment() {
       ) {
          val data = Data.Builder()
             .putString("Name", viewModel?.getNameContact())
-            .putString("Phone", viewModel?.getPhoneContact())
+            .putString("Phone", viewModel?.getTextPhone())
             .putString("TextTemplate", viewModel?.getTextTemplate())
             .build()
-         viewModel?.getContact()?.getId()?.let { dbManager.createWorkRequest(data, it) }
+         viewModel?.getId()?.let { dbManager.createWorkRequest(data, it) }
          Log.d("gera", "createWorkerForNotification: ")
       }
    }

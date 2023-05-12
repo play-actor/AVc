@@ -8,11 +8,6 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="Base" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlActivated">@color/primary</item>
-        <item name="colorControlHighlight">@color/error</item>
-    </style>
-
     <style name="ActionButton" parent="@style/Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">@color/onSecondaryContainer</item>
         <item name="android:textSize">14sp</item>
@@ -20,24 +15,6 @@
 
     <style name="Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/secondaryContainer</item>
-    </style>
-
-
-    <!--Floating label text style-->
-    <style name="MyHintText" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textColor">@color/error</item>
-    </style>
-
-    <!--Input field style-->
-    <style name="MyEditText" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/error</item>
-        <item name="colorControlActivated">@color/errorContainer</item>
-    </style>
-
-    <style name="The" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">#d32f2f</item>
-        <item name="colorControlActivated">#2196F3</item>
-        <item name="colorControlHighlight">#009688</item>
     </style>
 
     <style name="TextInputEditTextM3" parent="ThemeOverlay.Material3.TextInputEditText">
@@ -53,6 +30,9 @@
         <item name="hintTextColor">@color/primary</item>
         <item name="android:textColorHint">@color/primary</item>
         <item name="endIconMode">custom</item>
+    </style>
 
+    <style name="MaterialSwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbIcon">@animator/default_switch_icon</item>
     </style>
 </resources>

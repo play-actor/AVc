@@ -48,7 +48,7 @@ class DBManager @Singleton constructor() {
 //      WorkManager.getInstance(context).enqueue(it)
 //   }
 
-   fun createWorkRequest(data: Data, idContact: Int) {
+   fun createWorkRequest(data: Data, idCongratulation: Int) {
 //      var periodicWorkRequest: PeriodicWorkRequest?
       var periodicWorkRequest: OneTimeWorkRequest?
       scope.launch {
@@ -59,9 +59,9 @@ class DBManager @Singleton constructor() {
             .build()
 
          periodicWorkRequest?.let {
-            db.eventDao().getById(idContact)?.let { congratulation ->
+            db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
                congratulation.setIdWorker(it.id)
-               db.eventDao().update(congratulation)
+               db.congratulationsDao().update(congratulation)
             }
          }
       }

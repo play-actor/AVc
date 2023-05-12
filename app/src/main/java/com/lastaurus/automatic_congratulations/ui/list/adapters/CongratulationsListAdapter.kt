@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
 import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
-import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Congratulation
+import com.lastaurus.automatic_congratulations.repository.DataRepository
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -61,7 +61,7 @@ class CongratulationsListAdapter : RecyclerView.Adapter<CongratulationsListAdapt
 
       holder.apply {
          nameView.text = contact?.getName()
-         phoneView.text = contact?.getPhoneList()?.get(0) ?: ""
+         phoneView.text = congratulations.getPhone()
          dateAndTime.text = FORMATTER_DATE.print(congratulations.getDate()) + " " +
                FORMATTER_TIME.print(congratulations.getTime())
          itemView.setOnClickListener {

@@ -2,8 +2,8 @@ package com.lastaurus.automatic_congratulations.ui.list.template_list
 
 import com.github.terrakok.cicerone.Router
 import com.lastaurus.automatic_congratulations.cicerone.Screens
-import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Template
+import com.lastaurus.automatic_congratulations.repository.DataRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

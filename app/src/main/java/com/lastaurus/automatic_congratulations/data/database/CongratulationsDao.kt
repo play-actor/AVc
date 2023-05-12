@@ -9,6 +9,9 @@ interface CongratulationsDao {
    @Query("SELECT * FROM congratulation")
    fun all(): Flow<List<Congratulation>>
 
+   @Query("SELECT * FROM congratulation")
+   fun all1(): List<Congratulation>
+
    @Query("SELECT * FROM congratulation WHERE (active != 0)")
    fun active(): Flow<List<Congratulation>>
 

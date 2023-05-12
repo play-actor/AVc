@@ -1,7 +1,7 @@
 package com.lastaurus.automatic_congratulations.ui.template
 
-import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Template
+import com.lastaurus.automatic_congratulations.repository.DataRepository
 import javax.inject.Inject
 
 class TemplateUseCase @Inject constructor(var dataRepository: DataRepository) {

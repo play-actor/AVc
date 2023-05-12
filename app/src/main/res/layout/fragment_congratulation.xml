@@ -49,6 +49,30 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addContactPhone"
+            style="@style/TextInputEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:enabled="true"
+            android:hint="Номер"
+            android:theme="@style/TextInputEditTextM3"
+            app:endIconDrawable="@drawable/call_fill0_wght400_grad0_opsz48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addContact">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contactPhoneText"
+                style="@style/TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="no" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/addTemplate"
             style="@style/TextInputEditText"
             android:layout_width="0dp"
@@ -62,7 +86,7 @@
             app:endIconDrawable="@drawable/change2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addContact">
+            app:layout_constraintTop_toBottomOf="@+id/addContactPhone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/templateText"
@@ -121,8 +145,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/active"
+            style="@style/MaterialSwitch"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -136,7 +161,7 @@
             app:layout_constraintTop_toBottomOf="@+id/addTime"
             app:thumbTint="@color/primary"
             app:trackTint="@color/colorItemBackground"
-            app:useMaterialThemeColors="false" />
+            app:useMaterialThemeColors="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/saveCongratulation"

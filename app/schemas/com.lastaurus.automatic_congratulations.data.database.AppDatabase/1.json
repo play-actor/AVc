@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "46f266266e48b09c78d8e4efce2d9401",
+    "identityHash": "9fd2a0ec79d77286df54df3fde7c92f1",
     "entities": [
       {
         "tableName": "Contact",
@@ -88,7 +88,7 @@
       },
       {
         "tableName": "Congratulation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idWorker` BLOB, `date` INTEGER NOT NULL, `time` INTEGER NOT NULL, `idContact` INTEGER NOT NULL, `idTemplate` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idWorker` BLOB, `date` INTEGER NOT NULL, `time` INTEGER NOT NULL, `idContact` INTEGER NOT NULL, `phone` TEXT NOT NULL, `idTemplate` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -121,6 +121,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "idTemplate",
             "columnName": "idTemplate",
             "affinity": "INTEGER",
@@ -146,7 +152,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '46f266266e48b09c78d8e4efce2d9401')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9fd2a0ec79d77286df54df3fde7c92f1')"
     ]
   }
 }

@@ -50,6 +50,10 @@ class CongratulationViewModel : ViewModel() {
       }
    }
 
+   fun getId(): Int {
+      return congratulation?.getId() ?: Int.MIN_VALUE
+   }
+
    private fun getListSize(): Int {
       return congratulationUseCase.getCongratulationListSize()
    }
@@ -80,12 +84,26 @@ class CongratulationViewModel : ViewModel() {
          ?: ""
    }
 
+   fun getContactPhoneList(): ArrayList<String>? {
+      return congratulationUseCase.getContactPhoneList(congratulation?.getIdContact())
+   }
+
    fun getTextTemplate(): String {
       return getTextTemplate(congratulation?.getIdTemplate())
    }
 
    fun getTextTemplate(id: Int?): String {
       return congratulationUseCase.getTemplate(id)?.getTextTemplate() ?: ""
+   }
+
+   fun getTextPhone(): String {
+      return congratulation?.getPhone() ?: ""
+   }
+
+   fun getTextPhone(id: Int?): String {
+      return id?.let {
+         congratulationUseCase.getContactPhoneList(congratulation?.getIdContact())?.get(it) ?: ""
+      }.toString()
    }
 
    fun getDate(): String {
@@ -106,6 +124,10 @@ class CongratulationViewModel : ViewModel() {
 
    fun setContact(id: Int) {
       congratulation?.setIdContact(id)
+   }
+
+   fun setPhone(text: String) {
+      congratulation?.setPhone(text)
    }
 
    fun setTemplate(id: Int) {

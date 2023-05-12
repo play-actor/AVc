@@ -1,7 +1,7 @@
 package com.lastaurus.automatic_congratulations.ui.contact
 
-import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Contact
+import com.lastaurus.automatic_congratulations.repository.DataRepository
 import javax.inject.Inject
 
 class ContactUseCase @Inject constructor(var dataRepository: DataRepository) {

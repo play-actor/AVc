@@ -1,15 +1,19 @@
 package com.lastaurus.automatic_congratulations.ui.congratulation
 
-import com.lastaurus.automatic_congratulations.data.DataRepository
 import com.lastaurus.automatic_congratulations.data.model.Congratulation
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import com.lastaurus.automatic_congratulations.data.model.Template
+import com.lastaurus.automatic_congratulations.repository.DataRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CongratulationUseCase @Inject constructor(var dataRepository: DataRepository) {
    fun getContact(id: Int?): Contact? {
       return dataRepository.getContactById(id)
+   }
+
+   fun getContactPhoneList(id: Int?): ArrayList<String>? {
+      return dataRepository.getContactPhoneListById(id)
    }
 
    fun getContact(name: String?): Contact? {

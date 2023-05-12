@@ -15,6 +15,7 @@ data class Congratulation(
    private var date: Long = 0,
    private var time: Long = 0,
    private var idContact: Int = Int.MIN_VALUE,
+   private var phone: String = "",
    private var idTemplate: Int = Int.MIN_VALUE,
    private var active: Boolean = false,
 ) : BaseObservable() {
@@ -39,6 +40,17 @@ data class Congratulation(
    @Bindable
    fun getIdContact(): Int {
       return idContact
+   }
+
+   @Bindable
+   fun setPhone(text: String) {
+      this.phone = text
+      notifyPropertyChanged(BR.phone)
+   }
+
+   @Bindable
+   fun getPhone(): String {
+      return this.phone
    }
 
    @Bindable

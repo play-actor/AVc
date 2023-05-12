@@ -15,5 +15,5 @@ abstract class AppDatabase : RoomDatabase() {
 
    abstract fun templateDao(): TemplateDao
 
-   abstract fun eventDao(): CongratulationsDao
+   abstract fun congratulationsDao(): CongratulationsDao
 }

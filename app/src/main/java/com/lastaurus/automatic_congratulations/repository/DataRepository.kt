@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.data
+package com.lastaurus.automatic_congratulations.repository
 
 import com.lastaurus.automatic_congratulations.data.database.AppDatabase
 import com.lastaurus.automatic_congratulations.data.model.Congratulation
@@ -38,11 +38,11 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
    }
 
    fun getCongratulationsList(): Flow<List<Congratulation>> {
-      return db.eventDao().all()
+      return db.congratulationsDao().all()
    }
 
    fun getActiveCongratulationsList(): Flow<List<Congratulation>> {
-      return db.eventDao().active()
+      return db.congratulationsDao().active()
    }
 
    fun getFavoriteContactList(): Flow<List<Contact>> {
@@ -61,6 +61,10 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
       return id?.let { db.contactDao().getById(it) }
    }
 
+   fun getContactPhoneListById(id: Int?): ArrayList<String>? {
+      return id?.let { db.contactDao().getById(it)?.getPhoneList() }
+   }
+
    fun getContactByName(id: String?): Contact? {
       return id?.let { db.contactDao().getByName(it) }
    }
@@ -70,19 +74,19 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
    }
 
    fun getCongratulationListSize(): Int {
-      return db.eventDao().size
+      return db.congratulationsDao().size
    }
 
    fun updateCongratulationDB(congratulation: Congratulation) {
-      db.eventDao().update(congratulation)
+      db.congratulationsDao().update(congratulation)
    }
 
    fun upsertCongratulationDB(congratulation: Congratulation) {
-      db.eventDao().upsert(congratulation)
+      db.congratulationsDao().upsert(congratulation)
    }
 
    fun getCongratulationById(id: Int?): Congratulation? {
-      return id?.let { db.eventDao().getById(it) }
+      return id?.let { db.congratulationsDao().getById(it) }
    }
 
    fun getPhoneListFromContact(id: Int): ArrayList<String>? {
