@@ -7,4 +7,6 @@ sealed class BusEvent {
          return "Сохранено"
       }
    }
+
+   class RequestPermissionsResult(val result: Int) : BusEvent()
 }

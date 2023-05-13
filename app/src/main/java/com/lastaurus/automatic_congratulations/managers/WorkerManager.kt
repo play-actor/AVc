@@ -83,6 +83,6 @@ class WorkerManager(
    }
 
    companion object {
-      const val TAG = "WorkerManager"
+      const val TAG = "gera:WorkerManager"
    }
 }

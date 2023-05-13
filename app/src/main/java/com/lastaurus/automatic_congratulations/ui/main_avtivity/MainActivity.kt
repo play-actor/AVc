@@ -2,7 +2,6 @@ package com.lastaurus.automatic_congratulations.ui.main_avtivity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -46,10 +45,13 @@ class MainActivity : AppCompatActivity() {
       instance.appComponent.inject(this)
       super.onCreate(savedInstanceState)
       setContentView(R.layout.activity_main)
-      val intent: Intent = intent
       this.viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-      viewModel.initIntent(intent, supportFragmentManager)
-      if (viewModel.getContactListSize() == 0) uploadContactList()
+      this.viewModel.initMainScrean(supportFragmentManager)
+      if (this.viewModel.getContactListSize() == 0) uploadContactList()
+      subscribeOnEventBus()
+   }
+
+   private fun subscribeOnEventBus() {
       eventHandler.subscribeEvent { busEvent ->
          (busEvent as? BusEvent.TextOfSave)?.let {
             Snackbar.make(
@@ -58,32 +60,14 @@ class MainActivity : AppCompatActivity() {
                Snackbar.LENGTH_SHORT
             ).show()
          }
+         (busEvent as? BusEvent.RequestPermissionsResult)?.let {
+            if (it.result == REQUEST_CODE_READ_CONTACTS) {
+               uploadContactList()
+            }
+         }
          false
       }
    }
-
-//   @SuppressLint("IntentReset")
-//   private fun smsSend(toSms: String?, messageText: String?) {
-//      try {
-//         val sms = Intent(Intent.ACTION_SEND, Uri.parse("smsto: ${toSms?.let { art(it) }}"))
-//         sms.apply {
-//            type = "text/plain"
-//            putExtra(Intent.EXTRA_TEXT, messageText)
-//         }
-//         startActivity(Intent.createChooser(sms, "Отправить"))
-//      } catch (exception: Exception) {
-//         Log.e("AVc", "smsSend $exception")
-//      }
-//   }
-
-//   private fun art(text: String): String {
-//      var finalText = text
-//      val taboo = "+-"
-//      for (c in taboo.toCharArray()) {
-//         finalText = finalText.replace(c, ' ').replace(" ".toRegex(), "")
-//      }
-//      return finalText
-//   }
 
    override fun onResume() {
       navigatorHolder.setNavigator(navigator)
@@ -115,15 +99,9 @@ class MainActivity : AppCompatActivity() {
       permissions: Array<String>,
       grantResults: IntArray,
    ) {
-      if (requestCode == REQUEST_CODE_READ_CONTACTS) {
-         uploadContactList()
-      }
+      eventHandler.postEvent(BusEvent.RequestPermissionsResult(requestCode))
       super.onRequestPermissionsResult(requestCode, permissions, grantResults)
    }
-
-//   fun sendMsg(text: String) {
-//      Snackbar.make(findViewById(R.id.root), text, Snackbar.LENGTH_SHORT).show()
-//   }
 
    override fun onDestroy() {
       dbManager.cancelJob()

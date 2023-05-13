@@ -6,8 +6,8 @@ import android.database.Cursor
 import android.provider.ContactsContract
 import android.util.Log
 import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
 import com.lastaurus.automatic_congratulations.data.database.AppDatabase
@@ -49,20 +49,24 @@ class DBManager @Singleton constructor() {
 //   }
 
    fun createWorkRequest(data: Data, idCongratulation: Int) {
-//      var periodicWorkRequest: PeriodicWorkRequest?
-      var periodicWorkRequest: OneTimeWorkRequest?
+      var periodicWorkRequest: PeriodicWorkRequest?
+//      var periodicWorkRequest: OneTimeWorkRequest?
       scope.launch {
-         periodicWorkRequest = OneTimeWorkRequest.Builder(WorkerManager::class.java)
-//            PeriodicWorkRequest.Builder(WorkerManager::class.java, 1, TimeUnit.MINUTES)
-            .setInputData(data)
-            .setInitialDelay(10, TimeUnit.SECONDS)
-            .build()
+         periodicWorkRequest =
+            PeriodicWorkRequest.Builder(WorkerManager::class.java, 15, TimeUnit.MINUTES)
+               .setInputData(data)
+//               .setInitialDelay(10, TimeUnit.MINUTES)
+               .build()
 
          periodicWorkRequest?.let {
             db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
+               if (congratulation.getIdWorker() != null) {
+                  WorkManager.getInstance(context).cancelWorkById(it.id)
+               }
                congratulation.setIdWorker(it.id)
                db.congratulationsDao().update(congratulation)
             }
+            WorkManager.getInstance(context).enqueue(it)
          }
       }
    }

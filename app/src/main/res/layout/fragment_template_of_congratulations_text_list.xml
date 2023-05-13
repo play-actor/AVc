@@ -22,17 +22,33 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <include
-        android:id="@+id/filter"
-        layout="@layout/filter"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/filterTemplate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:gravity="center"
+        app:singleSelection="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/buttonFilterAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Все" />
+
+        <Button
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/buttonFilterFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Избранное" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTemplate"

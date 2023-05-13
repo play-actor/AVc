@@ -17,7 +17,6 @@ import com.lastaurus.automatic_congratulations.ui.list.adapters.ContactListAdapt
 import com.lastaurus.automatic_congratulations.ui.list.adapters.PhoneListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListFragment
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListViewModel
-import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListViewModel
 import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListViewModel
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity
@@ -53,7 +52,6 @@ interface AppComponent {
    fun inject(classes: CongratulationFragment)
    fun inject(classes: TemplateListViewModel)
 
-   fun inject(classes: ContactListFragment)
    fun inject(classes: CongratulationsListFragment)
 
    fun inject(classes: DBManager)

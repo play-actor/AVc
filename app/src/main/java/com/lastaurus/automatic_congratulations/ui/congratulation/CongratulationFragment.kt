@@ -2,12 +2,14 @@ package com.lastaurus.automatic_congratulations.ui.congratulation
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +20,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.Util.TimePickerDialogCreator
+import com.lastaurus.automatic_congratulations.bus.BusEvent
+import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.managers.DBManager
 import javax.inject.Inject
@@ -45,17 +49,22 @@ class CongratulationFragment : Fragment() {
 
    private var viewModel: CongratulationViewModel? = null
    private var saveCongratulation: View? = null
-   val PERMISSION_STRING = Manifest.permission.SEND_SMS
+   val PERMISSION_SEND_SMS = Manifest.permission.SEND_SMS
+
+   @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+   val PERMISSION_POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 
 
    @Inject
    lateinit var dbManager: DBManager
 
+   @Inject
+   lateinit var eventHandler: EventHandler
+
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?,
    ): View {
-      ComponentManager.instance.appComponent.inject(this)
       val view: View = inflater.inflate(
          R.layout.fragment_congratulation, container, false
       )
@@ -169,74 +178,47 @@ class CongratulationFragment : Fragment() {
    }
 
    fun createWorkerForNotification() {
-      if (ContextCompat.checkSelfPermission(requireContext(), PERMISSION_STRING)
-         == PackageManager.PERMISSION_GRANTED
-      ) {
-         val data = Data.Builder()
-            .putString("Name", viewModel?.getNameContact())
-            .putString("Phone", viewModel?.getTextPhone())
-            .putString("TextTemplate", viewModel?.getTextTemplate())
-            .build()
-         viewModel?.getId()?.let { dbManager.createWorkRequest(data, it) }
-         Log.d("gera", "createWorkerForNotification: ")
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+         if (ContextCompat.checkSelfPermission(requireContext(), PERMISSION_POST_NOTIFICATIONS)
+            == PackageManager.PERMISSION_GRANTED
+         ) {
+            createDateForRequest()
+         } else {
+            ActivityCompat.requestPermissions(
+               requireActivity(),
+               arrayOf(PERMISSION_POST_NOTIFICATIONS),
+               2
+            )
+         }
+      } else {
+         createDateForRequest()
+
       }
    }
 
-//   fun setWorker(name: String?, phoneNumber: String?, dateCon: String?, getTextTemplate: String?) {
-//      this.interactorLoad = Applications.INSTANCE.getHelperInteractors().getContactInteractor()
-//      if (ContextCompat.checkSelfPermission(requireContext(), PERMISSION_STRING)
-//         == PackageManager.PERMISSION_GRANTED
-//      ) {
-//         val data = Data.Builder()
-//            .putString("Name", name)
-//            .putString("Phone", phoneNumber)
-//            .putString("TextTemplate", getTextTemplate)
-//            .build()
-//         try {
-//            format.applyPattern("dd.MM.yyyy, HH:mm")
-//            thisDateCon = format.parse(dateCon)
-//         } catch (e: ParseException) {
-//            e.printStackTrace()
-//         }
-//         var seconds: Long = (thisDateCon.getTime() - myTime.getTime()) / 1000
-//         if (seconds < 0) {
-//            seconds += 31536000
-//         }
-//         if (this.binding.favorite.isChecked()) {
-//            this.interactorLoad.myWork(data, seconds)
-//               .subscribeOn(Schedulers.computation())
-//               .observeOn(AndroidSchedulers.mainThread())
-//               .subscribe(
-//                  { Log.i(TAG, "Worker создан") }
-//               ) { throwable ->
-//                  Log.e(
-//                     TAG,
-//                     "Worker error",
-//                     throwable as Throwable
-//                  )
-//               }
-//            /*                    myWorkRequest = new PeriodicWorkRequest.Builder(SendWorker.class, 31536000, TimeUnit.MINUTES)
-//                           .setInputData(data)
-//                           .setInitialDelay(10, TimeUnit.SECONDS)
-//                           .build();
-//               WorkManager.getInstance(Applications.INSTANCE).enqueue(myWorkRequest);*/coordLayout =
-//               activity!!.findViewById<CoordinatorLayout>(R.id.mainFragApp)
-//            Snackbar.make(coordLayout, "Сохранено", BaseTransientBottomBar.LENGTH_LONG).show()
-//         }
-//      } else {
-//         ActivityCompat.requestPermissions(
-//            activity!!,
-//            arrayOf<String>(Manifest.permission.SEND_SMS),
-//            PERMISSION_REQUEST_CODE
-//         )
-//      }
-//   }
+   private fun createDateForRequest() {
+      val data = Data.Builder()
+         .putString("Name", viewModel?.getNameContact())
+         .putString("Phone", viewModel?.getTextPhone())
+         .putString("TextTemplate", viewModel?.getTextTemplate())
+         .build()
+      viewModel?.getId()?.let { dbManager.createWorkRequest(data, it) }
+   }
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
+      ComponentManager.instance.appComponent.inject(this)
       this.viewModel = ViewModelProvider(this)[CongratulationViewModel::class.java]
       viewModel?.init(arguments?.getInt("congratulation_Id", -1))
       setHasOptionsMenu(true)
+      eventHandler.subscribeEvent { busEvent ->
+         (busEvent as? BusEvent.RequestPermissionsResult)?.let {
+            if (it.result == 2) {
+               createWorkerForNotification()
+            }
+         }
+         false
+      }
    }
 
 }

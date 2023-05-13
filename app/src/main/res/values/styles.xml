@@ -33,6 +33,21 @@
     </style>
 
     <style name="MaterialSwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
-        <item name="thumbIcon">@animator/default_switch_icon</item>
+        <item name="android:thumb">@drawable/mtrl_switch_thumb</item>
+        <item name="track">@drawable/mtrl_switch_track</item>
+        <item name="trackDecoration">@drawable/mtrl_switch_track_decoration</item>
+        <item name="thumbTint">@color/mtrl_switch_thumb_tint</item>
+        <item name="thumbIconTint">@color/mtrl_switch_thumb_icon_tint</item>
+        <item name="trackTint">@color/mtrl_switch_track_tint</item>.
+    </style>
+
+    <style name="Widget.App.Button.OutlinedButton.IconOnly" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
     </style>
 </resources>
