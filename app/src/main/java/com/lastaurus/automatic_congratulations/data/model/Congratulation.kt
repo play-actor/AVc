@@ -12,8 +12,7 @@ data class Congratulation(
    @PrimaryKey
    private var id: Int = Int.MIN_VALUE,
    private var idWorker: UUID? = null,
-   private var date: Long = 0,
-   private var time: Long = 0,
+   private var dateTime: Long = 0,
    private var idContact: Int = Int.MIN_VALUE,
    private var phone: String = "",
    private var idTemplate: Int = Int.MIN_VALUE,
@@ -75,26 +74,20 @@ data class Congratulation(
       notifyPropertyChanged(BR.idWorker)
    }
 
-   @Bindable
-   fun getDate(): Long {
-      return date
+   fun claenIdWorker() {
+      this.idWorker = null
+      notifyPropertyChanged(BR.idWorker)
    }
 
    @Bindable
-   fun setDate(date: Long) {
-      this.date = date
-      notifyPropertyChanged(BR.date)
+   fun getDateTime(): Long {
+      return dateTime
    }
 
    @Bindable
-   fun getTime(): Long {
-      return date
-   }
-
-   @Bindable
-   fun setTime(time: Long) {
-      this.time = time
-      notifyPropertyChanged(BR.time)
+   fun setDateTime(dateTime: Long) {
+      this.dateTime = dateTime
+      notifyPropertyChanged(BR.dateTime)
    }
 
    @Bindable

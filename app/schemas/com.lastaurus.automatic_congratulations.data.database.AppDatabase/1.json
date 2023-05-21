@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9fd2a0ec79d77286df54df3fde7c92f1",
+    "identityHash": "8fe87255d8b9a7c6adc04408195dfc92",
     "entities": [
       {
         "tableName": "Contact",
@@ -88,7 +88,7 @@
       },
       {
         "tableName": "Congratulation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idWorker` BLOB, `date` INTEGER NOT NULL, `time` INTEGER NOT NULL, `idContact` INTEGER NOT NULL, `phone` TEXT NOT NULL, `idTemplate` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idWorker` BLOB, `dateTime` INTEGER NOT NULL, `idContact` INTEGER NOT NULL, `phone` TEXT NOT NULL, `idTemplate` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -103,14 +103,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "date",
-            "columnName": "date",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "time",
-            "columnName": "time",
+            "fieldPath": "dateTime",
+            "columnName": "dateTime",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -152,7 +146,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9fd2a0ec79d77286df54df3fde7c92f1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8fe87255d8b9a7c6adc04408195dfc92')"
     ]
   }
 }

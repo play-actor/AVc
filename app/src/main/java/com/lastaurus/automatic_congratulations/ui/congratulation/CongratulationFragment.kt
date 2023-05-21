@@ -148,14 +148,14 @@ class CongratulationFragment : Fragment() {
 
       date?.setEndIconOnClickListener {
          TimePickerDialogCreator.DateDialog(requireContext()) {
-            viewModel?.setDate(it.timeInMillis)
+            viewModel?.setDateTime(it.timeInMillis)
             dateText?.setText(viewModel?.getDate())
             true
          }.create()
       }
       time?.setEndIconOnClickListener {
          TimePickerDialogCreator.TimeDialog(requireContext()) {
-            viewModel?.setTime(it.timeInMillis)
+            viewModel?.setDateTime(it.timeInMillis)
             timeText?.setText(viewModel?.getTime())
             true
          }.create()
@@ -172,12 +172,20 @@ class CongratulationFragment : Fragment() {
       timeText?.setText(viewModel?.getTime())
       this.saveCongratulation?.setOnClickListener {
          viewModel?.save()
-         createWorkerForNotification()
+         active?.isChecked?.let {
+            if (it) {
+               createWorkerForNotification()
+            } else {
+               viewModel?.getId()?.let { id ->
+                  dbManager.cancelWorkRequest(id)
+               }
+            }
+         }
       }
       return view
    }
 
-   fun createWorkerForNotification() {
+   private fun createWorkerForNotification() {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
          if (ContextCompat.checkSelfPermission(requireContext(), PERMISSION_POST_NOTIFICATIONS)
             == PackageManager.PERMISSION_GRANTED
@@ -192,7 +200,6 @@ class CongratulationFragment : Fragment() {
          }
       } else {
          createDateForRequest()
-
       }
    }
 

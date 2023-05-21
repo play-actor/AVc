@@ -25,8 +25,6 @@ class WorkerManager(
    private val IFICATION_ID: String = NOTIFICATION_ID.toString()
    override fun doWork(): Result {
       val inputData = inputData
-      Log.i(TAG, "doWork: start")
-      Log.i(TAG, inputData.toString())
       val channel: NotificationChannel
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
          channel = NotificationChannel(
@@ -42,7 +40,7 @@ class WorkerManager(
       try {
          actionIntent.putExtra("TextTemplate", inputData.getString("TextTemplate"))
       } catch (e: Exception) {
-         Log.w(TAG, "doWork: e", e)
+         Log.w("AVC", "WorkerManager Exception: ", e)
       }
       var flag = 0
       flag = flag or PendingIntent.FLAG_IMMUTABLE
@@ -78,11 +76,6 @@ class WorkerManager(
          return Result.failure()
       }
       notificationManager.notify(NOTIFICATION_ID, builder.build())
-      Log.i(TAG, "doWork: end")
       return Result.success()
-   }
-
-   companion object {
-      const val TAG = "gera:WorkerManager"
    }
 }

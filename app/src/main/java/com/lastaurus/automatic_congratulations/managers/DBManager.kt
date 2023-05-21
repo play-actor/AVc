@@ -11,7 +11,6 @@ import androidx.work.WorkManager
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
 import com.lastaurus.automatic_congratulations.data.database.AppDatabase
-import com.lastaurus.automatic_congratulations.data.model.Congratulation
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import com.lastaurus.automatic_congratulations.data.model.Template
 import kotlinx.coroutines.CoroutineScope
@@ -24,12 +23,9 @@ import javax.inject.Singleton
 
 
 class DBManager @Singleton constructor() {
-   private var myWorkRequest: PeriodicWorkRequest? = null
 
    @Inject
    lateinit var db: AppDatabase
-   private var contactsList: List<Contact>? = null
-   private var eventList: List<Congratulation>? = null
 
    @Inject
    lateinit var context: Context
@@ -43,25 +39,52 @@ class DBManager @Singleton constructor() {
       loadTemplateList()
    }
 
-//   fun startWorkRequest(data: Data, idContact: Int, start: Boolean) {
-//      if(db.eventDao().getById(idContact)?.getIdWorker()!=null)
-//      WorkManager.getInstance(context).enqueue(it)
-//   }
+   fun cancelWorkRequest(idCongratulation: Int) {
+      scope.launch {
+         db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
+            congratulation.getIdWorker()?.let {
+               WorkManager.getInstance(context).cancelWorkById(it)
+               congratulation.claenIdWorker()
+            }
+         }
+      }
+   }
+
+
+   fun setEveryYearInterval(idCongratulation: Int) {
+      scope.launch {
+         val congratulationTime = db.congratulationsDao().getById(idCongratulation)?.getDateTime()
+         val currentTime = Calendar.getInstance().timeInMillis
+         var seconds = (congratulationTime?.minus(currentTime))
+         seconds = seconds?.div(1000)
+         seconds?.let {
+            if (seconds < 0) {
+               seconds += 31536000
+            }
+         }
+         //TODO
+      }
+   }
 
    fun createWorkRequest(data: Data, idCongratulation: Int) {
       var periodicWorkRequest: PeriodicWorkRequest?
-//      var periodicWorkRequest: OneTimeWorkRequest?
       scope.launch {
          periodicWorkRequest =
-            PeriodicWorkRequest.Builder(WorkerManager::class.java, 15, TimeUnit.MINUTES)
+            PeriodicWorkRequest.Builder(
+               WorkerManager::class.java,
+               365,
+               TimeUnit.DAYS,
+               24,
+               TimeUnit.HOURS,
+            )
                .setInputData(data)
-//               .setInitialDelay(10, TimeUnit.MINUTES)
+               .setInitialDelay(10, TimeUnit.SECONDS)
                .build()
 
          periodicWorkRequest?.let {
             db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
-               if (congratulation.getIdWorker() != null) {
-                  WorkManager.getInstance(context).cancelWorkById(it.id)
+               congratulation.getIdWorker()?.let { uuid ->
+                  WorkManager.getInstance(context).cancelWorkById(uuid)
                }
                congratulation.setIdWorker(it.id)
                db.congratulationsDao().update(congratulation)
@@ -70,60 +93,6 @@ class DBManager @Singleton constructor() {
          }
       }
    }
-
-//      return Observable.just(data)
-//         .flatMapCompletable { data1 ->
-//            myWorkRequest11 = PeriodicWorkRequest.Builder(WorkerManager::class.java, seconds, TimeUnit.MINUTES)
-//               .setInputData(data1)
-//               .setInitialDelay(10, TimeUnit.SECONDS)
-//               .build()
-//            WorkManager.getInstance(context).enqueue(myWorkRequest11!!)
-//            Completable.complete()
-//         }
-
-   //   public Completable createWorkRequest(Data data, long seconds, String id) {
-   //      return Observable.just(data)
-   //            .flatMapCompletable(data1 -> {
-   //               this.myWorkRequest = new PeriodicWorkRequest.Builder(WorkerManager.class, seconds, TimeUnit.MINUTES)
-   //                     .setInputData(data1)
-   //                     .setInitialDelay(10, TimeUnit.SECONDS)
-   //                     .build();
-   //               WorkManager.getInstance(context).enqueue(this.myWorkRequest);
-   //               return Completable.complete();
-   //            }).doFinally(() -> {
-   //               updateListIDWorker(id);
-   //            });
-   //   }
-   //
-   //   public Completable cancelWorkRequest(String id) {
-   //      Contact contact = db.contactDao().getById(id);
-   //      ArrayList<String> listIDWorker = new ArrayList<>(contact.getListIDWorker());
-   //      return Observable.just(listIDWorker)
-   //            .flatMapCompletable(listID -> {
-   //               for (String idfromList : listID) {
-   //                  UUID uuid = UUID.fromString(idfromList);
-   //                  WorkManager.getInstance(context).cancelWorkById(uuid);
-   //               }
-   //               return Completable.complete();
-   //            }).doFinally(() -> {
-   //               clineListIDWorker(id);
-   //            });
-   //   }
-   //   public void updateListIDWorker(String id) {
-   //      //FIXME добавляет но медленно, лучше в RX
-   //      Contact contact = db.contactDao().getById(id);
-   //      ArrayList<String> listIDWorker = new ArrayList<>(contact.getListIDWorker());
-   //      listIDWorker.add(this.myWorkRequest.getId().toString());
-   //      contact.setListIDWorker(listIDWorker);
-   //      db.contactDao().update(contact);
-   //   }
-   //
-   //   public void clineListIDWorker(String id) {
-   //      //FIXME удаляет но медленно, лучше в RX
-   //      Contact contact = db.contactDao().getById(id);
-   //      contact.setListIDWorker(Collections.emptyList());
-   //      db.contactDao().update(contact);
-   //   }
 
    fun loadSistemContactList() {
       dbJob = scope.launch {
@@ -209,20 +178,4 @@ class DBManager @Singleton constructor() {
    fun cancelJob() {
       dbJob?.cancel()
    }
-
-//   fun Filt(searchText: String): Single<List<Contact>> {
-//      contactsList = getContactList(0)
-//      return Observable.fromIterable(this.contactsList!!)
-//         .filter { contact: Contact ->
-//            val searchTextfinal = searchText.lowercase(Locale.getDefault())
-//            if (contact.getName().lowercase(Locale.getDefault())
-//                  .contains(searchTextfinal)
-//            ) {
-//               return@filter true
-//            }
-//            contact.getPhoneList()[0].lowercase(Locale.getDefault())
-//               .contains(searchTextfinal)
-//         }
-//         .toList()
-//   }
 }

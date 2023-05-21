@@ -62,8 +62,8 @@ class CongratulationsListAdapter : RecyclerView.Adapter<CongratulationsListAdapt
       holder.apply {
          nameView.text = contact?.getName()
          phoneView.text = congratulations.getPhone()
-         dateAndTime.text = FORMATTER_DATE.print(congratulations.getDate()) + " " +
-               FORMATTER_TIME.print(congratulations.getTime())
+         dateAndTime.text = FORMATTER_DATE.print(congratulations.getDateTime()) + " " +
+               FORMATTER_TIME.print(congratulations.getDateTime())
          itemView.setOnClickListener {
             if (click != null) {
                congratulations.getId().let { click?.click(it) }

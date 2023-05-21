@@ -107,19 +107,15 @@ class CongratulationViewModel : ViewModel() {
    }
 
    fun getDate(): String {
-      return congratulation?.getDate()?.let { FORMATTER_DATE.print(it) } ?: ""
+      return congratulation?.getDateTime()?.let { FORMATTER_DATE.print(it) } ?: ""
    }
 
    fun getTime(): String {
-      return (congratulation?.getTime()?.let { FORMATTER_TIME.print(it) } ?: "")
+      return (congratulation?.getDateTime()?.let { FORMATTER_TIME.print(it) } ?: "")
    }
 
-   fun setDate(date: Long) {
-      congratulation?.setDate(date)
-   }
-
-   fun setTime(time: Long) {
-      congratulation?.setTime(time)
+   fun setDateTime(dateTime: Long) {
+      congratulation?.setDateTime(dateTime)
    }
 
    fun setContact(id: Int) {
