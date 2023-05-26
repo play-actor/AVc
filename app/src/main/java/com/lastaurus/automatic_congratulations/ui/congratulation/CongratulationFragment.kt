@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +20,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.Util.TimePickerDialogCreator
-import com.lastaurus.automatic_congratulations.bus.BusEvent
 import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.managers.DBManager
@@ -49,7 +48,6 @@ class CongratulationFragment : Fragment() {
 
    private var viewModel: CongratulationViewModel? = null
    private var saveCongratulation: View? = null
-   val PERMISSION_SEND_SMS = Manifest.permission.SEND_SMS
 
    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
    val PERMISSION_POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
@@ -185,6 +183,13 @@ class CongratulationFragment : Fragment() {
       return view
    }
 
+   private val requestPermissionLauncher =
+      registerForActivityResult(
+         ActivityResultContracts.RequestPermission()
+      ) { isGranted: Boolean ->
+         if (isGranted) createWorkerForNotification()
+      }
+
    private fun createWorkerForNotification() {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
          if (ContextCompat.checkSelfPermission(requireContext(), PERMISSION_POST_NOTIFICATIONS)
@@ -192,11 +197,7 @@ class CongratulationFragment : Fragment() {
          ) {
             createDateForRequest()
          } else {
-            ActivityCompat.requestPermissions(
-               requireActivity(),
-               arrayOf(PERMISSION_POST_NOTIFICATIONS),
-               2
-            )
+            requestPermissionLauncher.launch(PERMISSION_POST_NOTIFICATIONS)
          }
       } else {
          createDateForRequest()
@@ -218,14 +219,6 @@ class CongratulationFragment : Fragment() {
       this.viewModel = ViewModelProvider(this)[CongratulationViewModel::class.java]
       viewModel?.init(arguments?.getInt("congratulation_Id", -1))
       setHasOptionsMenu(true)
-      eventHandler.subscribeEvent { busEvent ->
-         (busEvent as? BusEvent.RequestPermissionsResult)?.let {
-            if (it.result == 2) {
-               createWorkerForNotification()
-            }
-         }
-         false
-      }
    }
 
 }

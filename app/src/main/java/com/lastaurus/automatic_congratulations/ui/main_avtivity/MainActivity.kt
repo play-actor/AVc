@@ -4,8 +4,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.github.terrakok.cicerone.Command
@@ -60,11 +60,6 @@ class MainActivity : AppCompatActivity() {
                Snackbar.LENGTH_SHORT
             ).show()
          }
-         (busEvent as? BusEvent.RequestPermissionsResult)?.let {
-            if (it.result == REQUEST_CODE_READ_CONTACTS) {
-               uploadContactList()
-            }
-         }
          false
       }
    }
@@ -79,6 +74,13 @@ class MainActivity : AppCompatActivity() {
       super.onPause()
    }
 
+   private val requestPermissionLauncher =
+      registerForActivityResult(
+         ActivityResultContracts.RequestPermission()
+      ) { isGranted: Boolean ->
+         if (isGranted) uploadContactList()
+      }
+
    @SuppressLint("CheckResult")
    fun uploadContactList() {
       if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
@@ -86,21 +88,8 @@ class MainActivity : AppCompatActivity() {
       ) {
          dbManager.loadSistemContactList()
       } else {
-         ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.READ_CONTACTS),
-            REQUEST_CODE_READ_CONTACTS
-         )
+         requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
       }
-   }
-
-   override fun onRequestPermissionsResult(
-      requestCode: Int,
-      permissions: Array<String>,
-      grantResults: IntArray,
-   ) {
-      eventHandler.postEvent(BusEvent.RequestPermissionsResult(requestCode))
-      super.onRequestPermissionsResult(requestCode, permissions, grantResults)
    }
 
    override fun onDestroy() {
