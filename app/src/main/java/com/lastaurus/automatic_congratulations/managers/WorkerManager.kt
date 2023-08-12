@@ -7,75 +7,102 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.lastaurus.automatic_congratulations.R
+import com.lastaurus.automatic_congratulations.Util.Util.Companion.getDateTime
+import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
+import com.lastaurus.automatic_congratulations.data.database.DBManager
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import javax.inject.Inject
 
 class WorkerManager(
    private val context: Context,
    params: WorkerParameters?,
 ) : Worker(context, params!!) {
-   private val NOTIFICATION_ID = 466
-   private val IFICATION_ID: String = NOTIFICATION_ID.toString()
+   private val NOTIFICATION_ID = 666
+   private val scope: CoroutineScope by lazy { CoroutineScope(Job()) }
+
+   @Inject
+   lateinit var dbManager: DBManager
+
+   init {
+      instance.appComponent.inject(this)
+   }
+
    override fun doWork(): Result {
-      val inputData = inputData
       val channel: NotificationChannel
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-         channel = NotificationChannel(
-            IFICATION_ID,
-            "Automatic congratulations",
-            NotificationManager.IMPORTANCE_HIGH
-         )
+      val idCongratulation = inputData.getInt("idCongratulation", -1)
+
+      dbManager.db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
+         getDateTime(congratulation, congratulation.getDateTimeFuture())
+         dbManager.db.congratulationsDao().update(congratulation)
+         NotificationChannel(
+            /* id = */ NOTIFICATION_ID.toString(),
+            /* name = */ "Automatic congratulations",
+            /* importance = */ NotificationManager.IMPORTANCE_HIGH
+         ).also { channel = it }
          NotificationManagerCompat.from(context).createNotificationChannel(channel)
+         val name = dbManager.db.contactDao().getById(congratulation.getIdContact())?.getName()
+         val phone = congratulation.getPhone()
+         val actionIntent = Intent(context, MainActivity::class.java)
+         actionIntent.putExtra(
+            "Name",
+            name
+               ?: return Result.failure()
+         )
+         actionIntent.putExtra("Phone", phone)
+         actionIntent.putExtra(
+            "TextTemplate",
+            dbManager.db.templateDao().getById(congratulation.getIdTemplate())?.getTextTemplate()
+               ?: return Result.failure()
+         )
+         var flag = 0
+         flag = flag or PendingIntent.FLAG_IMMUTABLE
+         val actionPendingIntent =
+            PendingIntent.getActivity(
+               context,
+               0,
+               actionIntent,
+               flag
+            )
+         dbManager.createWorkRequest()
+         create(actionPendingIntent, name, phone) { Result.failure() }
+
+         return Result.success()
       }
-      val actionIntent = Intent(context, MainActivity::class.java)
-      actionIntent.putExtra("Name", inputData.getString("Name"))
-      actionIntent.putExtra("Phone", inputData.getString("Phone"))
-      try {
-         actionIntent.putExtra("TextTemplate", inputData.getString("TextTemplate"))
-      } catch (e: Exception) {
-         Log.w("AVC", "WorkerManager Exception: ", e)
-      }
-      var flag = 0
-      flag = flag or PendingIntent.FLAG_IMMUTABLE
-      val actionPendingIntent =
-         PendingIntent.getActivity( // Интент используется для создания отложенного интента.
-            context,  //Контекст (в данном случае текущая служба).
-            0,  //Этот флаг должен использоваться в том случае, если понадобится получить отложенный интент. Нам это не нужно, поэтому передается 0.
-            actionIntent,  //Интент, созданный выше
-            flag
-         ) //Если соответствующий отложенный интент существует, он будет обновлен
+      return Result.failure()
+   }
+
+   private inline fun create(
+      actionPendingIntent: PendingIntent,
+      name: String, phone: String,
+      resultFail: () -> Result,
+   ) {
       val builder: NotificationCompat.Builder = NotificationCompat.Builder(
-         context, IFICATION_ID
-      ) //Эти настройки необходимы для всех уведомлений.
+         context,
+         NOTIFICATION_ID.toString()
+      )
          .setSmallIcon(R.mipmap.ic_launcher_round)
-         .setContentTitle(
-            "Запланировано поздравить абонента: "
-                  + inputData.getString("Name") + " ("
-                  + inputData.getString("Phone") + ")"
-         ) //А эти — только для всплывающих уведомлений.
+         .setContentTitle("Запланировано поздравить абонента: $name ($phone)")
          .setPriority(NotificationCompat.PRIORITY_HIGH)
          .setVibrate(longArrayOf(1000, 1000))
-         .setAutoCancel(true) //Благодаря этой строке уведомление исчезает после щелчка.
-         /*      .addAction(R.drawable.ic_add_24dp, "Да",
-                          this.interactor.smsSend(this.context, inputData.getString("Phone"), inputData.getString("TextTemplate")))*/
+         .setAutoCancel(true)
          .setContentIntent(actionPendingIntent)
-      //Выдача уведомления
+
       val notificationManager = NotificationManagerCompat.from(context)
       if (ActivityCompat.checkSelfPermission(
             context,
             Manifest.permission.POST_NOTIFICATIONS
          ) != PackageManager.PERMISSION_GRANTED
       ) {
-         return Result.failure()
+         resultFail.invoke()
       }
       notificationManager.notify(NOTIFICATION_ID, builder.build())
-      return Result.success()
    }
 }

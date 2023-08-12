@@ -35,14 +35,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/OutlinedButton"
             android:id="@+id/buttonFilterAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Все" />
 
         <Button
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/OutlinedButton"
             android:id="@+id/buttonFilterFavorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -3,6 +3,7 @@ package com.lastaurus.automatic_congratulations.ui.congratulation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.lastaurus.automatic_congratulations.Util.Util.Companion.getDateTime
 import com.lastaurus.automatic_congratulations.bus.BusEvent
 import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
@@ -58,30 +59,12 @@ class CongratulationViewModel : ViewModel() {
       return congratulationUseCase.getCongratulationListSize()
    }
 
-   fun update() {
-      congratulation?.let { congratulationUseCase.updateCongratulationDB(it) }
-   }
-
-   fun upsert() {
-      congratulation?.let { congratulationUseCase.upsertCongratulationDB(it) }
-   }
-
    fun getNameContact(): String {
       return getNameContact(congratulation?.getIdContact())
    }
 
    fun getNameContact(id: Int?): String {
       return congratulationUseCase.getContact(id)?.getName() ?: ""
-   }
-
-   fun getContact(): Contact? {
-      return congratulationUseCase.getContact(congratulation?.getIdContact())
-   }
-
-   fun getPhoneContact(): String {
-      return congratulationUseCase.getContact(congratulation?.getIdContact())?.getPhoneList()
-         ?.get(0)
-         ?: ""
    }
 
    fun getContactPhoneList(): ArrayList<String>? {
@@ -114,6 +97,10 @@ class CongratulationViewModel : ViewModel() {
       return (congratulation?.getDateTime()?.let { FORMATTER_TIME.print(it) } ?: "")
    }
 
+   fun getPeriodic(): Boolean {
+      return congratulation?.getPeriodic() ?: false
+   }
+
    fun setDateTime(dateTime: Long) {
       congratulation?.setDateTime(dateTime)
    }
@@ -142,13 +129,25 @@ class CongratulationViewModel : ViewModel() {
       return congratulation?.getActive()
    }
 
+   fun setPeriodic(periodic: Boolean) {
+      congratulation?.setPeriodic(periodic)
+   }
+
    fun setActive(active: Boolean) {
       congratulation?.setActive(active)
    }
 
+   fun getContactByPeaceName(searchText: String): LiveData<List<Contact>> {
+      return congratulationUseCase.getContactByPeaceName(searchText).asLiveData()
+   }
+
    fun save() {
-      eventHandler.postEvent(BusEvent.TextOfSave)
-      congratulation?.let { congratulationUseCase.upsertCongratulationDB(it) }
+      congratulation?.let {
+         val dateTime = it.getDateTime()
+         getDateTime(congratulation, dateTime)
+         eventHandler.postEvent(BusEvent.TextOfSave)
+         congratulationUseCase.upsertCongratulationDB(it)
+      }
    }
 
 

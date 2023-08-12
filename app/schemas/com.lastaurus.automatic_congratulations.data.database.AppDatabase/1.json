@@ -2,15 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8fe87255d8b9a7c6adc04408195dfc92",
+    "identityHash": "42d4717b8165ca89e859c8f5add73b3d",
     "entities": [
       {
         "tableName": "Contact",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `phoneList` TEXT NOT NULL, `uriThumbnail` TEXT NOT NULL, `uriFull` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `cDateId` INTEGER NOT NULL, `name` TEXT NOT NULL, `phoneList` TEXT NOT NULL, `uriThumbnail` TEXT NOT NULL, `uriFull` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cDateId",
+            "columnName": "cDateId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -88,7 +94,7 @@
       },
       {
         "tableName": "Congratulation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `idWorker` BLOB, `dateTime` INTEGER NOT NULL, `idContact` INTEGER NOT NULL, `phone` TEXT NOT NULL, `idTemplate` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, `dateTimeFuture` INTEGER NOT NULL, `idContact` INTEGER NOT NULL, `phone` TEXT NOT NULL, `idTemplate` INTEGER NOT NULL, `periodic` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -97,14 +103,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "idWorker",
-            "columnName": "idWorker",
-            "affinity": "BLOB",
-            "notNull": false
-          },
-          {
             "fieldPath": "dateTime",
             "columnName": "dateTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateTimeFuture",
+            "columnName": "dateTimeFuture",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -123,6 +129,12 @@
           {
             "fieldPath": "idTemplate",
             "columnName": "idTemplate",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "periodic",
+            "columnName": "periodic",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -146,7 +158,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8fe87255d8b9a7c6adc04408195dfc92')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '42d4717b8165ca89e859c8f5add73b3d')"
     ]
   }
 }

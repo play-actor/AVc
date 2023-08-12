@@ -4,7 +4,7 @@ package com.lastaurus.automatic_congratulations.dagger.module
 import android.content.Context
 import androidx.room.Room
 import com.lastaurus.automatic_congratulations.data.database.AppDatabase
-import com.lastaurus.automatic_congratulations.managers.DBManager
+import com.lastaurus.automatic_congratulations.data.database.DBManager
 import dagger.Module
 import dagger.Provides
 import java.util.*

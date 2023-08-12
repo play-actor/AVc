@@ -82,4 +82,10 @@ class ContactViewModel : ViewModel() {
          )
       }
    }
+
+   fun save() {
+      contact?.apply {
+         changeContactUseCase.upsertContactDB(this)
+      }
+   }
 }

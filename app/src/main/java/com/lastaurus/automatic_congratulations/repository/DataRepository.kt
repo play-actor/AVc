@@ -65,8 +65,8 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
       return id?.let { db.contactDao().getById(it)?.getPhoneList() }
    }
 
-   fun getContactByName(id: String?): Contact? {
-      return id?.let { db.contactDao().getByName(it) }
+   fun getContactByPeaceName(searchText: String): Flow<List<Contact>> {
+      return db.contactDao().searchContact(searchText)
    }
 
    fun getContactListSize(): Int {

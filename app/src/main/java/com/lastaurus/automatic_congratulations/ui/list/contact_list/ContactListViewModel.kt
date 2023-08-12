@@ -31,4 +31,8 @@ class ContactListViewModel : ViewModel() {
    fun openNewContact() {
       contactListUseCase.openNewContact()
    }
+
+   fun loadSystemContactList() {
+      contactListUseCase.loadSystemContactList()
+   }
 }

@@ -32,6 +32,27 @@
         <item name="endIconMode">custom</item>
     </style>
 
+    <style name="TextInputEditTextOutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="colorOutline">@color/onErrorContainer</item>
+        <item name="boxStrokeErrorColor">@color/error</item>
+        <item name="android:textColor">@color/onBackground</item>
+        <item name="endIconTint">@color/onBackground</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="android:textColorHint">@color/primary</item>
+        <item name="endIconMode">custom</item>
+    </style>
+
+    <style name="TextInputEditTextExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/colorItemBackground</item>
+        <item name="boxStrokeColor">@color/onPrimaryContainer</item>
+        <item name="android:textColor">@color/onBackground</item>
+        <item name="endIconTint">@color/onBackground</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="android:textColorHint">@color/primary</item>
+        <item name="endIconMode">dropdown_menu</item>
+    </style>
+
     <style name="MaterialSwitch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
         <item name="android:thumb">@drawable/mtrl_switch_thumb</item>
         <item name="track">@drawable/mtrl_switch_track</item>

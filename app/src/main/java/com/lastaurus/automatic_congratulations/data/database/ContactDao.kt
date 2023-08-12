@@ -28,6 +28,9 @@ interface ContactDao {
    @get:Query("SELECT COUNT(*) FROM contact")
    val size: Int
 
+   @Query("SELECT * FROM contact WHERE name LIKE '%' || :searchText || '%'")
+   fun searchContact(searchText: String): Flow<List<Contact>>
+
    @Insert
    fun insert(contact: Contact)
 

@@ -6,12 +6,13 @@ import com.lastaurus.automatic_congratulations.dagger.module.BusModule
 import com.lastaurus.automatic_congratulations.dagger.module.HelperModule
 import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
 import com.lastaurus.automatic_congratulations.dagger.module.NavigationModule
-import com.lastaurus.automatic_congratulations.managers.DBManager
+import com.lastaurus.automatic_congratulations.data.database.DBManager
 import com.lastaurus.automatic_congratulations.managers.WorkerManager
 import com.lastaurus.automatic_congratulations.ui.congratulation.CongratulationFragment
 import com.lastaurus.automatic_congratulations.ui.congratulation.CongratulationViewModel
 import com.lastaurus.automatic_congratulations.ui.contact.ContactFragment
 import com.lastaurus.automatic_congratulations.ui.contact.ContactViewModel
+import com.lastaurus.automatic_congratulations.ui.contact.dialog.FullScreenDialogExample
 import com.lastaurus.automatic_congratulations.ui.list.adapters.CongratulationsListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.adapters.ContactListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.adapters.PhoneListAdapter

@@ -16,10 +16,6 @@ class CongratulationUseCase @Inject constructor(var dataRepository: DataReposito
       return dataRepository.getContactPhoneListById(id)
    }
 
-   fun getContact(name: String?): Contact? {
-      return dataRepository.getContactByName(name)
-   }
-
    fun getContactList(): Flow<List<Contact>> {
       return dataRepository.getContactList()
    }
@@ -36,15 +32,15 @@ class CongratulationUseCase @Inject constructor(var dataRepository: DataReposito
       return dataRepository.getCongratulationById(id)
    }
 
-   fun updateCongratulationDB(congratulation: Congratulation) {
-      dataRepository.updateCongratulationDB(congratulation)
-   }
-
    fun upsertCongratulationDB(congratulation: Congratulation) {
       dataRepository.upsertCongratulationDB(congratulation)
    }
 
    fun getCongratulationListSize(): Int {
       return dataRepository.getCongratulationListSize()
+   }
+
+   fun getContactByPeaceName(searchText: String): Flow<List<Contact>> {
+      return dataRepository.getContactByPeaceName(searchText)
    }
 }

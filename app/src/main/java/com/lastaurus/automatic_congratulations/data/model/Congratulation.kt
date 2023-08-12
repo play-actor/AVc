@@ -5,17 +5,17 @@ import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.UUID
 
 @Entity
 data class Congratulation(
    @PrimaryKey
    private var id: Int = Int.MIN_VALUE,
-   private var idWorker: UUID? = null,
    private var dateTime: Long = 0,
+   private var dateTimeFuture: Long = 0,
    private var idContact: Int = Int.MIN_VALUE,
    private var phone: String = "",
    private var idTemplate: Int = Int.MIN_VALUE,
+   private var periodic: Boolean = false,
    private var active: Boolean = false,
 ) : BaseObservable() {
 
@@ -64,22 +64,6 @@ data class Congratulation(
    }
 
    @Bindable
-   fun getIdWorker(): UUID? {
-      return idWorker
-   }
-
-   @Bindable
-   fun setIdWorker(idWorker: UUID) {
-      this.idWorker = idWorker
-      notifyPropertyChanged(BR.idWorker)
-   }
-
-   fun claenIdWorker() {
-      this.idWorker = null
-      notifyPropertyChanged(BR.idWorker)
-   }
-
-   @Bindable
    fun getDateTime(): Long {
       return dateTime
    }
@@ -91,6 +75,17 @@ data class Congratulation(
    }
 
    @Bindable
+   fun setDateTimeFuture(dateTimeFuture: Long) {
+      this.dateTimeFuture = dateTimeFuture
+      notifyPropertyChanged(BR.dateTimeFuture)
+   }
+
+   @Bindable
+   fun getDateTimeFuture(): Long {
+      return this.dateTimeFuture
+   }
+
+   @Bindable
    fun getActive(): Boolean {
       return active
    }
@@ -99,5 +94,16 @@ data class Congratulation(
    fun setActive(active: Boolean) {
       this.active = active
       notifyPropertyChanged(BR.active)
+   }
+
+   @Bindable
+   fun getPeriodic(): Boolean {
+      return periodic
+   }
+
+   @Bindable
+   fun setPeriodic(periodic: Boolean) {
+      this.periodic = periodic
+      notifyPropertyChanged(BR.periodic)
    }
 }

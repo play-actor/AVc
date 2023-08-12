@@ -1,9 +1,15 @@
 package com.lastaurus.automatic_congratulations.ui.list.contact_list
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +25,30 @@ class ContactListFragment : BaseFragment() {
    private var adapter: ContactListAdapter? = null
    private var viewModel: ContactListViewModel? = null
    private var addContact: View? = null
+   private var loadContact: Button? = null
    private var filterContact: MaterialButtonToggleGroup? = null
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       this.viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
+   }
+
+   private val requestPermissionLauncher =
+      registerForActivityResult(
+         ActivityResultContracts.RequestPermission()
+      ) { isGranted: Boolean ->
+         if (isGranted) uploadContactList()
+      }
+
+   @SuppressLint("CheckResult")
+   fun uploadContactList() {
+      if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
+         == PackageManager.PERMISSION_GRANTED
+      ) {
+         this.loadContact?.visibility = View.GONE
+         viewModel?.loadSystemContactList()
+      } else {
+         requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+      }
    }
 
    override fun onCreateView(
@@ -33,6 +59,7 @@ class ContactListFragment : BaseFragment() {
       with(view) {
          recyclerView = this.findViewById(R.id.list)
          addContact = this.findViewById(R.id.addContactToList)
+         loadContact = this.findViewById(R.id.loadContact)
          filterContact = this.findViewById(R.id.filterContact)
 
       }
@@ -40,6 +67,12 @@ class ContactListFragment : BaseFragment() {
       init(viewModel?.getContactList())
       this.addContact?.setOnClickListener {
          viewModel?.openNewContact()
+      }
+
+      this.loadContact?.apply {
+         visibility = viewModel?.getNeedVisibilityLoadContact() ?: View.GONE
+      }?.setOnClickListener {
+         uploadContactList()
       }
       filterContact?.addOnButtonCheckedListener { group, checkedId, isChecked ->
          when (checkedId) {

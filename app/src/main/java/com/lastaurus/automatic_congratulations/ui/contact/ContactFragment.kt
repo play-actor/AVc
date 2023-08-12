@@ -22,6 +22,7 @@ class ContactFragment : Fragment() {
    private var phonelist: RecyclerView? = null
    private var name: TextView? = null
    private var viewModel: ContactViewModel? = null
+   private var changeContact: Button? = null
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +34,7 @@ class ContactFragment : Fragment() {
          iconContact = this.findViewById(R.id.iconContact)
          mActionBarToolbar = this.findViewById(R.id.toolbar)
          name = this.findViewById(R.id.name)
+         changeContact = this.findViewById(R.id.changeContact)
       }
       mActionBarToolbar?.let {
          it.inflateMenu(R.menu.menu_contact)

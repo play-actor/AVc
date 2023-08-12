@@ -9,9 +9,6 @@ interface CongratulationsDao {
    @Query("SELECT * FROM congratulation")
    fun all(): Flow<List<Congratulation>>
 
-   @Query("SELECT * FROM congratulation")
-   fun all1(): List<Congratulation>
-
    @Query("SELECT * FROM congratulation WHERE (active != 0)")
    fun active(): Flow<List<Congratulation>>
 
@@ -20,6 +17,9 @@ interface CongratulationsDao {
 
    @get:Query("SELECT COUNT(*) FROM congratulation")
    val size: Int
+
+   @Query("SELECT * FROM congratulation WHERE ABS(dateTimeFuture>=:millis) limit 1")
+   fun targetCongratulation(millis: Long): Congratulation?
 
    @Insert
    fun insert(event: Congratulation)

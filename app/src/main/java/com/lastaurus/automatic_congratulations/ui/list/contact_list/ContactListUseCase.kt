@@ -2,12 +2,14 @@ package com.lastaurus.automatic_congratulations.ui.list.contact_list
 
 import com.github.terrakok.cicerone.Router
 import com.lastaurus.automatic_congratulations.cicerone.Screens
+import com.lastaurus.automatic_congratulations.data.database.DBManager
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import com.lastaurus.automatic_congratulations.repository.DataRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ContactListUseCase @Inject constructor(
+   var dbManager: DBManager,
    var dataRepository: DataRepository,
    var router: Router,
 ) {
@@ -25,5 +27,13 @@ class ContactListUseCase @Inject constructor(
 
    fun openNewContact() {
       router.navigateTo(Screens.contactScreen(dataRepository.getContactListSize()))
+   }
+
+   fun loadSystemContactList() {
+      dbManager.loadSystemContactList()
+   }
+
+   fun getNeedVisibilityLoadContact(): Boolean {
+      return dbManager.db.contactDao().size == 0
    }
 }
