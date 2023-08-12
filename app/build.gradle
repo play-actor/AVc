@@ -106,10 +106,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versionLifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versionLifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versionLifecycle"
-    implementation 'androidx.work:work-runtime-ktx:2.8.1'
-    implementation 'androidx.activity:activity-ktx:1.7.1'
+    implementation "androidx.work:work-runtime:$versionWork"
+    implementation "androidx.work:work-runtime-ktx:$versionWork"
+    implementation 'androidx.activity:activity-ktx:1.7.2'
     implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
+    implementation 'androidx.fragment:fragment-ktx:1.6.1'
 
 
     def versionCoroutines = "1.6.4"

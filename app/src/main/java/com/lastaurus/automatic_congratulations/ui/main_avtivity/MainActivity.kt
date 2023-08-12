@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
          supportFragmentManager.executePendingTransactions()
       }
    }
-   private val REQUEST_CODE_READ_CONTACTS = 1
 
    override fun onCreate(savedInstanceState: Bundle?) {
       instance.appComponent.inject(this)

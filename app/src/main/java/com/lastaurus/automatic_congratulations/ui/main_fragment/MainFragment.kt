@@ -35,10 +35,7 @@ class MainFragment : Fragment() {
          mActionBarToolbar = this.findViewById(R.id.toolbarMain)
          viewPager = this.findViewById(R.id.pager)
       }
-      mActionBarToolbar?.let {
-         it.inflateMenu(R.menu.menu_contactlist)
-//         it.setNavigationOnClickListener { requireActivity().onBackPressed() }
-      }
+      mActionBarToolbar?.inflateMenu(R.menu.menu_contactlist)
       val pagerAdapter = SectionsPagerAdapter(this)
       viewPager?.adapter = pagerAdapter
       barView?.setOnItemSelectedListener { item: MenuItem ->

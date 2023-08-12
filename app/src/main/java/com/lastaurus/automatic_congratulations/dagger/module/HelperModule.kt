@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 class HelperModule constructor(
-   var database: AppDatabase? = null
+   var database: AppDatabase? = null,
 ) {
 
    @JvmName("getDatabase1")

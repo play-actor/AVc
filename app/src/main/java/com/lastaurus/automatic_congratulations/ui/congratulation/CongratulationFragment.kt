@@ -4,32 +4,37 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.Data
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.Util.TimePickerDialogCreator
 import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
-import com.lastaurus.automatic_congratulations.managers.DBManager
+import com.lastaurus.automatic_congratulations.data.database.DBManager
 import javax.inject.Inject
 
 
 class CongratulationFragment : Fragment() {
 
    private var toolbar: Toolbar? = null
-   private var contactText: TextInputEditText? = null
+   private var contactText: MaterialAutoCompleteTextView? = null
    private var contact: TextInputLayout? = null
 
    private var contactPhoneText: TextInputEditText? = null
@@ -44,6 +49,7 @@ class CongratulationFragment : Fragment() {
    private var timeText: TextInputEditText? = null
    private var time: TextInputLayout? = null
 
+   private var toogle: MaterialButtonToggleGroup? = null
    private var active: MaterialSwitch? = null
 
    private var viewModel: CongratulationViewModel? = null
@@ -85,6 +91,7 @@ class CongratulationFragment : Fragment() {
          timeText = this.findViewById(R.id.timeText)
          time = this.findViewById(R.id.addTime)
 
+         toogle = this.findViewById(R.id.toggleGroup)
          active = this.findViewById(R.id.active)
 
          saveCongratulation = this.findViewById(R.id.saveCongratulation)
@@ -158,27 +165,66 @@ class CongratulationFragment : Fragment() {
             true
          }.create()
       }
+      toogle?.addOnButtonCheckedListener { group, checkedId, isChecked ->
+         if (isChecked) {
+            when (checkedId) {
+               R.id.buttonOneTime -> viewModel?.setPeriodic(false)
+               R.id.buttonPeriodic -> viewModel?.setPeriodic(true)
+            }
+         }
+      }
       active?.setOnCheckedChangeListener { buttonView, isChecked ->
          viewModel?.setActive(isChecked)
       }
-      viewModel?.getActive()?.let { active?.isChecked = it }
-      viewModel?.getContactPhoneList()?.let { items1 = it.toArray(arrayOfNulls<String>(0)) }
-      contactText?.setText(viewModel?.getNameContact())
-      contactPhoneText?.setText(viewModel?.getTextPhone())
-      templateText?.setText(viewModel?.getTextTemplate())
-      dateText?.setText(viewModel?.getDate())
-      timeText?.setText(viewModel?.getTime())
+
+      val list: MutableList<String> = emptyList<String>().toMutableList()
+      var arrayAdapter: ArrayAdapter<String>
+      contactText?.addTextChangedListener { textEditable: Editable? ->
+
+         viewModel?.getContactByPeaceName(textEditable.toString())
+            ?.observe(viewLifecycleOwner) { contacts ->
+               list.clear()
+               contacts.forEach { list.add(it.getName()) }
+               arrayAdapter =
+                  ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, list.toList())
+               contactText?.setAdapter(arrayAdapter)
+               contactText?.threshold = 2
+
+               contactText?.onItemClickListener =
+                  AdapterView.OnItemClickListener { parent, _, position, id ->
+                     val selectedItem = parent.getItemAtPosition(position).toString()
+                     // Выводим выбранное слово
+                     contacts.forEach { con ->
+                        if (con.getName() == selectedItem) {
+                           viewModel?.setContact(con.getId())
+                           viewModel?.getContactPhoneList()
+                              ?.let { items1 = it.toArray(arrayOfNulls<String>(0)) }
+                        }
+                     }
+                  }
+
+            }
+      }
+
+      viewModel?.apply {
+         getActive()?.let { active?.isChecked = it }
+         getContactPhoneList()?.let { items1 = it.toArray(arrayOfNulls<String>(0)) }
+         contactText?.setText(getNameContact())
+         contactPhoneText?.setText(getTextPhone())
+         templateText?.setText(getTextTemplate())
+         dateText?.setText(getDate())
+         timeText?.setText(getTime())
+         toogle?.check(
+            if (getPeriodic()) {
+               R.id.buttonPeriodic
+            } else {
+               R.id.buttonOneTime
+            }
+         )
+      }
       this.saveCongratulation?.setOnClickListener {
          viewModel?.save()
-         active?.isChecked?.let {
-            if (it) {
-               createWorkerForNotification()
-            } else {
-               viewModel?.getId()?.let { id ->
-                  dbManager.cancelWorkRequest(id)
-               }
-            }
-         }
+         createWorkerForNotification()
       }
       return view
    }
@@ -205,12 +251,9 @@ class CongratulationFragment : Fragment() {
    }
 
    private fun createDateForRequest() {
-      val data = Data.Builder()
-         .putString("Name", viewModel?.getNameContact())
-         .putString("Phone", viewModel?.getTextPhone())
-         .putString("TextTemplate", viewModel?.getTextTemplate())
-         .build()
-      viewModel?.getId()?.let { dbManager.createWorkRequest(data, it) }
+      viewModel?.apply {
+         dbManager.createWorkRequest()
+      }
    }
 
    override fun onCreate(savedInstanceState: Bundle?) {

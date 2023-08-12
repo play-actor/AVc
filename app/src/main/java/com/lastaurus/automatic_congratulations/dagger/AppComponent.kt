@@ -39,11 +39,9 @@ interface AppComponent {
    }
 
    fun inject(classes: AvcApplication)
-
+   fun inject(classes: WorkerManager)
    fun inject(classes: MainFragment)
-
    fun inject(classes: ContactFragment)
-
    fun inject(classes: TemplateFragment)
    fun inject(classes: ContactViewModel)
    fun inject(classes: ContactListViewModel)
@@ -52,20 +50,12 @@ interface AppComponent {
    fun inject(classes: TemplateViewModel)
    fun inject(classes: CongratulationFragment)
    fun inject(classes: TemplateListViewModel)
-
    fun inject(classes: CongratulationsListFragment)
-
    fun inject(classes: DBManager)
-   fun inject(classes: WorkerManager)
-
    fun inject(classes: ContactListAdapter)
-
    fun inject(classes: CongratulationsListAdapter)
-
    fun inject(classes: PhoneListAdapter)
-
    fun inject(classes: MainActivity)
-
    fun inject(classes: MainActivityViewModel)
 
 }

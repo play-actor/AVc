@@ -1,21 +1,25 @@
-package com.lastaurus.automatic_congratulations.managers
+package com.lastaurus.automatic_congratulations.data.database
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.provider.ContactsContract
 import android.util.Log
-import androidx.work.Data
-import androidx.work.PeriodicWorkRequest
+import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
-import com.lastaurus.automatic_congratulations.data.database.AppDatabase
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import com.lastaurus.automatic_congratulations.data.model.Template
+import com.lastaurus.automatic_congratulations.managers.WorkerManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -33,68 +37,62 @@ class DBManager @Singleton constructor() {
    private val template: Template by lazy { Template() }
    private val scope: CoroutineScope by lazy { CoroutineScope(Job()) }
    private var dbJob: Job? = null
+   private val APP_PREFERENCES = "settings";
+   private val preferences: SharedPreferences by lazy {
+      context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+   }
 
    init {
       instance.appComponent.inject(this)
       loadTemplateList()
    }
 
-   fun cancelWorkRequest(idCongratulation: Int) {
+   private fun cancelWorkRequest(id: UUID) {
       scope.launch {
-         db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
-            congratulation.getIdWorker()?.let {
-               WorkManager.getInstance(context).cancelWorkById(it)
-               congratulation.claenIdWorker()
-            }
-         }
+         WorkManager.getInstance(context).cancelWorkById(id)
       }
    }
 
-
-   fun setEveryYearInterval(idCongratulation: Int) {
+   fun createWorkRequest() {
       scope.launch {
-         val congratulationTime = db.congratulationsDao().getById(idCongratulation)?.getDateTime()
-         val currentTime = Calendar.getInstance().timeInMillis
-         var seconds = (congratulationTime?.minus(currentTime))
-         seconds = seconds?.div(1000)
-         seconds?.let {
-            if (seconds < 0) {
-               seconds += 31536000
+         val currentDateTime: Long =
+            ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()).toInstant().toEpochMilli()
+         val targetCongratulation = db.congratulationsDao().targetCongratulation(currentDateTime)
+         Log.d("gera", "createWorkRequest: targetCongratulation=$targetCongratulation")
+         targetCongratulation?.apply {
+            val saveId = getSavedId()
+            saveId?.let { uuid ->
+               cancelWorkRequest(uuid)
             }
-         }
-         //TODO
-      }
-   }
-
-   fun createWorkRequest(data: Data, idCongratulation: Int) {
-      var periodicWorkRequest: PeriodicWorkRequest?
-      scope.launch {
-         periodicWorkRequest =
-            PeriodicWorkRequest.Builder(
-               WorkerManager::class.java,
-               365,
-               TimeUnit.DAYS,
-               24,
-               TimeUnit.HOURS,
+            val inputData = workDataOf("idCongratulation" to this.getId())
+            val duration = this.getDateTimeFuture() - currentDateTime
+            val workRequest = OneTimeWorkRequest.Builder(
+               WorkerManager::class.java
             )
-               .setInputData(data)
-               .setInitialDelay(10, TimeUnit.SECONDS)
+               .setInitialDelay(duration, TimeUnit.MILLISECONDS)
+               .setInputData(inputData)
                .build()
-
-         periodicWorkRequest?.let {
-            db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
-               congratulation.getIdWorker()?.let { uuid ->
-                  WorkManager.getInstance(context).cancelWorkById(uuid)
-               }
-               congratulation.setIdWorker(it.id)
-               db.congratulationsDao().update(congratulation)
-            }
-            WorkManager.getInstance(context).enqueue(it)
+            val workManager = WorkManager.getInstance(context)
+            workManager.enqueue(workRequest)
+            saveId(workRequest.id)
          }
       }
    }
 
-   fun loadSistemContactList() {
+   private fun saveId(id: UUID) {
+      val editor: SharedPreferences.Editor = preferences.edit()
+      editor.putString("workRequestID", id.toString())
+      editor.apply()
+   }
+
+   private fun getSavedId(): UUID? {
+      if (preferences.contains("workRequestID")) {
+         return UUID.fromString(preferences.getString("workRequestID", ""))
+      }
+      return null
+   }
+
+   fun loadSystemContactList() {
       dbJob = scope.launch {
          val contentResolver = context.contentResolver
          @SuppressLint("Recycle") val cursor = contentResolver.query(
@@ -161,10 +159,10 @@ class DBManager @Singleton constructor() {
       }
    }
 
-   fun loadTemplateList() {
-      scope.launch {
-         val countries = context.resources.getStringArray(R.array.congratulations_templates)
-         if (db.templateDao().size == 0) {
+   private fun loadTemplateList() {
+      if (db.templateDao().size == 0) {
+         scope.launch {
+            val countries = context.resources.getStringArray(R.array.congratulations_templates)
             for (i in countries.indices) {
                template.setId(i)
                template.setTextTemplate(countries[i])
