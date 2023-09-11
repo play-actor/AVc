@@ -16,7 +16,8 @@ import com.lastaurus.automatic_congratulations.bus.BusEvent
 import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
 import com.lastaurus.automatic_congratulations.dagger.ExtSupportAppNavigator
-import com.lastaurus.automatic_congratulations.data.database.DBManager
+import com.lastaurus.automatic_congratulations.data.DataBaseManager
+import com.lastaurus.automatic_congratulations.databinding.ActivityMainBinding
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -25,12 +26,14 @@ class MainActivity : AppCompatActivity() {
    lateinit var navigatorHolder: NavigatorHolder
 
    @Inject
-   lateinit var dbManager: DBManager
+   lateinit var dbManager: DataBaseManager
 
    @Inject
    lateinit var eventHandler: EventHandler
 
    private lateinit var viewModel: MainActivityViewModel
+
+   private lateinit var binding: ActivityMainBinding
 
    private val navigator: Navigator = object : ExtSupportAppNavigator(this, R.id.root) {
       override fun applyCommands(commands: Array<out Command>) {
@@ -42,7 +45,9 @@ class MainActivity : AppCompatActivity() {
    override fun onCreate(savedInstanceState: Bundle?) {
       instance.appComponent.inject(this)
       super.onCreate(savedInstanceState)
-      setContentView(R.layout.activity_main)
+      binding = ActivityMainBinding.inflate(layoutInflater)
+      val view = binding.root
+      setContentView(view)
       this.viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
       this.viewModel.initMainScrean(supportFragmentManager)
       subscribeOnEventBus()
@@ -68,12 +73,15 @@ class MainActivity : AppCompatActivity() {
 
    private fun subscribeOnEventBus() {
       eventHandler.subscribeEvent { busEvent ->
-         (busEvent as? BusEvent.TextOfSave)?.let {
+         (busEvent as? BusEvent.TextOfSave)?.apply {
             Snackbar.make(
                findViewById(R.id.root),
-               it.getTextSave(),
+               this.getTextSave(),
                Snackbar.LENGTH_SHORT
             ).show()
+         }
+         (busEvent as? BusEvent.Text)?.apply {
+            Log.d("gera", "subscribeOnEventBus: ${this.text}")
          }
          false
       }

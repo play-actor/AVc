@@ -17,6 +17,14 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
       return db.templateDao().favorite
    }
 
+   fun getTemplateListDESC(): Flow<List<Template>> {
+      return db.templateDao().allDESC
+   }
+
+   fun getFavoriteTemplateListDESC(): Flow<List<Template>> {
+      return db.templateDao().favoriteDESC
+   }
+
    fun updateTemplateDB(template: Template) {
       db.templateDao().update(template)
    }
@@ -37,16 +45,32 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
       return db.contactDao().all
    }
 
+   fun getContactListDESC(): Flow<List<Contact>> {
+      return db.contactDao().allDESC
+   }
+
    fun getCongratulationsList(): Flow<List<Congratulation>> {
-      return db.congratulationsDao().all()
+      return db.congratulationsDao().all
    }
 
    fun getActiveCongratulationsList(): Flow<List<Congratulation>> {
-      return db.congratulationsDao().active()
+      return db.congratulationsDao().active
+   }
+
+   fun getCongratulationsListDESC(): Flow<List<Congratulation>> {
+      return db.congratulationsDao().allDESC
+   }
+
+   fun getActiveCongratulationsListDESC(): Flow<List<Congratulation>> {
+      return db.congratulationsDao().activeDESC
    }
 
    fun getFavoriteContactList(): Flow<List<Contact>> {
       return db.contactDao().favorite
+   }
+
+   fun getFavoriteContactListDESC(): Flow<List<Contact>> {
+      return db.contactDao().favoriteDESC
    }
 
    fun updateContactDB(contact: Contact) {
@@ -62,11 +86,19 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
    }
 
    fun getContactPhoneListById(id: Int?): ArrayList<String>? {
-      return id?.let { db.contactDao().getById(it)?.getPhoneList() }
+      return id?.let { db.contactDao().getById(it)?.phoneList }
    }
 
    fun getContactByPeaceName(searchText: String): Flow<List<Contact>> {
       return db.contactDao().searchContact(searchText)
+   }
+
+   fun getCongratulationsListByPeaceNameInContact(searchText: String): Flow<List<Congratulation>> {
+      return db.congratulationsDao().searchCongratulation(searchText)
+   }
+
+   fun getTemplateListByPeaceText(searchText: String): Flow<List<Template>> {
+      return db.templateDao().searchTemplate(searchText)
    }
 
    fun getContactListSize(): Int {
@@ -90,6 +122,6 @@ class DataRepository @Inject constructor(var db: AppDatabase) {
    }
 
    fun getPhoneListFromContact(id: Int): ArrayList<String>? {
-      return db.contactDao().getById(id)?.getPhoneList()
+      return db.contactDao().getById(id)?.phoneList
    }
 }

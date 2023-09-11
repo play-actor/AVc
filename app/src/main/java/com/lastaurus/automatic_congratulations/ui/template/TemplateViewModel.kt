@@ -25,17 +25,12 @@ class TemplateViewModel : ViewModel() {
    }
 
    fun init(id: Int? = null) {
-      if (id == null) {
-         if (template == null) {
-            template = Template()
-            template?.setId(getListSize())
-         }
-      } else {
+      id?.apply {
          template = changeTemplateUseCase.getTemplate(id)
-         if (template == null) {
-            template = Template()
-            template?.setId(getListSize())
-         }
+      }
+      if (template == null) {
+         template = Template()
+         template?.id = getListSize()
       }
    }
 
@@ -52,25 +47,25 @@ class TemplateViewModel : ViewModel() {
    }
 
    fun getFavorite(): Boolean {
-      return template?.getFavorite() ?: false
+      return template?.favorite ?: false
    }
 
 
    fun changeFavorite(): Boolean {
       this.favorite = !this.favorite
-      template?.setFavorite(this.favorite)
+      template?.favorite = this.favorite
       return this.favorite
    }
 
    fun getText(): String {
-      textTemplate = template?.getTextTemplate() ?: ""
+      textTemplate = template?.textTemplate ?: ""
       return textTemplate
    }
 
    private fun setText(text: String?) {
       eventHandler.postEvent(BusEvent.TextOfSave)
       text?.let {
-         template?.setTextTemplate(it)
+         template?.textTemplate = it
          this.textTemplate = it
       }
    }

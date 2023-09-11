@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarDialog"
+        style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/background"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/close"
+        app:subtitleTextColor="@color/subtitlecolorItemText"
+        app:title="Редактирование"
+        app:titleTextColor="@color/colorItemText" />
+
+    <ImageView
+        android:id="@+id/iconContact1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarDialog"
+        tools:srcCompat="@drawable/no_foto" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iconContactImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/addContact"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/addContact"
+            tools:srcCompat="@drawable/person" />
+
+        <ImageView
+            android:id="@+id/iconContactImgClean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/addContact"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/addContact"
+            tools:srcCompat="@drawable/close" />
+
+        <LinearLayout
+            android:id="@+id/conB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gant"
+            app:layout_goneMarginTop="32dp">
+
+            <Button
+                android:id="@+id/buttonChange"
+                style="@style/ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Изменить" />
+
+            <Button
+                android:id="@+id/buttonDelete"
+                style="@style/ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Удалить" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addContact"
+            style="@style/TextInputEditTextOutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:enabled="true"
+            android:hint="Ф.И.О."
+            android:theme="@style/TextInputEditTextM3"
+            app:layout_constraintEnd_toStartOf="@+id/iconContactImgClean"
+            app:layout_constraintStart_toEndOf="@+id/iconContactImg"
+            app:layout_constraintTop_toBottomOf="@+id/conB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/newContactName"
+                style="@style/TextInputEditTextOutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="no" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.lastaurus.automatic_congratulations.ui.view.GantView
+            android:id="@+id/gant"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/phonelist"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconContactImg"
+            app:layout_constraintTop_toBottomOf="@+id/addContact"
+            tools:itemCount="1"
+            tools:listitem="@layout/phone_number_item1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

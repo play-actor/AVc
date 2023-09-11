@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.Util
+package com.lastaurus.automatic_congratulations.util
 
 import android.graphics.Rect
 import android.util.TypedValue
@@ -24,11 +24,12 @@ class SpaceItemDecoration : RecyclerView.ItemDecoration() {
          marginBottom.toFloat(),
          view.resources.displayMetrics
       ).toInt()
-      if (parent.getChildAdapterPosition(view) == 0) {
+      if (parent.getChildAdapterPosition(view) == 0
+         || parent.getChildAdapterPosition(view) == parent.adapter?.itemCount
+      ) {
          outRect.top = spaceTop;
          outRect.bottom = 0;
-      }
-      if (parent.getChildLayoutPosition(view) == (parent.adapter?.itemCount?.minus(1))) {
+      } else if (parent.getChildLayoutPosition(view) == (parent.adapter?.itemCount?.minus(1))) {
          outRect.top = 0
          outRect.bottom = spaceBottom
       }

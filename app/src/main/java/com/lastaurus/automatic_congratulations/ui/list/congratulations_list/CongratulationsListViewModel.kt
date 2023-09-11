@@ -16,8 +16,17 @@ class CongratulationsListViewModel : ViewModel() {
       ComponentManager.instance.appComponent.inject(this)
    }
 
-   fun getContactList(): LiveData<List<Congratulation>> {
-      return congratulationsListUseCase.getCongratulationsList().asLiveData()
+   fun getCongratulationsList(sort: Boolean = true): LiveData<List<Congratulation>> {
+      return if (sort) {
+         congratulationsListUseCase.getCongratulationsList().asLiveData()
+      } else {
+         congratulationsListUseCase.getCongratulationsListDESC().asLiveData()
+      }
+   }
+
+   fun getCongratulationsListByPeaceNameInContact(searchText: String): LiveData<List<Congratulation>> {
+      return congratulationsListUseCase.getCongratulationsListByPeaceNameInContact(searchText)
+         .asLiveData()
    }
 
    fun getActiveCongratulationsList(): LiveData<List<Congratulation>> {

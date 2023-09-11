@@ -34,7 +34,7 @@
     </style>
 
     <style name="TextInputEditTextOutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/primary</item>
+        <item name="boxStrokeColor">@color/button_selector1</item>
         <item name="colorOutline">@color/onErrorContainer</item>
         <item name="boxStrokeErrorColor">@color/error</item>
         <item name="android:textColor">@color/onBackground</item>
@@ -58,12 +58,24 @@
         <item name="android:thumb">@drawable/mtrl_switch_thumb</item>
         <item name="track">@drawable/mtrl_switch_track</item>
         <item name="trackDecoration">@drawable/mtrl_switch_track_decoration</item>
-        <item name="thumbTint">@color/mtrl_switch_thumb_tint</item>
+        <item name="thumbTint">@color/primary</item>
+        <item name="android:textColor">@color/onBackground</item>
+        <item name="trackTint">@color/colorItemBackground</item>
         <item name="thumbIconTint">@color/mtrl_switch_thumb_icon_tint</item>
-        <item name="trackTint">@color/mtrl_switch_track_tint</item>.
     </style>
 
     <style name="OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
         <item name="android:textColor">@color/button_outlined_selector</item>
+    </style>
+
+    <style name="ElevatedButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:textColor">@color/button_selector</item>
+        <item name="iconTint">@color/button_selector</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Material3.Button.TonalButton</item>
+    </style>
+
+    <style name="ThemeOverlay.Material3.Button.TonalButton">
+        <item name="colorOnContainer">@color/onSecondaryContainer</item>
+        <item name="colorContainer">@color/secondaryContainer</item>
     </style>
 </resources>

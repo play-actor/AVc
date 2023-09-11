@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.Util
+package com.lastaurus.automatic_congratulations.util
 
 import com.lastaurus.automatic_congratulations.data.model.Congratulation
 import java.time.Instant
@@ -15,13 +15,12 @@ class Util {
                .atZone(ZoneId.of(ZoneId.systemDefault().id))
                .toLocalDateTime()
          if (congratulationTime.isAfter(currentDateTime)) {
-            congratulation?.setDateTimeFuture(dateTimeCongratulation)
+            congratulation?.dateTimeFuture = dateTimeCongratulation
          } else {
-            if (congratulation?.getPeriodic() == true) {
+            if (congratulation?.periodic == true) {
                val localDateTime = generateDateTime(congratulationTime)
-               congratulation.setDateTimeFuture(
+               congratulation.dateTimeFuture =
                   ZonedDateTime.of(localDateTime, ZoneId.systemDefault()).toInstant().toEpochMilli()
-               )
             }
          }
       }
@@ -38,4 +37,8 @@ class Util {
          }
       }
    }
+}
+
+fun <T> T.isNull(): Boolean {
+   return this == null
 }

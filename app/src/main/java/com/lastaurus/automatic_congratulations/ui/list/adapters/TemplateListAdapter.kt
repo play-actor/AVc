@@ -29,11 +29,11 @@ class TemplateListAdapter : RecyclerView.Adapter<TemplateListAdapter.ViewHolder?
    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val template = templateList[position]
       holder.apply {
-         templateView.text = template.getTextTemplate()
-         favorite.visibility = if (template.getFavorite()) View.VISIBLE else View.INVISIBLE
+         templateView.text = template.textTemplate
+         favorite.visibility = if (template.favorite) View.VISIBLE else View.INVISIBLE
          itemView.setOnClickListener {
             if (click != null) {
-               click!!.click(template.getId())
+               click!!.click(template.id)
             }
          }
       }

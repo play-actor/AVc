@@ -6,11 +6,10 @@ import com.lastaurus.automatic_congratulations.dagger.module.BusModule
 import com.lastaurus.automatic_congratulations.dagger.module.HelperModule
 import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
 import com.lastaurus.automatic_congratulations.dagger.module.NavigationModule
-import com.lastaurus.automatic_congratulations.data.database.DBManager
+import com.lastaurus.automatic_congratulations.data.DataBaseManager
 import com.lastaurus.automatic_congratulations.managers.WorkerManager
 import com.lastaurus.automatic_congratulations.ui.congratulation.CongratulationFragment
 import com.lastaurus.automatic_congratulations.ui.congratulation.CongratulationViewModel
-import com.lastaurus.automatic_congratulations.ui.contact.ContactFragment
 import com.lastaurus.automatic_congratulations.ui.contact.ContactViewModel
 import com.lastaurus.automatic_congratulations.ui.contact.dialog.FullScreenDialogExample
 import com.lastaurus.automatic_congratulations.ui.list.adapters.CongratulationsListAdapter
@@ -18,7 +17,9 @@ import com.lastaurus.automatic_congratulations.ui.list.adapters.ContactListAdapt
 import com.lastaurus.automatic_congratulations.ui.list.adapters.PhoneListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListFragment
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListViewModel
+import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListViewModel
+import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListFragment
 import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListViewModel
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivityViewModel
@@ -41,17 +42,19 @@ interface AppComponent {
    fun inject(classes: AvcApplication)
    fun inject(classes: WorkerManager)
    fun inject(classes: MainFragment)
-   fun inject(classes: ContactFragment)
+   fun inject(classes: ContactListFragment)
+   fun inject(classes: TemplateListFragment)
    fun inject(classes: TemplateFragment)
    fun inject(classes: ContactViewModel)
    fun inject(classes: ContactListViewModel)
    fun inject(classes: CongratulationViewModel)
    fun inject(classes: CongratulationsListViewModel)
+   fun inject(classes: FullScreenDialogExample)
    fun inject(classes: TemplateViewModel)
    fun inject(classes: CongratulationFragment)
    fun inject(classes: TemplateListViewModel)
    fun inject(classes: CongratulationsListFragment)
-   fun inject(classes: DBManager)
+   fun inject(classes: DataBaseManager)
    fun inject(classes: ContactListAdapter)
    fun inject(classes: CongratulationsListAdapter)
    fun inject(classes: PhoneListAdapter)

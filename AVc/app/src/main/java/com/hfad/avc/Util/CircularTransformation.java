@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.Util;
+package com.lastaurus.automatic_congratulations.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

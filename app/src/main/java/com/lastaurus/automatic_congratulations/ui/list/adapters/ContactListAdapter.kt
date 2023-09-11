@@ -43,14 +43,14 @@ class ContactListAdapter : RecyclerView.Adapter<ContactListAdapter.ViewHolder?>(
 
    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val contact = contactList[position]
-      contact.getUriThumbnail().let { imageModule.showImageForContact(holder.icon, it, false) }
+      contact.uriThumbnail.let { imageModule.showImageForContact(holder.icon, it, false) }
       holder.apply {
-         nameText.text = contact.getName()
-         phoneText.text = contact.getPhoneList()[0]
-         favorite.visibility = if (contact.getFavorite()) View.VISIBLE else View.INVISIBLE
+         nameText.text = contact.name
+         phoneText.text = contact.phoneList[0]
+         favorite.visibility = if (contact.favorite) View.VISIBLE else View.INVISIBLE
          itemView.setOnClickListener {
             if (click != null) {
-               contact.getId().let { click?.click(it) }
+               contact.id.let { click?.click(it) }
             }
          }
       }

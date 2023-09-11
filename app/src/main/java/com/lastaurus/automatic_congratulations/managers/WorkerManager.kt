@@ -13,10 +13,10 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.lastaurus.automatic_congratulations.R
-import com.lastaurus.automatic_congratulations.Util.Util.Companion.getDateTime
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager.Companion.instance
-import com.lastaurus.automatic_congratulations.data.database.DBManager
+import com.lastaurus.automatic_congratulations.data.DataBaseManager
 import com.lastaurus.automatic_congratulations.ui.main_avtivity.MainActivity
+import com.lastaurus.automatic_congratulations.util.Util.Companion.getDateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import javax.inject.Inject
@@ -29,7 +29,7 @@ class WorkerManager(
    private val scope: CoroutineScope by lazy { CoroutineScope(Job()) }
 
    @Inject
-   lateinit var dbManager: DBManager
+   lateinit var dbManager: DataBaseManager
 
    init {
       instance.appComponent.inject(this)
@@ -39,17 +39,17 @@ class WorkerManager(
       val channel: NotificationChannel
       val idCongratulation = inputData.getInt("idCongratulation", -1)
 
-      dbManager.db.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
-         getDateTime(congratulation, congratulation.getDateTimeFuture())
-         dbManager.db.congratulationsDao().update(congratulation)
+      dbManager.database.congratulationsDao().getById(idCongratulation)?.let { congratulation ->
+         getDateTime(congratulation, congratulation.dateTimeFuture)
+         dbManager.database.congratulationsDao().update(congratulation)
          NotificationChannel(
             /* id = */ NOTIFICATION_ID.toString(),
             /* name = */ "Automatic congratulations",
             /* importance = */ NotificationManager.IMPORTANCE_HIGH
          ).also { channel = it }
          NotificationManagerCompat.from(context).createNotificationChannel(channel)
-         val name = dbManager.db.contactDao().getById(congratulation.getIdContact())?.getName()
-         val phone = congratulation.getPhone()
+         val name = dbManager.database.contactDao().getById(congratulation.idContact)?.name
+         val phone = congratulation.phone
          val actionIntent = Intent(context, MainActivity::class.java)
          actionIntent.putExtra(
             "Name",
@@ -59,7 +59,7 @@ class WorkerManager(
          actionIntent.putExtra("Phone", phone)
          actionIntent.putExtra(
             "TextTemplate",
-            dbManager.db.templateDao().getById(congratulation.getIdTemplate())?.getTextTemplate()
+            dbManager.database.templateDao().getById(congratulation.idTemplate)?.textTemplate
                ?: return Result.failure()
          )
          var flag = 0

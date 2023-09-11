@@ -16,8 +16,16 @@ class TemplateListViewModel : ViewModel() {
       ComponentManager.instance.appComponent.inject(this)
    }
 
-   fun getTemplateList(): LiveData<List<Template>> {
-      return templateListUseCase.getTemplateList().asLiveData()
+   fun getTemplateList(sort: Boolean = true): LiveData<List<Template>> {
+      return if (sort) {
+         templateListUseCase.getTemplateList().asLiveData()
+      } else {
+         templateListUseCase.getTemplateListDESC().asLiveData()
+      }
+   }
+
+   fun getTemplateListByPeaceText(searchText: String): LiveData<List<Template>> {
+      return templateListUseCase.getTemplateListByPeaceText(searchText).asLiveData()
    }
 
    fun getTemplateListFavorite(): LiveData<List<Template>> {

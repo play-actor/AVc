@@ -7,6 +7,7 @@ import com.lastaurus.automatic_congratulations.R
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
 import com.lastaurus.automatic_congratulations.data.model.Contact
+import com.lastaurus.automatic_congratulations.util.isNull
 import javax.inject.Inject
 
 class ContactViewModel : ViewModel() {
@@ -25,17 +26,10 @@ class ContactViewModel : ViewModel() {
    }
 
    fun initContact(id: Int? = null) {
-      if (id == null) {
-         if (contact == null) {
-            contact = Contact()
-            contact?.setId(getListSize())
-         }
-      } else {
-         contact = changeContactUseCase.getContact(id)
-         if (contact == null) {
-            contact = Contact()
-            contact?.setId(getListSize())
-         }
+      id?.apply { contact = changeContactUseCase.getContact(this) }
+      if (contact.isNull()) {
+         contact = Contact()
+         contact?.id = getListSize()
       }
    }
 
@@ -52,25 +46,25 @@ class ContactViewModel : ViewModel() {
    }
 
    fun getName(): String {
-      contactName = contact?.getName() ?: ""
+      contactName = contact?.name ?: ""
       return contactName
    }
 
    fun getPhoneListFromContact(): ArrayList<String>? {
-      return contact?.getId()?.let { changeContactUseCase.getPhoneListFromContact(it) }
+      return contact?.id?.let { changeContactUseCase.getPhoneListFromContact(it) }
    }
 
    fun getFavorite(): Boolean {
-      return contact?.getFavorite() ?: false
+      return contact?.favorite ?: false
    }
 
    fun setIconContact(iconContact: ImageView) {
-      contact?.getUriFull()?.let { imageModule.showImageForContact(iconContact, it, true) }
+      contact?.uriFull?.let { imageModule.showImageForContact(iconContact, it, true) }
    }
 
    fun changeFavorite(): Boolean {
       this.favorite = !this.favorite
-      contact?.setFavorite(this.favorite)
+      contact?.favorite = this.favorite
       return this.favorite
    }
 

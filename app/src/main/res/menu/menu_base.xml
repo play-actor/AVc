@@ -15,9 +15,15 @@
         yourapp:showAsAction="collapseActionView" />
 
     <item
-        android:id="@+id/action_upload_contact_list"
+        android:id="@+id/action_update_contact_list"
         android:enabled="true"
         android:icon="@drawable/sync"
-        android:title="@string/sync"
+        android:title="@string/syncUpdate"
+        yourapp:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/action_insert_contact_list"
+        android:enabled="true"
+        android:icon="@drawable/sync"
+        android:title="@string/syncInsert"
         yourapp:showAsAction="collapseActionView" />
 </menu>

@@ -37,22 +37,20 @@ class TemplateFragment : Fragment() {
          textTemplate = this.findViewById(R.id.text_template)
       }
       toolbar?.let {
-         this.toolbar?.inflateMenu(R.menu.menu_contact)
-         this.toolbar?.setNavigationOnClickListener { requireActivity().onBackPressed() }
+         it.inflateMenu(R.menu.menu_contact)
+         it.setNavigationOnClickListener { requireActivity().onBackPressed() }
       }
-      this.favoriteTemplate = toolbar?.menu?.findItem(R.id.favoriteObject)
-
-      this.textTemplate?.setText(this.viewModel?.getText())
-      this.favoriteTemplate.let {
-         viewModel?.setFavoriteTemplate(it, viewModel?.getFavorite())
-      }
-      this.favoriteTemplate?.setOnMenuItemClickListener {
-         viewModel?.let {
-            it.setFavoriteTemplate(favoriteTemplate, it.changeFavorite())
-            it.update()
+      this.favoriteTemplate = toolbar?.menu?.findItem(R.id.favoriteObject)?.apply {
+         viewModel?.setFavoriteTemplate(this, viewModel?.getFavorite())
+      }?.setOnMenuItemClickListener {
+         viewModel?.let { tvm ->
+            tvm.setFavoriteTemplate(it, tvm.changeFavorite())
+            tvm.update()
          }
          false
       }
+
+      this.textTemplate?.setText(this.viewModel?.getText())
       this.saveView?.setOnClickListener {
          viewModel?.saveText(textTemplate?.text.toString())
       }

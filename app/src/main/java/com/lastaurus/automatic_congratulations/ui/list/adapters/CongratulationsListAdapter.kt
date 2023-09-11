@@ -56,17 +56,17 @@ class CongratulationsListAdapter : RecyclerView.Adapter<CongratulationsListAdapt
    @SuppressLint("SetTextI18n")
    override fun onBindViewHolder(holder: CongratulationsListAdapter.ViewHolder, position: Int) {
       val congratulations = eventCongratulationsList[position]
-      val contact = repository.getContactById(congratulations.getIdContact())
-      contact?.getUriThumbnail()?.let { imageModule.showImageForContact(holder.icon, it, false) }
+      val contact = repository.getContactById(congratulations.idContact)
+      contact?.uriThumbnail?.let { imageModule.showImageForContact(holder.icon, it, false) }
 
       holder.apply {
-         nameView.text = contact?.getName()
-         phoneView.text = congratulations.getPhone()
-         dateAndTime.text = FORMATTER_DATE.print(congratulations.getDateTime()) + " " +
-               FORMATTER_TIME.print(congratulations.getDateTime())
+         nameView.text = contact?.name
+         phoneView.text = congratulations.phone
+         dateAndTime.text = FORMATTER_DATE.print(congratulations.dateTime) + " " +
+               FORMATTER_TIME.print(congratulations.dateTime)
          itemView.setOnClickListener {
             if (click != null) {
-               congratulations.getId().let { click?.click(it) }
+               congratulations.id.let { click?.click(it) }
             }
          }
       }

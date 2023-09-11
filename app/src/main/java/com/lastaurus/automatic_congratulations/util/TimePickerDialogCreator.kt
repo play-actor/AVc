@@ -1,4 +1,4 @@
-package com.lastaurus.automatic_congratulations.Util
+package com.lastaurus.automatic_congratulations.util
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog

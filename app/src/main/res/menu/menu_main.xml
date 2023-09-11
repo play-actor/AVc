@@ -2,26 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/contactList"
-        android:contentDescription="@string/content_description_search"
         android:icon="@drawable/contact_list"
         android:title="@string/contactList" />
 
     <item
-        android:id="@+id/templated_contacts"
-        android:contentDescription="@string/content_description_search"
+        android:id="@+id/congratulations"
         android:icon="@drawable/notifications_active_black_24dp"
-        android:title="@string/templated_contacts" />
+        android:title="@string/congratulations" />
 
     <item
         android:id="@+id/templates"
-        android:contentDescription="@string/content_description_search"
         android:icon="@drawable/list"
-        android:title="@string/list_text" />
-
-<!--    <item-->
-<!--        android:id="@+id/template_text3"-->
-<!--        android:contentDescription="@string/content_description_search"-->
-<!--        android:icon="@drawable/setting"-->
-<!--        android:title="@string/setting_text" />-->
+        android:title="@string/templates" />
 
 </menu>

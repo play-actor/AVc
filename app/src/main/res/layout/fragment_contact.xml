@@ -82,6 +82,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_card_line_device2_mobile" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/changeContact"
+            style="@style/OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Редактировать"
+            android:textColor="@color/secondary"
+            app:icon="@drawable/change"
+            app:iconTint="@color/secondary"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/phonelist"
             android:layout_width="match_parent"
@@ -92,22 +107,10 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/changeContact"
             tools:itemCount="5"
             tools:listitem="@layout/phone_number_item" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/changeTemplate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:visibility="visible"
-            app:backgroundTint="@color/colorfabAdd"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/save_fill0_wght400_grad0_opsz48"
-            app:tint="@color/background" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

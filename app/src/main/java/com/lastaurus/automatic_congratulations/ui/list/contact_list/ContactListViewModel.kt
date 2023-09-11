@@ -1,5 +1,6 @@
 package com.lastaurus.automatic_congratulations.ui.list.contact_list
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -16,8 +17,24 @@ class ContactListViewModel : ViewModel() {
       ComponentManager.instance.appComponent.inject(this)
    }
 
-   fun getContactList(): LiveData<List<Contact>> {
-      return contactListUseCase.getContactList().asLiveData()
+   fun getContactList(sort: Boolean = true): LiveData<List<Contact>> {
+      return if (sort) {
+         contactListUseCase.getContactList().asLiveData()
+      } else {
+         contactListUseCase.getContactListDESC().asLiveData()
+      }
+   }
+
+   fun getNeedVisibilityLoadContact(): Int {
+      return if (contactListUseCase.getNeedVisibilityLoadContact()) {
+         View.VISIBLE
+      } else {
+         View.GONE
+      }
+   }
+
+   fun getContactByPeaceName(searchText: String): LiveData<List<Contact>> {
+      return contactListUseCase.getContactByPeaceName(searchText).asLiveData()
    }
 
    fun getContactListFavorite(): LiveData<List<Contact>> {
@@ -32,7 +49,15 @@ class ContactListViewModel : ViewModel() {
       contactListUseCase.openNewContact()
    }
 
-   fun loadSystemContactList() {
-      contactListUseCase.loadSystemContactList()
+   fun firstLoadSystemContactList() {
+      contactListUseCase.firstLoadSystemContactList()
+   }
+
+   fun updateSystemContactList() {
+      contactListUseCase.updateSystemContactList()
+   }
+
+   fun insertNewSystemContactInList() {
+      contactListUseCase.insertNewSystemContactInList()
    }
 }

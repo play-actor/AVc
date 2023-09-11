@@ -15,6 +15,14 @@ class CongratulationsListUseCase @Inject constructor(
       return dataRepository.getCongratulationsList()
    }
 
+   fun getCongratulationsListDESC(): Flow<List<Congratulation>> {
+      return dataRepository.getCongratulationsListDESC()
+   }
+
+   fun getCongratulationsListByPeaceNameInContact(searchText: String): Flow<List<Congratulation>> {
+      return dataRepository.getCongratulationsListByPeaceNameInContact(searchText)
+   }
+
    fun getActiveCongratulationsList(): Flow<List<Congratulation>> {
       return dataRepository.getActiveCongratulationsList()
    }

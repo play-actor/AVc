@@ -15,6 +15,14 @@ class TemplateListUseCase @Inject constructor(
       return dataRepository.getTemplateList()
    }
 
+   fun getTemplateListDESC(): Flow<List<Template>> {
+      return dataRepository.getTemplateListDESC()
+   }
+
+   fun getTemplateListByPeaceText(searchText: String): Flow<List<Template>> {
+      return dataRepository.getTemplateListByPeaceText(searchText)
+   }
+
    fun getFavoriteTemplateList(): Flow<List<Template>> {
       return dataRepository.getFavoriteTemplateList()
    }

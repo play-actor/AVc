@@ -129,7 +129,6 @@ public class MainActivity extends MvpAppCompatActivity implements ChainHolder, I
                .subscribeOn(Schedulers.io())
                .observeOn(AndroidSchedulers.mainThread())
                .subscribe(list -> {
-                        //toolbar.setSubtitle("Количество записей: "+list.size());
                         Log.i(TAG, "Обновление базы данных завершено. " +
                               "Количество записей: " + list.size());
                      },

@@ -3,7 +3,6 @@ package com.lastaurus.automatic_congratulations.ui.congratulation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.lastaurus.automatic_congratulations.Util.Util.Companion.getDateTime
 import com.lastaurus.automatic_congratulations.bus.BusEvent
 import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
@@ -11,6 +10,7 @@ import com.lastaurus.automatic_congratulations.dagger.module.ImageModule
 import com.lastaurus.automatic_congratulations.data.model.Congratulation
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import com.lastaurus.automatic_congratulations.data.model.Template
+import com.lastaurus.automatic_congratulations.util.Util.Companion.getDateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -37,22 +37,17 @@ class CongratulationViewModel : ViewModel() {
    }
 
    fun init(id: Int? = null) {
-      if (id == null) {
-         if (congratulation == null) {
-            congratulation = Congratulation()
-            congratulation?.setId(getListSize())
-         }
-      } else {
-         congratulation = congratulationUseCase.getCongratulation(id)
-         if (congratulation == null) {
-            congratulation = Congratulation()
-            congratulation?.setId(getListSize())
-         }
+      id?.apply {
+         congratulation = congratulationUseCase.getCongratulation(this)
+      }
+      if (congratulation == null) {
+         congratulation = Congratulation()
+         congratulation?.id = getListSize()
       }
    }
 
    fun getId(): Int {
-      return congratulation?.getId() ?: Int.MIN_VALUE
+      return congratulation?.id ?: Int.MIN_VALUE
    }
 
    private fun getListSize(): Int {
@@ -60,61 +55,61 @@ class CongratulationViewModel : ViewModel() {
    }
 
    fun getNameContact(): String {
-      return getNameContact(congratulation?.getIdContact())
+      return getNameContact(congratulation?.idContact)
    }
 
    fun getNameContact(id: Int?): String {
-      return congratulationUseCase.getContact(id)?.getName() ?: ""
+      return congratulationUseCase.getContact(id)?.name ?: ""
    }
 
    fun getContactPhoneList(): ArrayList<String>? {
-      return congratulationUseCase.getContactPhoneList(congratulation?.getIdContact())
+      return congratulationUseCase.getContactPhoneList(congratulation?.idContact)
    }
 
    fun getTextTemplate(): String {
-      return getTextTemplate(congratulation?.getIdTemplate())
+      return getTextTemplate(congratulation?.idTemplate)
    }
 
    fun getTextTemplate(id: Int?): String {
-      return congratulationUseCase.getTemplate(id)?.getTextTemplate() ?: ""
+      return congratulationUseCase.getTemplate(id)?.textTemplate ?: ""
    }
 
    fun getTextPhone(): String {
-      return congratulation?.getPhone() ?: ""
+      return congratulation?.phone ?: ""
    }
 
    fun getTextPhone(id: Int?): String {
       return id?.let {
-         congratulationUseCase.getContactPhoneList(congratulation?.getIdContact())?.get(it) ?: ""
+         congratulationUseCase.getContactPhoneList(congratulation?.idContact)?.get(it) ?: ""
       }.toString()
    }
 
    fun getDate(): String {
-      return congratulation?.getDateTime()?.let { FORMATTER_DATE.print(it) } ?: ""
+      return congratulation?.dateTime?.let { FORMATTER_DATE.print(it) } ?: ""
    }
 
    fun getTime(): String {
-      return (congratulation?.getDateTime()?.let { FORMATTER_TIME.print(it) } ?: "")
+      return (congratulation?.dateTime?.let { FORMATTER_TIME.print(it) } ?: "")
    }
 
    fun getPeriodic(): Boolean {
-      return congratulation?.getPeriodic() ?: false
+      return congratulation?.periodic ?: false
    }
 
    fun setDateTime(dateTime: Long) {
-      congratulation?.setDateTime(dateTime)
+      congratulation?.dateTime = dateTime
    }
 
    fun setContact(id: Int) {
-      congratulation?.setIdContact(id)
+      congratulation?.idContact = id
    }
 
    fun setPhone(text: String) {
-      congratulation?.setPhone(text)
+      congratulation?.phone = text
    }
 
    fun setTemplate(id: Int) {
-      congratulation?.setIdTemplate(id)
+      congratulation?.idTemplate = id
    }
 
    fun getContactList(): LiveData<List<Contact>> {
@@ -126,15 +121,15 @@ class CongratulationViewModel : ViewModel() {
    }
 
    fun getActive(): Boolean? {
-      return congratulation?.getActive()
+      return congratulation?.active
    }
 
    fun setPeriodic(periodic: Boolean) {
-      congratulation?.setPeriodic(periodic)
+      congratulation?.periodic = periodic
    }
 
    fun setActive(active: Boolean) {
-      congratulation?.setActive(active)
+      congratulation?.active = active
    }
 
    fun getContactByPeaceName(searchText: String): LiveData<List<Contact>> {
@@ -143,7 +138,7 @@ class CongratulationViewModel : ViewModel() {
 
    fun save() {
       congratulation?.let {
-         val dateTime = it.getDateTime()
+         val dateTime = it.dateTime
          getDateTime(congratulation, dateTime)
          eventHandler.postEvent(BusEvent.TextOfSave)
          congratulationUseCase.upsertCongratulationDB(it)
