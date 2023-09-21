@@ -3,6 +3,8 @@ package com.lastaurus.automatic_congratulations.ui.list.template_list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.github.terrakok.cicerone.Router
+import com.lastaurus.automatic_congratulations.cicerone.Screens
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.data.model.Template
 import javax.inject.Inject
@@ -11,6 +13,9 @@ class TemplateListViewModel : ViewModel() {
 
    @Inject
    lateinit var templateListUseCase: TemplateListUseCase
+
+   @Inject
+   lateinit var router: Router
 
    init {
       ComponentManager.instance.appComponent.inject(this)
@@ -33,10 +38,10 @@ class TemplateListViewModel : ViewModel() {
    }
 
    fun openTemplate(id: Int) {
-      templateListUseCase.openTemplate(id)
+      router.navigateTo(Screens.templateScreen(id))
    }
 
    fun openNewTemplate() {
-      templateListUseCase.openNewTemplate()
+      router.navigateTo(Screens.templateScreen(templateListUseCase.dataRepository.getTemplateListSize()))
    }
 }

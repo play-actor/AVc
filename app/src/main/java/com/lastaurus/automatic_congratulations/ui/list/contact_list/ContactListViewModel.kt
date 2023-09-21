@@ -4,6 +4,8 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.github.terrakok.cicerone.Router
+import com.lastaurus.automatic_congratulations.cicerone.Screens
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.data.model.Contact
 import javax.inject.Inject
@@ -12,6 +14,9 @@ class ContactListViewModel : ViewModel() {
 
    @Inject
    lateinit var contactListUseCase: ContactListUseCase
+
+   @Inject
+   lateinit var router: Router
 
    init {
       ComponentManager.instance.appComponent.inject(this)
@@ -42,11 +47,11 @@ class ContactListViewModel : ViewModel() {
    }
 
    fun openContact(id: Int) {
-      contactListUseCase.openContact(id)
+      router.navigateTo(Screens.contactScreen(id))
    }
 
    fun openNewContact() {
-      contactListUseCase.openNewContact()
+      router.navigateTo(Screens.contactScreen(contactListUseCase.dataRepository.getContactListSize()))
    }
 
    fun firstLoadSystemContactList() {

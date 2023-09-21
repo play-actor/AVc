@@ -3,6 +3,8 @@ package com.lastaurus.automatic_congratulations.ui.list.congratulations_list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.github.terrakok.cicerone.Router
+import com.lastaurus.automatic_congratulations.cicerone.Screens
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.data.model.Congratulation
 import javax.inject.Inject
@@ -11,6 +13,9 @@ class CongratulationsListViewModel : ViewModel() {
 
    @Inject
    lateinit var congratulationsListUseCase: CongratulationsListUseCase
+
+   @Inject
+   lateinit var router: Router
 
    init {
       ComponentManager.instance.appComponent.inject(this)
@@ -34,10 +39,10 @@ class CongratulationsListViewModel : ViewModel() {
    }
 
    fun openCongratulation(id: Int) {
-      congratulationsListUseCase.openCongratulation(id)
+      router.navigateTo(Screens.congratulationScreen(id))
    }
 
-   fun openNewContact() {
-      congratulationsListUseCase.openNewCongratulation()
+   fun openNewCongratulation() {
+      router.navigateTo(Screens.congratulationScreen(congratulationsListUseCase.dataRepository.getCongratulationListSize()))
    }
 }
