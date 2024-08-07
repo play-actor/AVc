@@ -14,7 +14,6 @@ import com.lastaurus.automatic_congratulations.ui.contact.ContactViewModel
 import com.lastaurus.automatic_congratulations.ui.contact.dialog.FullScreenDialogExample
 import com.lastaurus.automatic_congratulations.ui.list.adapters.CongratulationsListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.adapters.ContactListAdapter
-import com.lastaurus.automatic_congratulations.ui.list.adapters.PhoneListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListFragment
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListViewModel
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment
