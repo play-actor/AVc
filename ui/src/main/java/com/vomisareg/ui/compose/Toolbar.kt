@@ -18,8 +18,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -49,7 +51,7 @@ fun ToolbarWithLoadLine(
     onEndButtonClick: (Boolean) -> Unit,
     imageFilled: Boolean = false
 ) {
-    val filled = remember(imageFilled) {
+    var filled by remember(imageFilled) {
         mutableStateOf(imageFilled)
     }
     Column(
@@ -83,12 +85,12 @@ fun ToolbarWithLoadLine(
                         .size(24.dp)
                         .align(Alignment.TopEnd),
                     onClick = {
-                        filled.value = filled.value.not()
-                        onEndButtonClick(filled.value)
+                        filled = filled.not()
+                        onEndButtonClick(filled)
                     }
                 ) {
                     Icon(
-                        imageVector = if (filled.value) {
+                        imageVector = if (filled) {
                             IconPack.Starfilled
                         } else {
                             IconPack.Star
