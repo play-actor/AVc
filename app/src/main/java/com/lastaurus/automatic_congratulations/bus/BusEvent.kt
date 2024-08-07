@@ -3,7 +3,7 @@ package com.lastaurus.automatic_congratulations.bus
 import com.lastaurus.automatic_congratulations.data.model.Contact
 
 sealed class BusEvent {
-   class Text(val text: String) : BusEvent()
+   class TextShow(val text: String) : BusEvent()
    object TextOfSave : BusEvent() {
       fun getTextSave(): String {
          return "Сохранено"

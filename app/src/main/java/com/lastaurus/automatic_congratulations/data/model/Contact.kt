@@ -1,8 +1,5 @@
 package com.lastaurus.automatic_congratulations.data.model
 
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import androidx.databinding.library.baseAdapters.BR
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

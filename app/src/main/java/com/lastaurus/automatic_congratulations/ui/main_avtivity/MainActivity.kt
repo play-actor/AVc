@@ -74,15 +74,15 @@ class MainActivity : AppCompatActivity() {
    private fun subscribeOnEventBus() {
       eventHandler.subscribeEvent { busEvent ->
          (busEvent as? BusEvent.TextOfSave)?.apply {
-            Snackbar.make(
-               findViewById(R.id.root),
-               this.getTextSave(),
-               Snackbar.LENGTH_SHORT
-            ).show()
+             Snackbar.make(
+                 findViewById(R.id.root),
+                 this.getTextSave(),
+                 Snackbar.LENGTH_SHORT
+             ).show()
          }
-         (busEvent as? BusEvent.Text)?.apply {
-            Log.d("gera", "subscribeOnEventBus: ${this.text}")
-         }
+          (busEvent as? BusEvent.TextShow)?.apply {
+              Log.d("gera", "subscribeOnEventBus: ${this.text}")
+          }
          false
       }
    }

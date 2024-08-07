@@ -34,31 +34,31 @@ import javax.inject.Singleton
 @Component(modules = [HelperModule::class, NavigationModule::class, BusModule::class, ImageModule::class])
 interface AppComponent {
 
-   @Component.Factory
-   interface Factory {
-      fun create(@BindsInstance context: Context): AppComponent
-   }
+    @Component.Factory
+    interface Factory {
 
-   fun inject(classes: AvcApplication)
-   fun inject(classes: WorkerManager)
-   fun inject(classes: MainFragment)
-   fun inject(classes: ContactListFragment)
-   fun inject(classes: TemplateListFragment)
-   fun inject(classes: TemplateFragment)
-   fun inject(classes: ContactViewModel)
-   fun inject(classes: ContactListViewModel)
-   fun inject(classes: CongratulationViewModel)
-   fun inject(classes: CongratulationsListViewModel)
-   fun inject(classes: FullScreenDialogExample)
-   fun inject(classes: TemplateViewModel)
-   fun inject(classes: CongratulationFragment)
-   fun inject(classes: TemplateListViewModel)
-   fun inject(classes: CongratulationsListFragment)
-   fun inject(classes: DataBaseManager)
-   fun inject(classes: ContactListAdapter)
-   fun inject(classes: CongratulationsListAdapter)
-   fun inject(classes: PhoneListAdapter)
-   fun inject(classes: MainActivity)
-   fun inject(classes: MainActivityViewModel)
+        fun create(@BindsInstance context: Context): AppComponent
+    }
+
+    fun inject(classes: AvcApplication)
+    fun inject(classes: WorkerManager)
+    fun inject(classes: MainFragment)
+    fun inject(classes: ContactListFragment)
+    fun inject(classes: TemplateListFragment)
+    fun inject(classes: TemplateFragment)
+    fun inject(classes: ContactViewModel)
+    fun inject(classes: ContactListViewModel)
+    fun inject(classes: CongratulationViewModel)
+    fun inject(classes: CongratulationsListViewModel)
+    fun inject(classes: FullScreenDialogExample)
+    fun inject(classes: TemplateViewModel)
+    fun inject(classes: CongratulationFragment)
+    fun inject(classes: TemplateListViewModel)
+    fun inject(classes: CongratulationsListFragment)
+    fun inject(classes: DataBaseManager)
+    fun inject(classes: ContactListAdapter)
+    fun inject(classes: CongratulationsListAdapter)
+    fun inject(classes: MainActivity)
+    fun inject(classes: MainActivityViewModel)
 
 }

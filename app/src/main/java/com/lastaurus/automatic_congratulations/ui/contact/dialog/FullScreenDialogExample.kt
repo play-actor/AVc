@@ -10,8 +10,6 @@ import com.lastaurus.automatic_congratulations.bus.BusEvent
 import com.lastaurus.automatic_congratulations.bus.EventHandler
 import com.lastaurus.automatic_congratulations.dagger.ComponentManager
 import com.lastaurus.automatic_congratulations.databinding.ResultProfileBinding
-import com.lastaurus.automatic_congratulations.ui.view.Task
-import java.time.LocalDate
 import javax.inject.Inject
 
 class FullScreenDialogExample : DialogFragment() {
@@ -36,48 +34,48 @@ class FullScreenDialogExample : DialogFragment() {
       val view = binding.root
       binding.apply {
 //         iconContact1.setImageResource(R.drawable.no_foto)
-         iconContactImg.setImageResource(R.drawable.person)
-         val now = LocalDate.now()
-         gant.setTasks(
-            listOf(
-               Task(
-                  name = "Task 1",
-                  dateStart = now.minusMonths(1),
-                  dateEnd = now
-               ),
-               Task(
-                  name = "Task 2 long name",
-                  dateStart = now.minusWeeks(2),
-                  dateEnd = now.plusWeeks(1)
-               ),
-               Task(
-                  name = "Task 3",
-                  dateStart = now.minusMonths(2),
-                  dateEnd = now.plusMonths(2)
-               ),
-               Task(
-                  name = "Some Task 4",
-                  dateStart = now.plusWeeks(2),
-                  dateEnd = now.plusMonths(2).plusWeeks(1)
-               ),
-               Task(
-                  name = "Task 5",
-                  dateStart = now.minusMonths(2).minusWeeks(1),
-                  dateEnd = now.plusWeeks(1)
-               )
-            )
-         )
-         with(toolbarDialog) {
-            inflateMenu(R.menu.menu_contact_change)
-            setNavigationOnClickListener {
-               dismiss()
-            }
-            menu.apply {
-               setOnMenuItemClickListener {
+          iconContactImg.setImageResource(R.drawable.person)
+//         val now = LocalDate.now()
+//         gant.setTasks(
+//            listOf(
+//               Task(
+//                  name = "Task 1",
+//                  dateStart = now.minusMonths(1),
+//                  dateEnd = now
+//               ),
+//               Task(
+//                  name = "Task 2 long name",
+//                  dateStart = now.minusWeeks(2),
+//                  dateEnd = now.plusWeeks(1)
+//               ),
+//               Task(
+//                  name = "Task 3",
+//                  dateStart = now.minusMonths(2),
+//                  dateEnd = now.plusMonths(2)
+//               ),
+//               Task(
+//                  name = "Some Task 4",
+//                  dateStart = now.plusWeeks(2),
+//                  dateEnd = now.plusMonths(2).plusWeeks(1)
+//               ),
+//               Task(
+//                  name = "Task 5",
+//                  dateStart = now.minusMonths(2).minusWeeks(1),
+//                  dateEnd = now.plusWeeks(1)
+//               )
+//            )
+//         )
+          with(toolbarDialog) {
+              inflateMenu(R.menu.menu_contact_change)
+              setNavigationOnClickListener {
+                  dismiss()
+              }
+              menu.apply {
+                  setOnMenuItemClickListener {
 //         eventHandler.postEvent(BusEvent.saveContact(
 //            //TODO
 //         ))
-                  eventHandler.postEvent(BusEvent.Text(binding.newContactName.text.toString()))
+                      eventHandler.postEvent(BusEvent.TextShow(binding.newContactName.text.toString()))
                   dismiss()
                   true
                }

@@ -71,7 +71,7 @@ class CongratulationsListFragment @Inject constructor() : BaseFragment() {
          adapter = CongratulationsListAdapter()
          init(viewModel?.getCongratulationsList())
          addCongratulationsToList.setOnClickListener {
-            viewModel?.openNewContact()
+            //viewModel?.openNewContact()
          }
          listCongratulationsAll.addItemDecoration(SpaceItemDecoration())
          adapter?.setClick(object : CongratulationsListAdapter.Click {
