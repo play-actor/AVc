@@ -23,9 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lastaurus.automatic_congratulations.R
+import com.lastaurus.automatic_congratulations.ui.contact.ContactViewModel
 import com.vomisareg.ui.compose.ContactPhone
-import com.vomisareg.ui.compose.Details
 import com.vomisareg.ui.compose.DetailsContent
 import com.vomisareg.ui.compose.ToolbarWithLoadLine
 import com.vomisareg.ui.theme.AppTheme
@@ -36,9 +37,7 @@ import com.vomisareg.ui.theme.fontGerberReg
 fun ContactScreenPreview() {
     AppTheme(false) {
         ContactScreen(
-            employees = remember { Details.EmployDetailsList },
             onBackCLick = {},
-            onEndButtonClick = {},
         )
     }
 }
@@ -48,22 +47,26 @@ fun ContactScreenPreview() {
 fun ContactScreenDarkPreview() {
     AppTheme(true) {
         ContactScreen(
-            employees = remember { Details.EmployDetailsList },
             onBackCLick = {},
-            onEndButtonClick = {},
         )
     }
 }
 
+private fun contactPhones(listViewModel: ContactViewModel): MutableList<ContactPhone> {
+    val list = mutableListOf<ContactPhone>()
+    listViewModel.getPhoneListFromContact()?.forEachIndexed { index, element ->
+        list.add(index, ContactPhone(element))
+    }
+    return list
+}
+
 @Composable
 fun ContactScreen(
-    title: String = "",
-    name: String = "",
-    employees: List<ContactPhone> = listOf(),
+    id: Int? = null,
     onBackCLick: () -> Unit,
-    onEndButtonClick: (Boolean) -> Unit,
-    imageFilled: Boolean = false
+    listViewModel: ContactViewModel = viewModel(),
 ) {
+    listViewModel.initContact(id)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -73,14 +76,17 @@ fun ContactScreen(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             ToolbarWithLoadLine(
-                title = title,
+                title = "",
                 showBackButton = true,
                 endButton = true,
                 onBackClick = { onBackCLick.invoke() },
                 onEndButtonClick = {
-                    onEndButtonClick.invoke(it)
+                    listViewModel.apply {
+                        setFavoriteContactCompose(it)
+                        update()
+                    }
                 },
-                imageFilled = imageFilled
+                imageFilled = listViewModel.getFavorite()
             )
             Image(
                 painterResource(R.drawable.no_foto),
@@ -101,7 +107,7 @@ fun ContactScreen(
                 ) {
                     Spacer(modifier = Modifier.height(24.dp))
                     Text(
-                        text = name,
+                        text = listViewModel.getName(),
                         fontSize = 24.sp,
                         lineHeight = 32.sp,
                         textAlign = TextAlign.Center,
@@ -131,7 +137,7 @@ fun ContactScreen(
                             .align(Alignment.Start)
                             .padding(start = 24.dp)
                     )
-                    DetailsContent(remember { employees })
+                    DetailsContent(remember { contactPhones(listViewModel) })
                 }
             }
         }

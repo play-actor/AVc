@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentFactory
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.lastaurus.automatic_congratulations.ui.congratulation.CongratulationFragment
-import com.lastaurus.automatic_congratulations.ui.contact.compose.ContactFragmentCompose
 import com.lastaurus.automatic_congratulations.ui.main_fragment.MainFragment
 import com.lastaurus.automatic_congratulations.ui.template.TemplateFragment
 
@@ -16,15 +15,6 @@ object Screens {
             MainFragment()
     }
 
-    @JvmStatic
-    fun contactScreen(contactId: Int) = object : FragmentScreen {
-        override fun createFragment(factory: FragmentFactory) =
-            ContactFragmentCompose().apply {
-                val bundle = Bundle()
-                bundle.putInt("contactId", contactId)
-                arguments = bundle
-            }
-    }
 
     @JvmStatic
     fun templateScreen(templateId: Int) = object : FragmentScreen {

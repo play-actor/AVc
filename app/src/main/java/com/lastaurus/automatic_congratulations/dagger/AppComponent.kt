@@ -13,10 +13,9 @@ import com.lastaurus.automatic_congratulations.ui.congratulation.CongratulationV
 import com.lastaurus.automatic_congratulations.ui.contact.ContactViewModel
 import com.lastaurus.automatic_congratulations.ui.contact.dialog.FullScreenDialogExample
 import com.lastaurus.automatic_congratulations.ui.list.adapters.CongratulationsListAdapter
-import com.lastaurus.automatic_congratulations.ui.list.adapters.ContactListAdapter
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListFragment
 import com.lastaurus.automatic_congratulations.ui.list.congratulations_list.CongratulationsListViewModel
-import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragment
+import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListFragmentCompose
 import com.lastaurus.automatic_congratulations.ui.list.contact_list.ContactListViewModel
 import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListFragment
 import com.lastaurus.automatic_congratulations.ui.list.template_list.TemplateListViewModel
@@ -35,14 +34,13 @@ interface AppComponent {
 
     @Component.Factory
     interface Factory {
-
         fun create(@BindsInstance context: Context): AppComponent
     }
 
     fun inject(classes: AvcApplication)
     fun inject(classes: WorkerManager)
     fun inject(classes: MainFragment)
-    fun inject(classes: ContactListFragment)
+    fun inject(classes: ContactListFragmentCompose)
     fun inject(classes: TemplateListFragment)
     fun inject(classes: TemplateFragment)
     fun inject(classes: ContactViewModel)
@@ -55,7 +53,6 @@ interface AppComponent {
     fun inject(classes: TemplateListViewModel)
     fun inject(classes: CongratulationsListFragment)
     fun inject(classes: DataBaseManager)
-    fun inject(classes: ContactListAdapter)
     fun inject(classes: CongratulationsListAdapter)
     fun inject(classes: MainActivity)
     fun inject(classes: MainActivityViewModel)
